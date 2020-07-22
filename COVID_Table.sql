@@ -41,7 +41,7 @@ CREATE TABLE hospital(
  foreign key (county_id) references county(county_id)
 );
 
-CREATE TABLE case_id(
+CREATE TABLE case(
  case_id NUMERIC(7,0) not null,
  patient_id NUMERIC(6,0) not null,
  county_id NUMERIC(5,0) not null,
