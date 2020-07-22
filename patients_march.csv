@@ -1,0 +1,151 @@
+patient_id,name,address_street,address_city,address_state,address_zip,phone,admitted,discharged,county_id,health_info,age,race,gender
+100749,"Knowles, August S.",Ap #135-591 Ut Rd.,Varendonk,NJ,72357,(275) 704-0539,2020-03-04,2020-03-27,34013,asthma,16,caucasian,male
+100748,"Greene, Gay T.",Ap #558-2634 Sagittis Rd.,Lutsel K'e,NJ,19099,(894) 107-7412,2020-03-01,2020-03-16,34021,asthma,39,caucasian,female
+100747,"Diaz, Ralph E.","P.O. Box 829, 8882 Mauris St.",Bulandshahr,NJ,12482,(877) 599-5317,2020-03-03,2020-03-24,34003,heart disease,66,caucasian,male
+100746,"Franco, Alvin W.",611-132 Mattis. Ave,Akhtubinsk,NJ,18095,(272) 705-6410,2020-03-12,2020-03-29,34015,heart disease,3,caucasian,male
+100745,"Lara, Margaret I.",5211 Suspendisse Rd.,Caramanico Terme,NJ,84393,(473) 552-8037,2020-03-07,2020-03-26,34033,none,14, middle eastern ,male
+100744,"Hooper, Hilda Z.",6707 Tristique Ave,Montresta,NJ,87485,(157) 439-1629,2020-03-09,2020-03-18,34009,asthma,34,caucasian,female
+100743,"Randall, Ivy K.",3633 Mauris Av.,Pitrufquén,NJ,49603,(845) 255-2141,2020-03-11,2020-03-20,34009,diabetes,9,no answer,male
+100742,"Bennett, Oprah A.","P.O. Box 820, 895 Vitae St.",Talence,NJ,65408,(838) 354-1507,2020-03-02,2020-03-26,34013,none,66,multiracial/other,male
+100741,"Sellers, Erasmus X.",7585 Laoreet Ave,Vihari,NJ,65931,(132) 665-0565,2020-03-05,2020-03-20,34011,diabetes,3,asian/southeast asian,female
+100740,"Foley, Dana K.",7806 Metus. Av.,San Antonio,NJ,70040,(113) 916-0004,2020-03-08,2020-03-27,34005,alcoholism,63,caucasian,male
+100739,"Blair, Alden W.",235-7195 Pharetra. Road,Vezin,NJ,33117,(645) 835-2739,2020-03-05,2020-03-20,34031,travel,77,hispanic/latinx,female
+100738,"Ferguson, Venus A.",Ap #955-5080 Felis Road,Bella,NJ,74212,(371) 153-8010,2020-03-09,2020-03-27,34001,smoking,11,caucasian,female
+100737,"Green, Uriah D.",8442 Lorem Rd.,Orsogna,NJ,43517,(159) 982-1076,2020-03-14,2020-03-25,34005,alcoholism,71,caucasian,male
+100736,"Riddle, Amanda J.",345-1932 Mauris St.,Cavallino,NJ,38767,(129) 887-7753,2020-03-02,2020-03-15,34015,heart disease,52,caucasian,female
+100735,"Atkins, Kyle Z.",Ap #879-7812 Sit Rd.,Nothomb,NJ,70259,(239) 909-3745,2020-03-02,2020-03-25,34035,none,34,no answer,female
+100734,"Alexander, Hollee F.",822-4649 Fringilla Avenue,Banjarmasin,NJ,90950,(714) 838-2950,2020-03-14,2020-03-30,34003,none,62,caucasian,male
+100733,"Mcdonald, Calvin L.","P.O. Box 429, 4365 Dui St.",Burlington,NJ,57302,(107) 668-2076,2020-03-07,2020-03-16,34027,travel,3,caucasian,female
+100732,"Dean, Melanie C.",328-399 Molestie Road,Castelló,NJ,10226,(477) 603-3251,2020-03-07,2020-03-17,34005,heart disease,7,no answer,male
+100731,"Holcomb, Eliana X.","P.O. Box 559, 4853 Tempus St.",Virginal-Samme,NJ,75362,(871) 911-6665,2020-03-12,2020-03-17,34019,asthma,58,american indian/alaskan,female
+100730,"Kent, Wesley V.",2650 Cras Road,Feldkirchen in Kärnten,NJ,89912,(921) 467-5091,2020-03-04,2020-03-17,34009,heart disease,53,asian/southeast asian,male
+100729,"Battle, Nero N.",1468 Fusce Ave,Gosselies,NJ,91926,(950) 458-8488,2020-03-02,2020-03-18,34005,none,83,no answer,female
+100728,"Gutierrez, Nevada M.","P.O. Box 711, 8304 Erat Ave",Lublin,NJ,17525,(876) 145-9080,2020-03-08,2020-03-17,34023,asthma,57,caucasian,female
+100727,"Duffy, Walker A.",Ap #556-5116 Id Street,Guadalupe,NJ,20230,(496) 260-2796,2020-03-11,2020-03-29,34041,heart disease,45,caucasian,male
+100726,"Walton, Hammett Q.",698-3887 Malesuada St.,Starodub,NJ,78330,(870) 315-2462,2020-03-02,2020-03-21,34009,diabetes,10,no answer,male
+100725,"Waller, Wayne B.","P.O. Box 379, 5630 Dui. Road",Tuscaloosa,NJ,65950,(606) 150-5670,2020-03-07,2020-03-15,34025,alcoholism,25,no answer,female
+100724,"Raymond, Xavier E.",Ap #996-9348 Aliquet Rd.,Nogales,NJ,39428,(546) 966-8895,2020-03-01,2020-03-19,34005,none,81,caucasian,male
+100723,"Rodriquez, Andrew C.",272-6098 Natoque Rd.,Stavoren,NJ,93619,(409) 431-5442,2020-03-08,2020-03-29,34013,diabetes,90,caucasian,male
+100722,"Daugherty, Maisie P.",7224 Iaculis Rd.,Tropea,NJ,95563,(402) 557-0237,2020-03-06,2020-03-29,34041,heart disease,65,caucasian,male
+100721,"Stone, Yael Q.",5069 Commodo St.,Matagami,NJ,15241,(592) 281-3463,2020-03-01,2020-03-23,34041,none,12,asian/southeast asian,male
+100720,"Bauer, Angela A.",Ap #317-2475 Aliquam Street,Cuglieri,NJ,27727,(452) 574-7427,2020-03-03,2020-03-25,34033,smoking,73,caucasian,male
+100719,"Kim, Joan L.",Ap #858-7996 Quis Avenue,Vitrival,NJ,51375,(363) 736-2389,2020-03-05,2020-03-19,34031,smoking,50,caucasian,male
+100718,"Fletcher, Madonna N.",Ap #875-7165 Purus Ave,Fosses-la-Ville,NJ,86407,(817) 546-5716,2020-03-03,2020-03-20,34013,diabetes,56,no answer,male
+100717,"Johnson, Dana F.","P.O. Box 963, 6763 Urna Rd.",San Pablo,NJ,45741,(625) 230-2379,2020-03-05,2020-03-28,34007,smoking,29,hispanic/latinx,male
+100716,"Cantu, Ahmed H.","P.O. Box 520, 6175 Sit Street",Silvan,NJ,52558,(108) 441-0776,2020-03-03,2020-03-24,34041,none,90, middle eastern ,male
+100715,"Chavez, Alec Z.",6090 Fringilla St.,Rothes,NJ,28079,(943) 269-0280,2020-03-14,2020-03-25,34035,asthma,8,asian/southeast asian,female
+100714,"Bowers, Stephen L.","9957 Dui, Road",Haren,NJ,14689,(792) 184-0116,2020-03-14,2020-03-15,34013,smoking,27,caucasian,male
+100713,"Ashley, Ria R.",Ap #944-6904 Egestas. St.,Murdochville,NJ,44837,(518) 909-8854,2020-03-03,2020-03-27,34017,smoking,24,african american/black,female
+100712,"Snyder, Rogan G.","P.O. Box 388, 8485 Fringilla Ave",Etawah,NJ,71247,(598) 566-9132,2020-03-07,2020-03-26,34021,diabetes,74,hispanic/latinx,male
+100711,"Fitzgerald, Aurelia M.","P.O. Box 695, 5337 Ipsum. Ave",Cimitile,NJ,78165,(276) 742-5128,2020-03-09,2020-03-21,34001,smoking,60,caucasian,female
+100710,"Gordon, Quynn S.",1023 Duis Road,D�gelis,NJ,37829,(722) 185-8230,2020-03-05,2020-03-17,34033,none,11, middle eastern ,male
+100709,"Carney, Kermit Z.",209-3978 Gravida Av.,Lang,NJ,60513,(509) 408-6538,2020-03-09,2020-03-26,34031,smoking,4,african american/black,male
+100708,"Kerr, Medge R.","P.O. Box 217, 5803 Est. Ave",Muzaffargarh,NJ,41042,(307) 533-6801,2020-03-13,2020-03-31,34013,none,83,caucasian,female
+100707,"Howe, Ella C.",7650 Massa Road,Cambridge,NJ,73997,(222) 729-0719,2020-03-01,2020-03-27,34027,heart disease,88,african american/black,male
+100706,"Woodard, Rama P.",Ap #414-9291 Primis Rd.,Rivello,NJ,38000,(303) 106-1822,2020-03-05,2020-03-18,34029,diabetes,89,no answer,female
+100705,"Jordan, Flavia X.",3544 Molestie St.,Torghar,NJ,25015,(163) 989-7443,2020-03-12,2020-03-21,34021,travel,42,caucasian,female
+100704,"Woodward, Mikayla G.","P.O. Box 196, 7572 Eget, Rd.",Camarones,NJ,42909,(259) 840-5758,2020-03-12,2020-03-24,34025,smoking,75,caucasian,male
+100703,"Chandler, Quin C.",9082 Tempus Avenue,Harrisburg,NJ,41767,(630) 845-7056,2020-03-05,2020-03-19,34005,none,45,american indian/alaskan,male
+100702,"Cunningham, Ray S.","Ap #960-2620 Non, Avenue",Gonars,NJ,98113,(482) 384-4052,2020-03-09,2020-03-19,34009,none,43,caucasian,male
+100701,"Drake, Elton P.","P.O. Box 373, 2691 Sociis Avenue",Torrejón de Ardoz,NJ,98156,(802) 727-0141,2020-03-12,2020-03-26,34009,none,37,asian/southeast asian,female
+100700,"Daugherty, Nolan Q.",Ap #111-2132 Ornare. Road,Jalandhar (Jullundur),NJ,32840,(995) 708-7698,2020-03-08,2020-03-17,34031,none,52,african american/black,female
+100549,"Bolton, Gabriel E.",820-7186 Lacinia. St.,Santa Maria a Monte,NY,12313,(411) 433-1218,2020-03-13,2020-03-28,36011,none,7,asian/southeast asian,male
+100548,"Atkinson, Sarah C.",Ap #930-9561 Curabitur Ave,Des Moines,NY,66948,(953) 834-2197,2020-03-10,2020-03-25,36091,none,81,caucasian,female
+100547,"Elliott, Ray N.",6334 Metus. Av.,Bulzi,NY,37236,(445) 129-8423,2020-03-08,2020-03-28,36015,diabetes,66,caucasian,male
+100546,"Joyce, Noah O.","Ap #249-8318 Ut, Rd.",Orsara di Puglia,NY,10404,(275) 816-3615,2020-03-04,2020-03-18,36045,none,54,multiracial/other,female
+100545,"Lee, Ulla L.","989-380 Est, Rd.",Gattatico,NY,51822,(621) 930-6686,2020-03-05,2020-03-15,36009,none,19, middle eastern ,female
+100544,"Franks, Rana H.","P.O. Box 243, 8066 Sed St.",Pereira,NY,13803,(737) 662-9095,2020-03-05,2020-03-21,36065,none,71,african american/black,male
+100543,"Henry, Anthony O.",585-8048 Elit Ave,Clermont-Ferrand,NY,83573,(448) 575-4094,2020-03-08,2020-03-21,36121,diabetes,89,caucasian,female
+100542,"Joyner, Lester J.",Ap #162-8408 Sed Road,Stourbridge,NY,76131,(725) 637-1396,2020-03-08,2020-03-17,36073,none,88,american indian/alaskan,female
+100541,"Woods, Eliana K.","P.O. Box 814, 4780 A, Ave",San Giovanni Suergiu,NY,44974,(714) 291-9050,2020-03-04,2020-03-17,36015,alcoholism,3,no answer,male
+100540,"Daugherty, Sigourney C.","P.O. Box 311, 2335 Nec Av.",Piegaro,NY,37763,(547) 225-9114,2020-03-04,2020-03-25,36029,diabetes,23,hispanic/latinx,female
+100539,"Maynard, Ivana Q.",7421 Nunc St.,Concepción,NY,99607,(110) 274-3024,2020-03-03,2020-03-24,36115,none,88,caucasian,female
+100538,"Albert, Bell G.",Ap #903-7656 Varius Ave,Södertälje,NY,99740,(180) 788-6466,2020-03-05,2020-03-17,36011,none,70,caucasian,female
+100537,"Dalton, Jerry H.",Ap #435-1278 Lorem St.,Sokoto,NY,20794,(451) 811-1368,2020-03-08,2020-03-24,36035,travel,76,no answer,male
+100536,"Walker, Yvonne I.",Ap #263-9151 Lectus Avenue,Laino Castello,NY,46960,(481) 968-5168,2020-03-01,2020-03-15,36029,none,39,asian/southeast asian,male
+100535,"Bauer, Ralph E.","P.O. Box 554, 2267 Orci. Rd.",Soria,NY,76778,(110) 290-8414,2020-03-11,2020-03-31,36037,none,45,asian/southeast asian,female
+100534,"Clarke, Rina H.","P.O. Box 901, 2039 Donec Street",Montpelier,NY,36073,(531) 322-0292,2020-03-01,2020-03-26,36091,alcoholism,49,american indian/alaskan,male
+100533,"Goff, Shay H.",Ap #920-8529 At Rd.,Lissewege,NY,79704,(827) 182-5393,2020-03-08,2020-03-15,36005,none,10,caucasian,male
+100532,"Bowers, Alana V.","P.O. Box 763, 2754 Nonummy Street",Maracalagonis,NY,48985,(755) 268-3866,2020-03-07,2020-03-24,36057,alcoholism,30,no answer,female
+100531,"Mcneil, Kenyon L.",Ap #839-6248 Aliquam Avenue,Dublin,NY,18465,(844) 455-2097,2020-03-02,2020-03-17,36015,travel,18,multiracial/other,male
+100530,"Acosta, Karleigh A.","P.O. Box 354, 9312 Sed St.",Avelgem,NY,74982,(681) 817-6046,2020-03-02,2020-03-16,36019,none,57,multiracial/other,female
+100529,"Ingram, Xanthus T.","P.O. Box 240, 2500 Nonummy. Ave",Curacaví,NY,30002,(527) 811-2180,2020-03-05,2020-03-22,36081,smoking,1,hispanic/latinx,male
+100528,"Adams, Teagan U.",Ap #347-6505 Suspendisse Av.,Frascati,NY,82312,(356) 537-0668,2020-03-05,2020-03-22,36035,none,31, middle eastern ,female
+100527,"Mcmahon, Mason U.",9385 Ipsum Rd.,Vezin,NY,46681,(759) 981-0423,2020-03-13,2020-03-22,36103,alcoholism,31,no answer,female
+100526,"Frederick, Zoe T.","Ap #619-3976 Mauris, Road",Couillet,NY,55200,(572) 696-0762,2020-03-05,2020-03-22,36035,alcoholism,22,no answer,male
+100525,"Rivas, Piper F.",Ap #511-3529 Eu Avenue,Poulseur,NY,14527,(658) 304-4675,2020-03-07,2020-03-29,36079,none,26,african american/black,male
+100524,"Murphy, Rashad X.",490-7583 Nullam Av.,Bouge,NY,97233,(768) 986-5218,2020-03-12,2020-03-22,36009,none,86,hispanic/latinx,female
+100523,"Bright, Regina V.",289-1026 Magnis Ave,Auxerre,NY,34745,(993) 302-8265,2020-03-12,2020-03-30,36049,travel,31,multiracial/other,female
+100522,"Martin, Adrienne T.","P.O. Box 313, 3753 Ac, Ave",Tubeke Tubize,NY,30528,(577) 145-6930,2020-03-10,2020-03-23,36113,diabetes,74,hispanic/latinx,male
+100521,"Fernandez, Teegan X.",735-6031 Consequat Street,Königs Wusterhausen,NY,84416,(119) 987-5471,2020-03-03,2020-03-30,36107,alcoholism,74,american indian/alaskan,female
+100520,"Herman, Bruno X.",4926 Duis Ave,Dalkeith,NY,66911,(674) 381-6179,2020-03-03,2020-03-24,36067,none,12,hispanic/latinx,male
+100519,"Higgins, Abbot V.","P.O. Box 754, 2055 Est. Avenue",Elversele,NY,98749,(854) 645-7781,2020-03-11,2020-03-23,36123,obesity,78,asian/southeast asian,female
+100518,"Huff, Clio Y.",5414 Vivamus Ave,Lasnigo,NY,26968,(452) 235-9183,2020-03-04,2020-03-25,36085,travel,67,no answer,female
+100517,"Flowers, Benjamin D.",8692 Neque. Street,Coaldale,NY,88646,(417) 913-3883,2020-03-06,2020-03-29,36013,none,59,multiracial/other,female
+100516,"Leach, Elaine E.",2898 Nibh Rd.,Bloomington,NY,57250,(667) 507-0493,2020-03-14,2020-03-21,36095,diabetes,25,no answer,other
+100515,"Eaton, Selma E.",918-5865 Laoreet Rd.,Ospedaletto Lodigiano,NY,95292,(391) 494-8004,2020-03-04,2020-03-23,36013,travel,3,hispanic/latinx,female
+100514,"Bradford, Dieter C.","P.O. Box 214, 7500 Vitae St.",La Thuile,NY,63743,(642) 237-6453,2020-03-02,2020-03-24,36025,alcoholism,22,hispanic/latinx,male
+100513,"Garner, Vivien W.",6686 Tempor Ave,Lens-Saint-Remy,NY,28471,(862) 410-5274,2020-03-07,2020-03-20,36015,travel,50,caucasian,female
+100512,"Craft, Buffy Y.",Ap #189-953 Adipiscing Avenue,Tambaram,NY,77696,(809) 897-2166,2020-03-06,2020-03-23,36079,travel,65,no answer,female
+100511,"Lloyd, Alexander D.",Ap #522-3217 Mauris Av.,Monteleone di Spoleto,NY,75875,(374) 437-8485,2020-03-02,2020-03-18,36051,diabetes,63,no answer,male
+100510,"Rodriquez, Thane I.",8194 Vitae Av.,Venlo,NY,77908,(276) 430-7911,2020-03-14,2020-03-18,36043,none,72,hispanic/latinx,female
+100509,"Ball, Freya Y.",3718 Malesuada Street,Patiala,NY,88847,(241) 468-8169,2020-03-03,2020-03-16,36009,none,1,no answer,female
+100508,"Barry, Christian O.",Ap #250-195 Mollis. Ave,Beawar,NY,28955,(579) 882-0776,2020-03-10,2020-03-21,36047,none,36,asian/southeast asian,female
+100507,"Harmon, Scarlett D.","9566 Tempus, St.",Castel di Tora,NY,65127,(650) 620-8934,2020-03-12,2020-03-26,36087,none,67,no answer,female
+100506,"Romero, Sean Y.",773-4434 Dignissim Street,Iqaluit,NY,50066,(931) 896-0134,2020-03-01,2020-03-31,36109,none,51,multiracial/other,male
+100505,"Bean, Gail N.","P.O. Box 475, 858 Sed St.",Gistel,NY,77547,(865) 812-3224,2020-03-06,2020-03-19,36063,travel,90,african american/black,female
+100504,"Massey, Nissim Y.",828-3310 Neque. Avenue,Narowal,NY,46897,(392) 212-7039,2020-03-11,2020-03-17,36025,none,77,multiracial/other,male
+100503,"Logan, Kerry Z.",Ap #648-2758 Volutpat. Rd.,Neumünster,NY,49094,(357) 432-3925,2020-03-08,2020-03-19,36045,none,2, middle eastern ,male
+100502,"Poole, Jana H.",6896 Non Road,Kincardine,NY,81491,(217) 941-5552,2020-03-05,2020-03-24,36017,diabetes,18,no answer,other
+100501,"Mercer, Victor H.","261-6094 Non, Street",Motala,NY,63863,(903) 876-6144,2020-03-13,2020-03-28,36061,diabetes,44,no answer,female
+100500,"Fowler, Rhoda C.","P.O. Box 764, 5405 Eros Rd.",Kailua,NY,23394,(786) 802-1546,2020-03-08,2020-03-29,36091,none,20,caucasian,female
+100049,"Reeves, Brynne J.","P.O. Box 196, 2909 Lectus Av.",Rzeszów,CT,67048,(477) 938-1783,2020-03-04,2020-03-27,9003,diabetes,52,hispanic/latinx,female
+100048,"Reid, Connor K.",987-8376 Elit Av.,Cappelle sul Tavo,CT,82432,(109) 256-3927,2020-03-12,2020-03-25,9007,heart disease,56,no answer,female
+100047,"Hatfield, Raphael S.","778-1524 Amet, Ave",Worksop,CT,57643,(115) 304-4062,2020-03-08,2020-03-27,9005,smoking,5,caucasian,male
+100046,"Mcdowell, Jordan Y.",9764 Faucibus Road,Berlin,CT,14617,(950) 598-9273,2020-03-12,2020-03-23,9003,obesity,53,american indian/alaskan,male
+100045,"Joyce, Guinevere D.",8169 Magna. Ave,Greater Sudbury,CT,71156,(293) 202-9298,2020-03-04,2020-03-18,9011,asthma,81,african american/black,female
+100044,"Lang, Brianna W.",Ap #582-9427 Et Avenue,Goslar,CT,43329,(762) 905-5338,2020-03-04,2020-03-30,9003,smoking,41,no answer,other
+100043,"Goodwin, Davis V.",828 Gravida Av.,Rodez,CT,42810,(897) 178-2134,2020-03-05,2020-03-22,9013,diabetes,2,no answer,female
+100042,"Tyson, Gisela U.","P.O. Box 959, 3171 Leo, Ave",Béthune,CT,90676,(614) 838-2808,2020-03-04,2020-03-19,9009,none,54,african american/black,male
+100041,"Hunt, Summer R.",117-7028 Blandit Rd.,Meduno,CT,69593,(187) 223-9264,2020-03-01,2020-03-17,9011,none,0,no answer,female
+100040,"Glenn, Daria D.",Ap #923-6620 Malesuada Street,Thatta,CT,72196,(991) 301-0764,2020-03-09,2020-03-17,9003,none,18,african american/black,female
+100039,"Kirkland, Iliana D.",3822 Libero. Av.,Hafizabad,CT,86542,(496) 864-1643,2020-03-04,2020-03-27,9007,none,15,caucasian,male
+100038,"Clayton, Perry A.","793-9361 Non, Ave",Fort William,CT,61420,(778) 390-0876,2020-03-10,2020-03-18,9003,heart disease,37,caucasian,male
+100037,"Nolan, Lee P.",6020 Aliquet. Road,Las Vegas,CT,97151,(859) 619-8880,2020-03-07,2020-03-28,9015,diabetes,19,african american/black,female
+100036,"Valentine, Sonia Q.",427 Quis Avenue,Plast,CT,28559,(202) 324-7711,2020-03-01,2020-03-25,9013,diabetes,17,american indian/alaskan,female
+100035,"Ferrell, Shelley U.",688-5147 Posuere Street,Accadia,CT,69313,(156) 400-9717,2020-03-04,2020-03-25,9003,none,101,caucasian,other
+100034,"Haney, Tashya O.","P.O. Box 378, 4684 Adipiscing St.",Southampton,CT,44802,(995) 832-8178,2020-03-10,2020-03-27,9013,none,80,asian/southeast asian,male
+100033,"Hinton, Marsden D.","P.O. Box 771, 224 Vestibulum Road",Yellowknife,CT,40260,(644) 144-7069,2020-03-12,2020-03-26,9009,travel,30,hispanic/latinx,male
+100032,"Huff, Alec I.","203-5718 Mauris, Road",Vernon,CT,67482,(426) 826-2508,2020-03-04,2020-03-27,9011,diabetes,47,american indian/alaskan,female
+100031,"Kinney, Genevieve F.",6007 Neque Rd.,Angoulême,CT,43638,(365) 819-9835,2020-03-09,2020-03-26,9015,alcoholism,99,no answer,male
+100030,"Sparks, Casey J.",796-7356 Interdum Rd.,Córdoba,CT,10793,(211) 208-7093,2020-03-14,2020-03-31,9011,asthma,52,african american/black,male
+100029,"Harris, Larissa I.","P.O. Box 782, 145 Fames Road",Guelph,CT,95770,(915) 399-6120,2020-03-03,2020-03-30,9007,diabetes,46,asian/southeast asian,male
+100028,"Ramirez, Brendan L.",Ap #485-8733 Proin St.,Rigolet,CT,33127,(282) 189-0329,2020-03-10,2020-03-22,9013,asthma,26,caucasian,female
+100027,"Rollins, Pearl J.","294-2984 Eu, Avenue",Charny,CT,47242,(107) 836-6306,2020-03-01,2020-03-16,9013,none,2,african american/black,male
+100026,"Dennis, Laith J.",668 Phasellus Street,Milano,CT,68057,(393) 796-6719,2020-03-07,2020-03-21,9003,travel,55,hispanic/latinx,male
+100025,"Pearson, Tana C.",384-2085 Suspendisse St.,Znamensk,CT,47304,(450) 366-9790,2020-03-05,2020-03-21,9011,alcoholism,80,caucasian,female
+100024,"Johns, Jin N.","173-7432 Lectus, St.",Groenlo,CT,73202,(451) 285-6241,2020-03-05,2020-03-24,9001,none,52,caucasian,female
+100023,"Hensley, Callie O.",2384 Urna Rd.,Chilliwack,CT,43769,(145) 275-6170,2020-03-14,2020-03-29,9003,heart disease,68,caucasian,female
+100022,"Snider, Valentine H.",695-4749 Arcu. Street,Los Patios,CT,94993,(114) 283-0080,2020-03-01,2020-03-27,9015,smoking,41,caucasian,female
+100021,"Greene, Bertha W.",1668 Ornare Avenue,Hathras,CT,19809,(199) 534-9310,2020-03-14,2020-03-31,9007,alcoholism,82,multiracial/other,male
+100020,"Sutton, Zachary J.","P.O. Box 184, 2781 Orci, Rd.",Gateshead,CT,25658,(893) 256-3305,2020-03-11,2020-03-23,9003,obesity,26,hispanic/latinx,female
+100019,"Munoz, Moses V.",5372 Nulla. Rd.,Amstelveen,CT,14179,(191) 636-6653,2020-03-13,2020-03-31,9007,diabetes,58,african american/black,male
+100018,"Henderson, Deacon R.",7218 Turpis Av.,Lakki Marwat,CT,31461,(498) 156-7375,2020-03-10,2020-03-20,9011,alcoholism,98,asian/southeast asian,female
+100017,"Sheppard, Ivory B.",545-3823 Posuere Rd.,Honolulu,CT,10266,(920) 293-9250,2020-03-04,2020-03-26,9005,asthma,58,asian/southeast asian,female
+100016,"Gregory, Stella J.",410-6999 Consectetuer Rd.,Vertou,CT,11482,(897) 726-3303,2020-03-13,2020-03-20,9005,obesity,71,hispanic/latinx,female
+100015,"Coffey, Mohammad Q.","P.O. Box 860, 5252 In, St.",Midlands,CT,64026,(587) 670-6490,2020-03-09,2020-03-18,9007,alcoholism,48,asian/southeast asian,male
+100014,"Drake, Lani B.",Ap #561-5488 Placerat St.,Manoppello,CT,30698,(626) 325-5895,2020-03-14,2020-03-15,9003,heart disease,36,hispanic/latinx,female
+100013,"Trevino, Blake Z.",4225 Adipiscing Road,Wardin,CT,41711,(735) 583-8495,2020-03-01,2020-03-24,9001,smoking,8,caucasian,male
+100012,"Maynard, Daria L.","1569 Et, Road",Biryuch,CT,70392,(815) 984-6074,2020-03-02,2020-03-30,9011,asthma,14,caucasian,male
+100011,"Morton, James E.",841-2227 Ullamcorper Rd.,Diets-Heur,CT,58252,(894) 488-8798,2020-03-02,2020-03-26,9007,alcoholism,29, middle eastern ,male
+100010,"Price, September O.","P.O. Box 496, 909 Ipsum Av.",Passau,CT,47986,(915) 589-4413,2020-03-06,2020-03-20,9005,none,28,multiracial/other,male
+100009,"Bowen, Brynn W.",8081 Diam Av.,Minneapolis,CT,62286,(140) 416-4422,2020-03-06,2020-03-17,9005,alcoholism,15,american indian/alaskan,female
+100008,"Tran, Vernon O.",9586 Egestas. Rd.,Rishra,CT,44314,(565) 955-6031,2020-03-10,2020-03-25,9003,smoking,38,american indian/alaskan,male
+100007,"Henson, Libby O.",7112 Lorem Rd.,Kohat,CT,76612,(499) 117-2575,2020-03-08,2020-03-31,9011,obesity,52,caucasian,female
+100006,"Powell, Hall M.",7348 Vivamus Road,Hamoir,CT,20899,(912) 606-4195,2020-03-05,2020-03-25,9005,obesity,85,caucasian,female
+100005,"Johnston, Samuel B.",2960 Luctus Street,Marzi,CT,93139,(456) 986-5354,2020-03-08,2020-03-22,9015,none,61,african american/black,other
+100004,"Rivers, Clinton L.",741-2553 Nonummy. Rd.,Whittlesey,CT,94723,(839) 668-3106,2020-03-01,2020-03-23,9005,obesity,74,no answer,female
+100003,"Ingram, Russell A.",8221 Sem. St.,Tuxtla Gutiérrez,CT,36258,(484) 705-6157,2020-03-03,2020-03-27,9005,diabetes,46,hispanic/latinx,female
+100002,"Pace, Reece P.",Ap #209-7308 Bibendum. Ave,Edmonton,CT,43030,(321) 316-2293,2020-03-12,2020-03-20,9005,travel,93,hispanic/latinx,male
+100001,"Hurley, Ray C.",Ap #899-1481 Varius Avenue,Gdańsk,CT,93855,(872) 887-3742,2020-03-09,2020-03-18,9015,obesity,67,asian/southeast asian,male
+100000,"Buchanan, Hashim Y.",7923 Ante Avenue,Shimanovsk,CT,45999,(689) 667-0426,2020-03-09,2020-03-27,9011,travel,82, middle eastern ,female
