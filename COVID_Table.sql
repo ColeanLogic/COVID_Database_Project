@@ -20,7 +20,8 @@ CREATE TABLE patient(
  age NUMERIC(3,0) not null,
  race VARCHAR(50),
  gender VARCHAR(20) not null,
- primary key(patient_id)
+ primary key(patient_id),
+ foreign key (county_id) references county(county_id)
 );
 
 CREATE TABLE county(
@@ -37,6 +38,7 @@ CREATE TABLE hospital(
  name VARCHAR(75) not null,
  county_id NUMERIC(5,0) not null,
  primary key (hospital_id)
+ foreign key (county_id) references county(county_id)
 );
 
 CREATE TABLE case_id(
@@ -46,4 +48,7 @@ CREATE TABLE case_id(
  hospital_id NUMERIC(6,0) not null,
  status VARCHAR(15),
  primary key (case_id)
+ foreign key (county_id) references county(county_id),
+ foreign key (patient_id) references patient(patient_id),
+ foreign key (hospital_id) references hospital(hostpital_id)
 );
