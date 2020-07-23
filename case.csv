@@ -1,0 +1,271 @@
+case_id,patient_id,county_id,hospital_id,status,Name
+800301,500743,34027,600029,at home,Acuity Specialty Hospital
+800300,500756,34027,600029,at home,Acuity Specialty Hospital
+800299,400709,34027,600029,in hospital ,Acuity Specialty Hospital
+800298,400733,34027,600029,in hospital ,Acuity Specialty Hospital
+800297,300761,34027,600029,in hospital ,Acuity Specialty Hospital
+800296,200734,34027,600029,recovered,Acuity Specialty Hospital
+800295,200746,34027,600029,recovered,Acuity Specialty Hospital
+800294,200763,34027,600029,recovered,Acuity Specialty Hospital
+800293,200770,34027,600029,deceased,Acuity Specialty Hospital
+800292,100707,34027,600029,deceased,Acuity Specialty Hospital
+800291,100733,34027,600029,at home,Acuity Specialty Hospital
+800290,500747,34003,600028,at home,The Valley Hospital
+800289,400702,34003,600028,at home,The Valley Hospital
+800288,400719,34003,600028,in hospital ,The Valley Hospital
+800287,400721,34003,600028,in hospital ,The Valley Hospital
+800286,400735,34003,600028,in hospital ,The Valley Hospital
+800285,400742,34003,600028,recovered,The Valley Hospital
+800284,400746,34003,600028,recovered,The Valley Hospital
+800283,400753,34003,600028,recovered,The Valley Hospital
+800282,400768,34003,600028,deceased,The Valley Hospital
+800281,400797,34003,600028,deceased,The Valley Hospital
+800279,500728,34001,600027,at home,Saint Peter’s University Hospital
+800278,500760,34001,600027,at home,Saint Peter’s University Hospital
+800277,500764,34001,600027,in hospital ,Saint Peter’s University Hospital
+800276,400715,34001,600027,in hospital ,Saint Peter’s University Hospital
+800275,400776,34001,600027,in hospital ,Saint Peter’s University Hospital
+800274,400779,34001,600027,recovered,Saint Peter’s University Hospital
+800273,400787,34001,600027,recovered,Saint Peter’s University Hospital
+800272,300707,34001,600027,recovered,Saint Peter’s University Hospital
+800271,300722,34001,600027,deceased,Saint Peter’s University Hospital
+800270,500753,34021,600026,deceased,Children’s Hospital of New Jersey
+800269,400747,34021,600026,at home,Children’s Hospital of New Jersey
+800268,300768,34021,600026,at home,Children’s Hospital of New Jersey
+800267,300777,34021,600026,at home,Children’s Hospital of New Jersey
+800266,300797,34021,600026,in hospital ,Children’s Hospital of New Jersey
+800265,200702,34021,600026,in hospital ,Children’s Hospital of New Jersey
+800264,200704,34021,600026,in hospital ,Children’s Hospital of New Jersey
+800263,200718,34021,600026,recovered,Children’s Hospital of New Jersey
+800262,100712,34021,600026,recovered,Children’s Hospital of New Jersey
+800261,100748,34021,600026,recovered,Children’s Hospital of New Jersey
+800259,500717,34039,600025,deceased,Christ Hospital
+800258,400739,34039,600025,at home,Christ Hospital
+800257,400773,34039,600025,at home,Christ Hospital
+800256,400784,34039,600025,at home,Christ Hospital
+800255,300773,34039,600025,in hospital ,Christ Hospital
+800254,300785,34039,600025,in hospital ,Christ Hospital
+800253,200706,34039,600025,in hospital ,Christ Hospital
+800252,200744,34039,600025,recovered,Christ Hospital
+800251,200773,34039,600025,recovered,Christ Hospital
+800250,500749,34019,600024,recovered,Robert Wood Johnson Hospital
+800249,500765,34019,600024,deceased,Robert Wood Johnson Hospital
+800248,400706,34019,600024,deceased,Robert Wood Johnson Hospital
+800247,300704,34019,600024,at home,Robert Wood Johnson Hospital
+800246,300734,34019,600024,at home,Robert Wood Johnson Hospital
+800245,300742,34019,600024,at home,Robert Wood Johnson Hospital
+800244,300748,34019,600024,in hospital ,Robert Wood Johnson Hospital
+800243,200724,34019,600024,in hospital ,Robert Wood Johnson Hospital
+800242,200742,34019,600024,in hospital ,Robert Wood Johnson Hospital
+800241,100731,34019,600024,recovered,Robert Wood Johnson Hospital
+800240,500750,34015,600023,recovered,Hackensack Medical Center
+800239,500762,34015,600023,recovered,Hackensack Medical Center
+800238,400700,34015,600023,deceased,Hackensack Medical Center
+800237,400716,34015,600023,deceased,Hackensack Medical Center
+800236,400745,34015,600023,at home,Hackensack Medical Center
+800235,400751,34015,600023,at home,Hackensack Medical Center
+800234,400774,34015,600023,at home,Hackensack Medical Center
+800233,200701,34015,600023,in hospital ,Hackensack Medical Center
+800232,100736,34015,600023,in hospital ,Hackensack Medical Center
+800231,100746,34015,600023,in hospital ,Hackensack Medical Center
+800230,500726,34011,600022,recovered,Kindred Hospital
+800229,500741,34011,600022,recovered,Kindred Hospital
+800228,400705,34011,600022,recovered,Kindred Hospital
+800227,400769,34011,600022,deceased,Kindred Hospital
+800226,400795,34011,600022,deceased,Kindred Hospital
+800225,300706,34011,600022,at home,Kindred Hospital
+800224,300709,34011,600022,at home,Kindred Hospital
+800223,200714,34011,600022,at home,Kindred Hospital
+800222,200761,34011,600022,in hospital ,Kindred Hospital
+800221,100741,34011,600022,in hospital ,Kindred Hospital
+800220,300702,34003,600021,in hospital ,Community Medical Center
+800219,300710,34003,600021,recovered,Community Medical Center
+800218,300730,34003,600021,recovered,Community Medical Center
+800217,300735,34003,600021,recovered,Community Medical Center
+800216,300756,34003,600021,deceased,Community Medical Center
+800215,200725,34003,600021,deceased,Community Medical Center
+800214,200745,34003,600021,at home,Community Medical Center
+800213,200752,34003,600021,at home,Community Medical Center
+800212,100734,34003,600021,at home,Community Medical Center
+800211,100747,34003,600021,in hospital ,Community Medical Center
+800210,300765,34001,600020,in hospital ,University Hospital
+800209,300766,34001,600020,in hospital ,University Hospital
+800208,300770,34001,600020,recovered,University Hospital
+800207,200721,34001,600020,recovered,University Hospital
+800206,200728,34001,600020,recovered,University Hospital
+800205,200747,34001,600020,deceased,University Hospital
+800204,200748,34001,600020,deceased,University Hospital
+800203,200767,34001,600020,at home,University Hospital
+800202,100711,34001,600020,at home,University Hospital
+800201,100738,34001,600020,at home,University Hospital
+800195,400509,36101,600019,recovered,Elmhurst Hospital Center
+800194,400549,36101,600019,deceased,Elmhurst Hospital Center
+800193,400592,36101,600019,deceased,Elmhurst Hospital Center
+800192,200514,36101,600019,in hospital ,Elmhurst Hospital Center
+800191,200528,36101,600019,at home,Elmhurst Hospital Center
+800190,400504,36081,600018,at home,Brookdale University Hospital
+800189,400554,36081,600018,in hospital ,Brookdale University Hospital
+800188,400570,36081,600018,in hospital ,Brookdale University Hospital
+800187,400573,36081,600018,in hospital ,Brookdale University Hospital
+800186,300553,36081,600018,recovered,Brookdale University Hospital
+800185,200501,36081,600018,recovered,Brookdale University Hospital
+800184,200519,36081,600018,recovered,Brookdale University Hospital
+800183,200522,36081,600018,deceased,Brookdale University Hospital
+800182,200567,36081,600018,deceased,Brookdale University Hospital
+800181,100529,36081,600018,at home,Brookdale University Hospital
+800179,500504,36007,600017,at home,Queens Medical Center
+800178,500525,36007,600017,in hospital ,Queens Medical Center
+800177,500560,36007,600017,in hospital ,Queens Medical Center
+800176,500573,36007,600017,in hospital ,Queens Medical Center
+800175,400556,36007,600017,recovered,Queens Medical Center
+800174,400565,36007,600017,recovered,Queens Medical Center
+800173,300510,36007,600017,recovered,Queens Medical Center
+800172,300551,36007,600017,deceased,Queens Medical Center
+800171,200564,36007,600017,deceased,Queens Medical Center
+800170,500507,36025,600016,at home,Lenox Hill Hospital
+800169,500540,36025,600016,at home,Lenox Hill Hospital
+800168,500566,36025,600016,at home,Lenox Hill Hospital
+800167,400502,36025,600016,in hospital ,Lenox Hill Hospital
+800166,400571,36025,600016,in hospital ,Lenox Hill Hospital
+800165,300548,36025,600016,in hospital ,Lenox Hill Hospital
+800164,200566,36025,600016,recovered,Lenox Hill Hospital
+800163,200569,36025,600016,recovered,Lenox Hill Hospital
+800162,100504,36025,600016,recovered,Lenox Hill Hospital
+800161,100514,36025,600016,deceased,Lenox Hill Hospital
+800158,400501,36095,600015,at home,Tisch Hospital
+800157,400527,36095,600015,at home,Tisch Hospital
+800156,400536,36095,600015,deceased,Tisch Hospital
+800155,300540,36095,600015,in hospital ,Tisch Hospital
+800154,200508,36095,600015,in hospital ,Tisch Hospital
+800153,200516,36095,600015,recovered,Tisch Hospital
+800152,200523,36095,600015,recovered,Tisch Hospital
+800151,100516,36095,600015,recovered,Tisch Hospital
+800147,500572,36011,600014,at home,Rockefeller University Hospital
+800146,400518,36011,600014,at home,Rockefeller University Hospital
+800145,300514,36011,600014,in hospital ,Rockefeller University Hospital
+800144,300590,36011,600014,in hospital ,Rockefeller University Hospital
+800143,200562,36011,600014,in hospital ,Rockefeller University Hospital
+800142,100538,36011,600014,recovered,Rockefeller University Hospital
+800141,100549,36011,600014,recovered,Rockefeller University Hospital
+800137,500521,36111,600013,at home,Mount Sinai Beth Israel
+800136,400515,36111,600013,deceased,Mount Sinai Beth Israel
+800135,400581,36111,600013,at home,Mount Sinai Beth Israel
+800134,300530,36111,600013,recovered,Mount Sinai Beth Israel
+800133,300597,36111,600013,in hospital ,Mount Sinai Beth Israel
+800132,200568,36111,600013,in hospital ,Mount Sinai Beth Israel
+800131,200572,36111,600013,recovered,Mount Sinai Beth Israel
+800125,500517,36033,600012,deceased,New York Downtown Hospital
+800124,400534,36033,600012,at home,New York Downtown Hospital
+800123,300522,36033,600012,recovered,New York Downtown Hospital
+800122,300562,36033,600012,in hospital ,New York Downtown Hospital
+800121,300581,36033,600012,in hospital ,New York Downtown Hospital
+800115,500561,36031,600011,deceased,Bellevue Hospital
+800114,500562,36031,600011,at home,Bellevue Hospital
+800113,200532,36031,600011,at home,Bellevue Hospital
+800112,200548,36031,600011,in hospital ,Bellevue Hospital
+800111,200565,36031,600011,in hospital ,Bellevue Hospital
+800106,500535,36001,600010,deceased,New York Presbyterian
+800103,400578,36001,600010,at home,New York Presbyterian
+800102,300516,36001,600010,at home,New York Presbyterian
+800101,300584,36001,600010,in hospital ,New York Presbyterian
+800100,500022,9013,600009,in hospital ,Connecticut Children’s Medical Center
+800099,500023,9013,600009,in hospital ,Connecticut Children’s Medical Center
+800098,500028,9013,600009,recovered,Connecticut Children’s Medical Center
+800097,500038,9013,600009,recovered,Connecticut Children’s Medical Center
+800096,400001,9013,600009,recovered,Connecticut Children’s Medical Center
+800095,400023,9013,600009,deceased,Connecticut Children’s Medical Center
+800094,400034,9013,600009,deceased,Connecticut Children’s Medical Center
+800093,400039,9013,600009,at home,Connecticut Children’s Medical Center
+800092,400042,9013,600009,at home,Connecticut Children’s Medical Center
+800091,400043,9013,600009,at home,Connecticut Children’s Medical Center
+800090,500014,9003,600008,in hospital ,Orchard Medical Center
+800089,500020,9003,600008,in hospital ,Orchard Medical Center
+800088,400045,9003,600008,in hospital ,Orchard Medical Center
+800087,400049,9003,600008,recovered,Orchard Medical Center
+800086,300090,9003,600008,recovered,Orchard Medical Center
+800085,300097,9003,600008,recovered,Orchard Medical Center
+800084,200001,9003,600008,deceased,Orchard Medical Center
+800083,200003,9003,600008,deceased,Orchard Medical Center
+800082,100046,9003,600008,at home,Orchard Medical Center
+800081,100049,9003,600008,at home,Orchard Medical Center
+800080,500025,9001,600007,at home,Griffin Hospital
+800079,500034,9001,600007,in hospital ,Griffin Hospital
+800078,500047,9001,600007,in hospital ,Griffin Hospital
+800077,500048,9001,600007,in hospital ,Griffin Hospital
+800076,400016,9001,600007,recovered,Griffin Hospital
+800075,400019,9001,600007,recovered,Griffin Hospital
+800074,400020,9001,600007,recovered,Griffin Hospital
+800073,300018,9001,600007,deceased,Griffin Hospital
+800072,300031,9001,600007,deceased,Griffin Hospital
+800071,300064,9001,600007,at home,Griffin Hospital
+800070,500006,9005,600006,at home,Connecticut Valley Hospital
+800069,500016,9005,600006,at home,Connecticut Valley Hospital
+800068,500018,9005,600006,in hospital ,Connecticut Valley Hospital
+800067,400021,9005,600006,in hospital ,Connecticut Valley Hospital
+800066,300062,9005,600006,in hospital ,Connecticut Valley Hospital
+800065,300067,9005,600006,recovered,Connecticut Valley Hospital
+800064,300076,9005,600006,recovered,Connecticut Valley Hospital
+800063,200018,9005,600006,recovered,Connecticut Valley Hospital
+800062,100017,9005,600006,deceased,Connecticut Valley Hospital
+800061,100047,9005,600006,deceased,Connecticut Valley Hospital
+800060,300068,9013,600005,at home,Waterbury Hospital
+800059,300085,9013,600005,at home,Waterbury Hospital
+800058,300098,9013,600005,at home,Waterbury Hospital
+800057,200000,9013,600005,in hospital ,Waterbury Hospital
+800056,200020,9013,600005,in hospital ,Waterbury Hospital
+800055,200025,9013,600005,in hospital ,Waterbury Hospital
+800054,200032,9013,600005,recovered,Waterbury Hospital
+800053,100034,9013,600005,recovered,Waterbury Hospital
+800052,100036,9013,600005,recovered,Waterbury Hospital
+800051,100043,9013,600005,deceased,Waterbury Hospital
+800050,500007,9009,600004,deceased,Yale New Haven Hospital
+800049,500032,9009,600004,at home,Yale New Haven Hospital
+800048,500033,9009,600004,at home,Yale New Haven Hospital
+800047,400054,9009,600004,at home,Yale New Haven Hospital
+800046,300075,9009,600004,in hospital ,Yale New Haven Hospital
+800045,300096,9009,600004,in hospital ,Yale New Haven Hospital
+800044,200005,9009,600004,in hospital ,Yale New Haven Hospital
+800043,200010,9009,600004,recovered,Yale New Haven Hospital
+800042,200016,9009,600004,recovered,Yale New Haven Hospital
+800041,100042,9009,600004,recovered,Yale New Haven Hospital
+800040,300066,9001,600003,deceased,Hospital of Central Connecticut
+800039,300083,9001,600003,deceased,Hospital of Central Connecticut
+800038,200031,9001,600003,at home,Hospital of Central Connecticut
+800037,200033,9001,600003,at home,Hospital of Central Connecticut
+800036,200038,9001,600003,at home,Hospital of Central Connecticut
+800035,200065,9001,600003,in hospital ,Hospital of Central Connecticut
+800034,200071,9001,600003,in hospital ,Hospital of Central Connecticut
+800033,100013,9001,600003,in hospital ,Hospital of Central Connecticut
+800032,100024,9001,600003,recovered,Hospital of Central Connecticut
+800031,500051,9007,600002,recovered,Bridgeport Hospital
+800030,400059,9007,600002,recovered,Bridgeport Hospital
+800029,400062,9007,600002,deceased,Bridgeport Hospital
+800028,400067,9007,600002,deceased,Bridgeport Hospital
+800027,400070,9007,600002,at home,Bridgeport Hospital
+800026,300094,9007,600002,at home,Bridgeport Hospital
+800025,300099,9007,600002,at home,Bridgeport Hospital
+800024,200006,9007,600002,in hospital ,Bridgeport Hospital
+800023,100021,9007,600002,in hospital ,Bridgeport Hospital
+800022,100029,9007,600002,in hospital ,Bridgeport Hospital
+800021,500002,9015,600001,recovered,Gaylord Specialty Healthcare
+800020,500011,9015,600001,recovered,Gaylord Specialty Healthcare
+800019,500027,9015,600001,recovered,Gaylord Specialty Healthcare
+800018,400041,9015,600001,deceased,Gaylord Specialty Healthcare
+800017,400044,9015,600001,deceased,Gaylord Specialty Healthcare
+800016,400076,9015,600001,at home,Gaylord Specialty Healthcare
+800015,400077,9015,600001,at home,Gaylord Specialty Healthcare
+800014,300025,9015,600001,at home,Gaylord Specialty Healthcare
+800013,300033,9015,600001,in hospital ,Gaylord Specialty Healthcare
+800012,300046,9015,600001,in hospital ,Gaylord Specialty Healthcare
+800011,300050,9015,600001,in hospital ,Gaylord Specialty Healthcare
+800010,300059,9015,600000,recovered,Hospital of Saint Raphael
+800009,300070,9015,600000,recovered,Hospital of Saint Raphael
+800008,300093,9015,600000,recovered,Hospital of Saint Raphael
+800007,200059,9015,600000,deceased,Hospital of Saint Raphael
+800006,200063,9015,600000,deceased,Hospital of Saint Raphael
+800005,200069,9015,600000,at home,Hospital of Saint Raphael
+800004,200073,9015,600000,at home,Hospital of Saint Raphael
+800003,100005,9015,600000,at home,Hospital of Saint Raphael
+800002,100022,9015,600000,in hospital ,Hospital of Saint Raphael
+800001,100031,9015,600000,in hospital ,Hospital of Saint Raphael
+800000,100037,9015,600000,in hospital ,Hospital of Saint Raphael
