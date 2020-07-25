@@ -1,0 +1,6 @@
+LOAD DATA INFILE 'c:/covid_files/login_edited.txt' 
+INTO TABLE login
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
