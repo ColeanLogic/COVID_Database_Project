@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 import mysql.connector
 import pdb
 import os
 
 app = Flask(__name__)
+app.secret_key = b'helloworld'
 
 host = '127.0.0.1'
 user = 'root'
@@ -31,6 +32,7 @@ def create_tables():
     con.commit()
 def load_tables():
     global con
+    connect_to_db(con,dbname)
     path_table = [('county_jul','county'),('hospital','hospital'),('login','login'),('patients_july','patient'),('case','case_no')]
     for i in path_table:
         county_path = os.path.join(os.getcwd(), '..',i[0]+'.csv')
@@ -42,7 +44,11 @@ def load_tables():
         csr = con.cursor()
         csr.execute(load_data_query)
         con.commit()
-    
+def database_created():
+    csr = con.cursor()
+    csr.execute("SHOW DATABASES LIKE '" + dbname +"';")
+    res = csr.fetchall()
+    return len(res)!=0
 
 def return_query(query):
     global con
@@ -51,16 +57,30 @@ def return_query(query):
     return csr.fetchall()
 
 con = connect_to_xampp(host,user,passwd,dbname)
-create_tables()
+if not database_created():
+    create_tables()
+    load_tables()
 connect_to_db(con,dbname)
-load_tables()
-@app.route('/')
-def r1():
-    return render_template('base.html')
+
+@app.route('/',methods=['GET', 'POST'])
+def home():
+    if request.method == 'POST':
+        session['usr'] = request.form['usr']
+    return render_template('home.html')
+    
+@app.route('/login')
+def login():
+    return render_template('login.html')
+    
 @app.route('/test')
 def test():
     strbuilder = ""
     return render_template('test.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('usr',None)
+    return redirect(url_for('home'))
 
 @app.route('/somewhere_else',methods=['POST'])
 def results_page():

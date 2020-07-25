@@ -53,3 +53,11 @@ CREATE TABLE case_no(
  foreign key (patient_id) references patient(patient_id),
  foreign key (hospital_id) references hospital(hospital_id)
 );
+
+create view case_summary as select status, COUNT(case_id) from case_no group by status;
+
+create view county_summary as select county_name, state_name, SUM(cases), SUM(deaths) from county GROUP BY county_id;  
+
+create view hospital_summary as select name, status, COUNT(case_id) from case_no inner join hospital on (case_no.hospital_id = hospital.hospital_id) group by name, status;
+
+create view comprehensive_summary as select name, status, county_name, state_name, cases, deaths from case_no inner join hospital inner join county ON (case_no.hospital_id = hospital.hospital_id) WHERE case_no.county_id = county.county_id GROUP BY case_id;

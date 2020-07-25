@@ -17,9 +17,12 @@
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Page 1</a></li>
-      <li><a href="#">Page 2</a></li>
-      <li><a href="#">Page 3</a></li>
+	  {% if not session['usr'] %}
+      <li><a href="login">Login</a></li>
+	  {% else %}
+      <li><a href="test">Select All Rows</a></li>
+      <li><a href="#">Other</a></li>
+	  {% endif %}
     </ul>
   </div>
 </nav>
