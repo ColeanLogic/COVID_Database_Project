@@ -9,12 +9,13 @@ primary key(username)
 );
 
 CREATE TABLE county(
- county_id NUMERIC(5,0) not null,
+ county_date VARCHAR (15) not null,
  county_name VARCHAR(75) not null,
  state_name VARCHAR(50) not null,
+ county_id NUMERIC(5,0) not null,
  cases NUMERIC(7,0),
  deaths NUMERIC(7,0),
- primary key (county_id)
+ primary key (county_id, county_date)
 );
 
 CREATE TABLE patient(

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ol><p>Listing results for {{ name }} </p>
+{% for i in res %}
+<li>
+{% for j in i %}
+{{ j }}
+{% endfor %}
+</li>
+{% endfor %}
+</ol>
+{% endblock %}
+
