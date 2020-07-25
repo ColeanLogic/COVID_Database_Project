@@ -35,11 +35,14 @@ def load_tables():
     for i in path_table:
         county_path = os.path.join(os.getcwd(), '..',i[0]+'.csv')
         county_path = county_path.replace(r"/mnt/c", r"C:")
-        pdb.set_trace()
-        load_data_query = "LOAD DATA INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' IGNORE 1 LINES;".format(county_path,i[1])
+        if(i[1] is not 'patient'):
+            load_data_query = "LOAD DATA INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' IGNORE 1 LINES;".format(county_path,i[1])
+        else:
+            load_data_query = "LOAD DATA INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' IGNORE 1 LINES (patient_id, name, address,@dummy, @dummy, @dummy, phone, admitted, discharged, county_id, health_info, age,race,gender);".format(county_path,i[1])
         csr = con.cursor()
         csr.execute(load_data_query)
         con.commit()
+    
 
 def return_query(query):
     global con
