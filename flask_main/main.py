@@ -58,22 +58,22 @@ def return_query(query):
     csr = con.cursor()
     csr.execute(query)
     return csr.fetchall()
-    
-def connect_to_mongodb():
-    pdb.set_trace()
-    client = MongoClient('mongodb://127.0.0.1:27017');#MongoClient("mongodb://" + mongo_host+':'+mongo_port)
-    global mongo_con
-    if(mongo_con != None):
-        #already connected
-        return 
-    exists = False
-    for db in client.list_databases():
-        if db["name"] == "covid_db":
-          exists = True
-    if(exists==False):
-        raise Exception("You do not have a covid_db in your list of databases")
-    mongo_con = client.covid_db;
-    return
+
+# def connect_to_mongodb():
+#     pdb.set_trace()
+#     client = MongoClient('mongodb://127.0.0.1:27017');#MongoClient("mongodb://" + mongo_host+':'+mongo_port)
+#     global mongo_con
+#     if(mongo_con != None):
+#         #already connected
+#         return
+#     exists = False
+#     for db in client.list_databases():
+#         if db["name"] == "covid_db":
+#           exists = True
+#     if(exists==False):
+#         raise Exception("You do not have a covid_db in your list of databases")
+#     mongo_con = client.covid_db;
+#     return
 
 
 con = connect_to_xampp(host,user,passwd,dbname)
@@ -97,11 +97,11 @@ def home():
     if request.method == 'POST':
         session['usr'] = request.form['usr']
     return render_template('home.html')
-    
+
 @app.route('/login')
 def login():
     return render_template('login.html')
-    
+
 @app.route('/test')
 def test():
     strbuilder = ""
