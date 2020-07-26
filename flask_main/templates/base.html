@@ -7,6 +7,16 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  
+  
+<style>
+button {
+	position: relative;
+	top: 5px;
+	background-color: #FFFFFF;
+	border: 2px solid #6495ED;
+}
+</style>
 </head>
 <body>
 
@@ -23,6 +33,13 @@
       <li><a href="test">Select All Rows</a></li>
       <li><a href="#">Other</a></li>
 	  {% endif %}
+    </ul>
+	<ul class="nav navbar-nav navbar-right">
+	{% if session['use_mongo'] %}
+        <button onclick="window.location.href='switch_db'">Current Database: MongoDB<br/>Click to Switch!</button>
+	{% else %}
+		<button onclick="window.location.href='switch_db'">Current Database: SQL<br/>Click to Switch!</button>
+	{% endif %}
     </ul>
   </div>
 </nav>

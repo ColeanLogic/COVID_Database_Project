@@ -2,11 +2,14 @@ from flask import Flask, render_template, request, session, redirect, url_for
 import mysql.connector
 import pdb
 import os
+from pymongo import MongoClient
 
 app = Flask(__name__)
 app.secret_key = b'helloworld'
 
 host = '127.0.0.1'
+mongo_host = '127.0.0.1'
+mongo_port = '20717'
 user = 'root'
 passwd = ''
 dbname= 'COVID_Database'
@@ -55,12 +58,39 @@ def return_query(query):
     csr = con.cursor()
     csr.execute(query)
     return csr.fetchall()
+    
+def connect_to_mongodb():
+    pdb.set_trace()
+    client = MongoClient('mongodb://127.0.0.1:27017');#MongoClient("mongodb://" + mongo_host+':'+mongo_port)
+    global mongo_con
+    if(mongo_con != None):
+        #already connected
+        return 
+    exists = False
+    for db in client.list_databases():
+        if db["name"] == "covid_db":
+          exists = True
+    if(exists==False):
+        raise Exception("You do not have a covid_db in your list of databases")
+    mongo_con = client.covid_db;
+    return
+
 
 con = connect_to_xampp(host,user,passwd,dbname)
+mongo_con = None
 if not database_created():
     create_tables()
     load_tables()
 connect_to_db(con,dbname)
+
+@app.route('/switch_db')
+def switch_db():
+    if "use_mongo" in session:
+        session.pop('use_mongo',None)
+    else:
+        session['use_mongo'] = True
+        connect_to_mongodb()
+    return redirect(url_for('home'));
 
 @app.route('/',methods=['GET', 'POST'])
 def home():
