@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<form action="chart" method="POST">
+<label>Breakdown by:</label>
+<select id="breakdown" name="by">
+  <option value="gender">Gender</option>
+  <option value="age">Age</option>
+  <option value="race">Race</option>
+</select>
+<br>
+<label>With Status:</label>
+<select id="cases" name="cases">
+  <option value="In Hospital">In Hospital</option>
+  <option value="At Home<">At Home</option>
+  <option value="Recovered">Recovered</option>
+  <option value="Deceased">Deceased</option>
+</select>
+<br>
+<label>Chart Type:</label>
+<select id="type" name="type">
+  <option value="pie">pie</option>
+  <option value="bar">bar</option>
+  <option value="doughnut">doughnut</option>
+  <option value="polarArea">polarArea</option>
+</select>
+<br>
+<button>Show Chart</button>
+</form>
+<div id="chartDiv">
+<canvas id="myChart" width="400" height="400"></canvas>
+</div>
+<style>
+#chartDiv{
+height: 600px;
+width: 600px;
+}
+</style>
+{% if chart_data %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+var covid_labels = [];
+var covid_num = [];
+
+{% for key, val in chart_data.items() %}
+	covid_labels.push("{{ key }}");
+	covid_num.push({{ val }});
+{% endfor %}
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: '{{ type1 }}',
+    data: {
+        labels: covid_labels,
+        datasets: [{
+            label: 'Covid Cases',
+            data: covid_num,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+{% endif %}
+{% endblock %}

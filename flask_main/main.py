@@ -60,7 +60,6 @@ def return_query(query):
     return csr.fetchall()
     
 def connect_to_mongodb():
-    pdb.set_trace()
     client = MongoClient('mongodb://127.0.0.1:27017');#MongoClient("mongodb://" + mongo_host+':'+mongo_port)
     global mongo_con
     if(mongo_con != None):
@@ -82,7 +81,7 @@ if not database_created():
     create_tables()
     load_tables()
 connect_to_db(con,dbname)
-
+connect_to_mongodb()
 @app.route('/switch_db')
 def switch_db():
     if "use_mongo" in session:
@@ -119,3 +118,26 @@ def results_page():
         qry = "select * from " + tblname +";"
         res = return_query(qry)
         return render_template('results.html',res=res,name=tblname);
+        
+@app.route('/chart',methods=['GET','POST'])
+def chart_page():
+    type1 = ""
+    if request.method == 'POST':
+        status = request.form['cases']
+        chart_data = {}
+        demographic = request.form['by']
+        statuses = mongo_con.cases.find({},{'status':1,'id':0}).distinct('status')
+        demographics = []
+        type1 = request.form['type']
+        if "age" in demographic:
+            demographics = [10,20,30,40,50,60,70]
+            for dem in demographics:
+                total = mongo_con.cases.find({"$and":[{'status':status},{'patient_info.' + demographic:dem}]}).count()
+                chart_data[dem] = total
+        else:
+            demographics = mongo_con.cases.find({},{'patient_info.'+demographic:1,'id':0}).distinct('patient_info.' + demographic)
+            for dem in demographics:
+                total = mongo_con.cases.find({"$and":[{'status':status},{'patient_info.' + demographic:dem}]}).count()
+                chart_data[dem] = total
+        return render_template('chart.html',dems=demographics,chart_data=chart_data,type1=type1)
+    return render_template('chart.html',chart_data=None,type1=type1)
