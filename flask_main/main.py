@@ -74,7 +74,7 @@ def connect_to_mongodb():
     mongo_con = client.covid_db;
     return
 
-
+pdb.set_trace()
 con = connect_to_xampp(host,user,passwd,dbname)
 mongo_con = None
 if not database_created():
