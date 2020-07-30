@@ -56,6 +56,7 @@ CREATE TABLE case_no
     county_id NUMERIC(5,0) not null,
     hospital_id NUMERIC(6,0) not null,
     status VARCHAR(15),
+    name VARCHAR(100),
     primary key (case_id),
     foreign key (county_id) references county(county_id),
     foreign key (patient_id) references patient(patient_id),
