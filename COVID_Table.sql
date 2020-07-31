@@ -32,7 +32,7 @@ CREATE TABLE patient
     admitted DATE,
     discharged DATE ,
     county_id NUMERIC(5,0) not null,
-    health_info VARCHAR(100) not null,
+    health_info VARCHAR(100),
     age NUMERIC(3,0) not null,
     race VARCHAR(50),
     gender VARCHAR(20) not null,
