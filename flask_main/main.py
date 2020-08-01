@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from forms import PatientFormCreate
 from database import Database
 
@@ -29,6 +29,7 @@ def switch_db():
 def home():
     if request.method == 'POST':
         session['usr'] = request.form['usr']
+        flash('Logged in successfully!', 'success')
     return render_template('home.html')
 
 
@@ -58,6 +59,8 @@ def test():
 
 @app.route('/logout')
 def logout():
+    message = session['usr'] + " logged out successfully"
+    flash(message, 'success')
     session.pop('usr', None)
     return redirect(url_for('home'))
 
