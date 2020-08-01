@@ -3,18 +3,13 @@
 
 <head>
   <title>COVID DATABASE</title>
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1"
-  >
-  <link
-    rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
-  >
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+  <!-- Bootstrap 4.5 (lattest) CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
   <style>
     button {
@@ -28,81 +23,81 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">COVID Database</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a
-          class="navbar-brand"
-          href="/"
-        >COVID DATABASE</a>
-      </div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
         {% if not session['usr'] %}
-        <li><a href="login">Login</a></li>
+        <li class="nav-item active">
+          <a class="nav-link" href="login">Login</a></li>
         {% else %}
-        <li><a href="test">Select All Rows</a></li>
-        <li>
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdownMenuLink"
-            data-toggle="dropdown"
-          >
+        <li class="nav-item active">
+          <a class="nav-link" href="test">Select All Rows</a></li>
+
+
+        <!-- Patient Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             Patient
           </a>
-          <div
-            class="dropdown-menu"
-            aria-labelledby="navbarDropdownMenuLink"
-          >
-            <a
-              class="dropdown-item"
-              href="patient_create"
-            >Create</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="view-table/patient">View Table</a>
+            <a class="dropdown-item" href="patient_create">Add Patient</a>
+            <a class="dropdown-item disabled" href="#">Edit Patient</a>
           </div>
         </li>
-        <li>
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdownMenuLink"
-            data-toggle="dropdown"
-          >
+
+
+        <!-- County Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
             County
           </a>
-          <div
-            class="dropdown-menu"
-            aria-labelledby="navbarDropdownMenuLink"
-          >
-            <a
-              class="dropdown-item-disabled"
-              href="view-table/county"
-            >View Table</a>
-            <a
-              class="dropdown-item-disabled"
-              href="#"
-            >Add County</a>
-            <a
-              class="dropdown-item-disabled"
-              href="#"
-            >Edit</a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="view-table/county">View Table</a>
+            <a class="dropdown-item disabled" href="#">Add New County</a>
+            <a class="dropdown-item disabled" href="#">Edit County</a>
           </div>
         </li>
-        <li><a href="#">Other</a></li>
+
+        <!-- Hospital Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Hospital
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="view-table/hospital">View Table</a>
+            <a class="dropdown-item disabled" href="#">Add New Hospital</a>
+            <a class="dropdown-item disabled" href="#">Edit Hospital</a>
+          </div>
+        </li>
         {% endif %}
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        {% if session['use_mongo'] %}
-        <button onclick="window.location.href='switch_db'">Current Database: MongoDB<br />Click to Switch!</button>
-        {% else %}
-        <button onclick="window.location.href='switch_db'">Current Database: SQL<br />Click to Switch!</button>
-        {% endif %}
-      </ul>
-    </div>
   </nav>
   {% block content %}
   {% endblock %}
+
+  <!-- Boostrap 4.5 Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
