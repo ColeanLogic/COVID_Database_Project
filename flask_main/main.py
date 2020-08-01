@@ -37,6 +37,19 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/view-table/<table>', methods=['GET'])
+def viewTable(table):
+    # Retrieve Table Body
+    sql = f'''SELECT * FROM {table}'''
+    body = db.query(sql)
+
+    # Retrieve Table Header
+    sql = f'''SHOW COLUMNS FROM {table} '''
+    header = db.query(sql)
+
+    return render_template('view-table.html', header=header, body=body, table=table)
+
+
 @app.route('/test')
 def test():
     strbuilder = ""
@@ -68,7 +81,7 @@ def hooray():
 @app.route('/patient_created/<new_patient_id>', methods=['GET', 'POST'])
 def patient_created(new_patient_id):
     sql = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
-    res = query(sql)
+    res = db.query(sql)
     return render_template('patient_created.html', res=res)
 
 
