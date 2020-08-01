@@ -43,10 +43,10 @@
         </li>
         {% if not session['usr'] %}
         <li class="nav-item active">
-          <a class="nav-link" href="login">Login</a></li>
+          <a class="nav-link" href="{{url_for('login')}}">Login</a></li>
         {% else %}
         <li class="nav-item active">
-          <a class="nav-link" href="test">Select All Rows</a></li>
+          <a class="nav-link" href="{{url_for('test')}}">Select All Rows</a></li>
 
 
         <!-- Patient Dropdown -->
@@ -57,7 +57,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='patient')}}">View Table</a>
-            <a class="dropdown-item" href="patient_create">Add Patient</a>
+            <a class="dropdown-item" href="{{url_for('patient_create')}}">Add Patient</a>
             <a class="dropdown-item disabled" href="#">Edit Patient</a>
           </div>
         </li>
