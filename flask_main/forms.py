@@ -40,3 +40,9 @@ class PatientFormCreate(FlaskForm):
         ("Travel","Travel")        
         ])
     submit = SubmitField('Submit')
+
+class HospitalFormCreate(FlaskForm):
+    hospital_id = StringField('Hospital ID* ', validators=[DataRequired()])
+    name = StringField('Hospital Name* ', validators=[DataRequired()])
+    county_id = StringField('County ID* ', validators=[DataRequired()])
+    submit = SubmitField('Submit')

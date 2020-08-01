@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Create New Hospital Record</h1>
+
+<form action='/hospital_create' method="POST">
+   {{ template_form.hidden_tag() }}
+   <p>{{ template_form.hospital_id.label }}
+   {{ template_form.hospital_id() }}</p>
+   <p>{{ template_form.name.label }}
+   {{ template_form.name() }}</p>
+   <p>{{ template_form.county_id.label }}
+   {{ template_form.county_id() }}</p>
+   <br>
+   <p>{{ template_form.submit() }}</p>
+</form>
+{% endblock %}

@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 import mysql.connector
 import pdb
 import os
-from forms import PatientFormCreate
+from forms import PatientFormCreate, HospitalFormCreate
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, RadioField
 from wtforms.validators import DataRequired
@@ -10,10 +10,10 @@ from wtforms.validators import DataRequired
 app = Flask(__name__)
 app.secret_key = b'helloworld'
 
-host = '192.168.64.2'
-user = 'cassie'
-passwd = 'cassie'
-dbname= 'coviddb'
+host = 'localhost'
+user = 'root'
+passwd = ''
+dbname= 'COVID_Database'
 
 def connect_to_xampp(host,user,passwd,dbname):
     connection = None
@@ -43,7 +43,7 @@ def load_tables():
     for i in path_table:
         county_path = os.path.join(os.getcwd(), '..',i[0]+'.csv')
         county_path = county_path.replace(r"/mnt/c", r"C:")
-        if(i[1] is not 'patient'):
+        if(i[1] != 'patient'):
             load_data_query = "LOAD DATA INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' IGNORE 1 LINES;".format(county_path,i[1])
         else:
             load_data_query = "LOAD DATA INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' IGNORE 1 LINES (patient_id, name, address,@dummy, @dummy, @dummy, phone, admitted, discharged, county_id, health_info, age,race,gender);".format(county_path,i[1])
@@ -134,4 +134,26 @@ def patient_create():
         csr.execute(qry)
         return redirect(f'/patient_created/{new_patient_id}.html')
     return render_template('patient_create.html', template_form=patient_form_create)
+
+
+#The following lines of code are detain the creation of a hospital
+@app.route('/hospital_created/<new_hospital_id>', methods=['GET', 'POST'])
+def hospital_created(new_hospital_id):
+    qry = f'''SELECT * FROM hospital WHERE hospital_id = "{new_hospital_id}"'''
+    res = return_query(qry)
+    return render_template('hospital_created.html', res=res)
+
+@app.route('/hospital_create', methods=['GET', 'POST'])
+def hospital_create():
+    global con
+    hospital_form_create = HospitalFormCreate()
+    if hospital_form_create.validate_on_submit():
+        new_hospital_id = hospital_form_create.hospital_id.data
+        new_name = hospital_form_create.name.data
+        new_county_id = hospital_form_create.county_id.data
+        qry = f'''INSERT INTO hospital (hospital_id, name, county_id) VALUES ({new_hospital_id},"{new_name}","{new_county_id}");'''
+        csr = con.cursor()
+        csr.execute(qry)
+        return redirect(f'/hospital_created/{new_hospital_id}.html')
+    return render_template('hospital_create.html', template_form=hospital_form_create)
 
