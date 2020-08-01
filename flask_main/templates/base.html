@@ -62,7 +62,6 @@
           </div>
         </li>
 
-
         <!-- County Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -88,12 +87,51 @@
             <a class="dropdown-item disabled" href="#">Edit Hospital</a>
           </div>
         </li>
-        {% endif %}
+      </ul>
+
+      <!-- User Dropdown -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false" style="color:black;"> Welcome, {{ session['usr'] }}!
+          </a>
+          <div class=" dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+            <a class="dropdown-item" href="{{ url_for('logout') }}">Sign out</a>
+          </div>
+        </li>
+      </ul>
+      {% endif %}
   </nav>
+
+  <!-- Flashed Messages -->
+  <div class="container" id="content">
+    {% with messages= get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'message' %}
+    <div class="text-center alert alert-danger mt-3" id="flashed">
+      {{ message }}
+    </div>
+    {% else %}
+    <div class=" text-center alert alert-{{category}} mt-3" id="flashed">
+      {{ message }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <!-- End code for flashed messages -->
+    {% block container %}
+    {% endblock %}
+  </div>
+  <script>
+    // This clears all flashed messages after 3 seconds
+    $('#flashed').delay(3000).fadeOut('slow');
+  </script>
+  <!-- End Flashed Messages -->
+
   {% block content %}
   {% endblock %}
-
-
 </body>
 
 </html>
