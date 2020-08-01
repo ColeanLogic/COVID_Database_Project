@@ -28,7 +28,8 @@ def connect_to_xampp(host, user, passwd, dbname):
         print(E)
     return connection
 
-def connect_to_db(con,dbname):
+
+def connect_to_db(con, dbname):
     csr = con.cursor()
     csr.execute("use " + dbname)
     con.commit()
@@ -41,6 +42,7 @@ def create_tables():
     for res in csr.execute(sqlCmds, multi=True):
         pass
     con.commit()
+
 
 def load_tables():
     global con
@@ -59,6 +61,7 @@ def load_tables():
         csr = con.cursor()
         csr.execute(load_data_query)
         con.commit()
+
 
 def database_created():
     csr = con.cursor()
@@ -135,24 +138,28 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/somewhere_else',methods=['POST'])
+@app.route('/somewhere_else', methods=['POST'])
 def results_page():
     if request.method == 'POST':
         tblname = request.form['tablename']
         qry = "select * from " + tblname + ";"
         res = return_query(qry)
-        return render_template('results.html',res=res,name=tblname)
+        return render_template('results.html', res=res, name=tblname)
+
 
 @app.route('/hooray', methods=['GET', 'POST'])
 def hooray():
     return render_template('hooray.html')
 
 # Patient Routes
+
+
 @app.route('/patient_created/<new_patient_id>', methods=['GET', 'POST'])
 def patient_created(new_patient_id):
     qry = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
     res = return_query(qry)
     return render_template('patient_created.html', res=res)
+
 
 @app.route('/patient_create', methods=['GET', 'POST'])
 def patient_create():
@@ -178,4 +185,3 @@ def patient_create():
         csr.execute(qry)
         return redirect(f'/patient_created/{new_patient_id}.html')
     return render_template('patient_create.html', template_form=patient_form_create)
-
