@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-xs-12">
-            <h1>View Table: {{table}}</h1>
+        <div class="col">
+            <legend style="padding: 10px;">View Table: {{table}}</legend>
             <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead class="thead-dark">
+                <table class="table">
+                    <thead class="thead-light">
                         <tr>
                             {% for attribute in header %}
-                            <th scope="col">{{attribute[0]}}</th>
+                            <th>{{attribute[0]}}</th>
                             {% endfor %}
                         </tr>
                     </thead>
