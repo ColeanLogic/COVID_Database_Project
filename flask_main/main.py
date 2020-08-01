@@ -2,14 +2,18 @@ from flask import Flask, render_template, request, session, redirect, url_for
 import mysql.connector
 import pdb
 import os
+from forms import PatientFormCreate
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, TextAreaField, RadioField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__)
 app.secret_key = b'helloworld'
 
-host = '127.0.0.1'
-user = 'root'
-passwd = ''
-dbname= 'COVID_Database'
+host = '192.168.64.2'
+user = 'cassie'
+passwd = 'cassie'
+dbname= 'coviddb'
 
 def connect_to_xampp(host,user,passwd,dbname):
     connection = None
@@ -18,6 +22,7 @@ def connect_to_xampp(host,user,passwd,dbname):
     except mysql.connector.Error as E:
         print(E)
     return connection
+    
 def connect_to_db(con,dbname):
     csr = con.cursor()
     csr.execute("use " + dbname)
@@ -30,6 +35,7 @@ def create_tables():
     for res in csr.execute(sqlCmds,multi=True):
         pass
     con.commit()
+
 def load_tables():
     global con
     connect_to_db(con,dbname)
@@ -44,6 +50,7 @@ def load_tables():
         csr = con.cursor()
         csr.execute(load_data_query)
         con.commit()
+
 def database_created():
     csr = con.cursor()
     csr.execute("SHOW DATABASES LIKE '" + dbname +"';")
@@ -56,6 +63,7 @@ def return_query(query):
     csr.execute(query)
     return csr.fetchall()
 
+# Connect to mysql database, create database if not created yet
 con = connect_to_xampp(host,user,passwd,dbname)
 if not database_created():
     create_tables()
@@ -82,10 +90,48 @@ def logout():
     session.pop('usr',None)
     return redirect(url_for('home'))
 
+
 @app.route('/somewhere_else',methods=['POST'])
 def results_page():
     if request.method == 'POST':
         tblname = request.form['tablename']
         qry = "select * from " + tblname +";"
         res = return_query(qry)
-        return render_template('results.html',res=res,name=tblname);
+        return render_template('results.html',res=res,name=tblname)
+
+@app.route('/hooray', methods=['GET', 'POST'])
+def hooray():
+    return render_template('hooray.html')
+
+# Patient Routes
+@app.route('/patient_created/<new_patient_id>', methods=['GET', 'POST'])
+def patient_created(new_patient_id):
+    qry = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
+    res = return_query(qry)
+    return render_template('patient_created.html', res=res)
+
+@app.route('/patient_create', methods=['GET', 'POST'])
+def patient_create():
+    global con
+    patient_form_create = PatientFormCreate()
+    if patient_form_create.validate_on_submit():
+        new_patient_id = patient_form_create.patient_id.data
+        new_name = patient_form_create.name.data
+        new_address_street = patient_form_create.address_street.data
+        new_address_city = patient_form_create.address_city.data
+        new_address_state = patient_form_create.address_state.data
+        new_address_zip = patient_form_create.address_zip.data
+        new_county_id = patient_form_create.county_id.data
+        new_phone = patient_form_create.phone.data
+        new_age = patient_form_create.age.data
+        new_race = patient_form_create.race.data
+        new_gender = patient_form_create.gender.data
+        new_health_info = patient_form_create.health_info.data
+        new_admitted = patient_form_create.admitted.data
+        new_discharged = patient_form_create.discharged.data
+        qry = f'''INSERT INTO patient (patient_id, name, address_street, address_city, address_state, address_zip, county_id, phone, age, race, gender, health_info, admitted, discharged) VALUES ({new_patient_id},"{new_name}","{new_address_street}","{new_address_city}","{new_address_state}","{new_address_zip}","{new_county_id}","{new_phone}", "{new_age}","{new_race}","{new_gender}","{new_health_info}","{new_admitted}","{new_discharged}");'''
+        csr = con.cursor()
+        csr.execute(qry)
+        return redirect(f'/patient_created/{new_patient_id}.html')
+    return render_template('patient_create.html', template_form=patient_form_create)
+

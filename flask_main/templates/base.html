@@ -9,11 +9,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-
+  
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">COVID DATABASE</a>
+      <a class="navbar-brand" href="/">COVID DATABASE</a>
     </div>
     <ul class="nav navbar-nav">
       <li class="active"><a href="#">Home</a></li>
@@ -21,6 +21,14 @@
       <li><a href="login">Login</a></li>
 	  {% else %}
       <li><a href="test">Select All Rows</a></li>
+      <li>
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
+          Patient
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="patient_create">Create</a>
+        </div>
+      </li>
       <li><a href="#">Other</a></li>
 	  {% endif %}
     </ul>
