@@ -38,16 +38,18 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-        </li>
         {% if not session['usr'] %}
         <li class="nav-item active">
           <a class="nav-link" href="{{url_for('login')}}">Login</a></li>
         {% else %}
+        <!-- Schema -->
+        <li class="nav-item active">
+          <a class="nav-link" href="{{url_for('viewSchema')}}">View Schema<span class="sr-only"></span></a>
+        </li>
+
+        <!-- Select All Rows-->
         <li class="nav-item active">
           <a class="nav-link" href="{{url_for('test')}}">Select All Rows</a></li>
-
 
         <!-- Patient Dropdown -->
         <li class="nav-item dropdown">

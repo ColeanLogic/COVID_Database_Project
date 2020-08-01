@@ -16,15 +16,6 @@ app = Flask(__name__)
 app.secret_key = b'helloworld'
 
 
-@app.route('/switch_db')
-def switch_db():
-    if "use_mongo" in session:
-        session.pop('use_mongo', None)
-    else:
-        session['use_mongo'] = True
-    return redirect(url_for('home'))
-
-
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
@@ -36,6 +27,14 @@ def home():
 @app.route('/login')
 def login():
     return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    message = session['usr'] + " logged out successfully"
+    flash(message, 'success')
+    session.pop('usr', None)
+    return redirect(url_for('home'))
 
 
 @app.route('/view-table/<table>', methods=['GET'])
@@ -51,18 +50,15 @@ def viewTable(table):
     return render_template('view-table.html', header=header, body=body, table=table)
 
 
+@app.route('/view-schema', methods=['GET'])
+def viewSchema():
+    return render_template('view-schema.html')
+
+
 @app.route('/test')
 def test():
     strbuilder = ""
     return render_template('test.html')
-
-
-@app.route('/logout')
-def logout():
-    message = session['usr'] + " logged out successfully"
-    flash(message, 'success')
-    session.pop('usr', None)
-    return redirect(url_for('home'))
 
 
 @app.route('/somewhere_else', methods=['POST'])
@@ -72,6 +68,15 @@ def results_page():
         sql = "SELECT * FROM " + tblname + ";"
         res = db.query(sql)
         return render_template('results.html', res=res, name=tblname)
+
+
+@app.route('/switch_db')
+def switch_db():
+    if "use_mongo" in session:
+        session.pop('use_mongo', None)
+    else:
+        session['use_mongo'] = True
+    return redirect(url_for('home'))
 
 
 @app.route('/hooray', methods=['GET', 'POST'])
