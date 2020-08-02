@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<p>Login or Register</p>
-<form action="/" method="POST">
-	<label for="usr">Username</label>
-    <input id="tbname" name="usr">
-	<br>
-	<label for="pass">Password</label>
-	<input id="tbname" name="pass" type="password">
-	<br>
-	<input type="submit" value="Submit">
-</form>
+<div class="container-fluid" style="width: 100%; max-width: 330px; padding: 15px;margin: auto;">
+	<legend style="padding: 5px;">Login or Register</legend>
+	<form action="/" method="POST">
+		<div class="form-group">
+			<label for="usr">Username</label>
+			<input id="tbname" class="form-control" name="usr">
+		</div>
+		<div class="form-group">
+			<label for="pass">Password</label>
+			<input id="tbname" class="form-control" name="pass" type="password">
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+</div>
 
 {% endblock %}

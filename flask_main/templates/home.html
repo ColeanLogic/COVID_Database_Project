@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-
-{% if session['usr'] %}
-<p>You are logged in as {{ session['usr'] }} </p>
-<p>Your role is {{ session['role'] }}</p>
-<a href="logout">Log out</a>
-{% else %}
-<p>You are not logged in </p>
-<a href="login"> Login </a>
-{% endif %}
-{% endblock %}
+<div class="container">
+    {% if session['usr'] %}
+    <p style="padding: 5px;">Please select an option above to begin</p>
+    {% else %}
+    <p style="padding: 5px;">Please <a href="{{url_for('login')}}">login</a> to continue</p>
+    {% endif %}
+    {% endblock %}
+</div>
