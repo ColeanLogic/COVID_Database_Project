@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<div id="form1">
 <form action="chart" method="POST">
 <label>Breakdown by:</label>
 <select id="breakdown" name="by">
@@ -11,7 +12,7 @@
 <label>With Status:</label>
 <select id="cases" name="cases">
   <option value="In Hospital">In Hospital</option>
-  <option value="At Home<">At Home</option>
+  <option value="At Home">At Home</option>
   <option value="Recovered">Recovered</option>
   <option value="Deceased">Deceased</option>
 </select>
@@ -26,15 +27,153 @@
 <br>
 <button>Show Chart</button>
 </form>
+</div>
+<div id="main">
 <div id="chartDiv">
 <canvas id="myChart" width="400" height="400"></canvas>
 </div>
+{% if status %}
+<div id="updateData">
+<button type="button" class="cont">Quick View</button>
+<form class="form1" action="chart" method="POST">
+        <label>Select:</label>
+        <input type="text" id="test1" name="showFields">
+        <button>Show Attributes</button>
+        {% if dataList %}
+        <ol>
+        {% for i in dataList %}
+        <li>
+        {% if i is mapping %}
+        {% for j in i.values() %}
+        {{ j }}
+        {% endfor %}
+        {% else %}
+        {% for j in i %}
+        {{ j }}
+        {% endfor %}
+        {% endif %}
+        </li>
+        {% endfor %}
+        </ol>
+        {% endif %}
+</form>
+</div>
+
+
+<div id="updateData2">
+        <button type="button" id="cont2" class="cont">Quick Update</button>
+        <form action="chart" class="form1" method="POST">
+                <label>Id:</label>
+                <input type="text" id="test1" name="idToUpdate">
+                <br>
+                <label>
+                    Attribute To Update
+                </label>
+                <input type="text" id="test1" name="attrToUpdate">
+                <br>
+                <label>New Value</label>
+                <input type="text" id="test1" name="newValue">
+                <button id="b1">Update Data</button>
+                <br>
+                {% if successfulUpdate %}
+                <p>Successfully Updated the Database</p>
+                {% endif %}
+        </form>
+        </div>
+
+
+{% endif %}
+
+</div>
 <style>
-#chartDiv{
-height: 600px;
-width: 600px;
+
+.cont {
+  background-color: rgb(104, 185, 240,.6);
+  color: black;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
 }
+
+#cont2{
+    background-color: rgba(255, 99, 132, 1);
+}
+
+.form1{
+    margin-top: 1vw;
+
+}
+
+
+.active, .collapsible:hover {
+  background-color: #ccc;
+}
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+#main{
+    width: 95vw;
+}
+#form1{
+    position: relative; 
+    left: 10px;
+}
+#chartDiv{
+    float: left; 
+    left: 10px;
+    height: 60vw;
+    width: 60vw;
+}
+#updateData{
+    float: right;
+    top: 0px;
+    right: 10px;
+    border-color:rgb(104, 185, 240,.2);
+    border-width: 3px;
+    height: 30vw;
+    width: 30vw;
+    border-style: solid;
+    overflow: scroll;
+
+}
+
+#updateData2{
+    float: right;
+    bottom: 0px;
+    right: 10px;
+    border-color:rgba(255, 99, 132, .4);
+    border-width: 3px;
+    height: 25vw;
+    width: 30vw;
+    border-style: solid;
+    overflow: scroll;
+    margin-top: 5vw;
+}
+
+#b1{
+    border: 2px solid rgba(255, 99, 132, 1);
+}
+
 </style>
+
+<script type="text/javascript">
+{% if status %}
+document.getElementById("cases").value = "{{ status }}"
+document.getElementById("type").value = "{{ type1 }}"
+document.getElementById("breakdown").value = "{{ category }}"
+{% endif %}
+</script>
+
+
+
 {% if chart_data %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 <script>

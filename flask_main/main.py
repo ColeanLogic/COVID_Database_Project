@@ -3,6 +3,7 @@ import mysql.connector
 import pdb
 import os
 from pymongo import MongoClient
+from database_abstraction_classes import *
 
 app = Flask(__name__)
 app.secret_key = b'helloworld'
@@ -13,11 +14,12 @@ mongo_port = '20717'
 user = 'root'
 passwd = ''
 dbname= 'COVID_Database'
+mongo_con = None
 
 def connect_to_xampp(host,user,passwd,dbname):
     connection = None
     try:
-        connection = mysql.connector.connect(host=host,user=user,passwd=passwd,autocommit=True)
+        connection = mysql.connector.connect(host=host,user=user,passwd=passwd,autocommit=True,database=dbname)
     except mysql.connector.Error as E:
         print(E)
     return connection
@@ -33,6 +35,7 @@ def create_tables():
     for res in csr.execute(sqlCmds,multi=True):
         pass
     con.commit()
+    
 def load_tables():
     global con
     connect_to_db(con,dbname)
@@ -47,6 +50,7 @@ def load_tables():
         csr = con.cursor()
         csr.execute(load_data_query)
         con.commit()
+        
 def database_created():
     csr = con.cursor()
     csr.execute("SHOW DATABASES LIKE '" + dbname +"';")
@@ -71,24 +75,30 @@ def connect_to_mongodb():
           exists = True
     if(exists==False):
         raise Exception("You do not have a covid_db in your list of databases")
-    mongo_con = client.covid_db;
+    mongo_con = client.covid_db
     return
 
-pdb.set_trace()
 con = connect_to_xampp(host,user,passwd,dbname)
-mongo_con = None
 if not database_created():
     create_tables()
     load_tables()
 connect_to_db(con,dbname)
 connect_to_mongodb()
+
+#here we have mongodb conn to covid_db and a sql conn to covid_db.
+DataBaseFactory.mongo_conn = mongo_con
+DataBaseFactory.sql_conn = con
+DataBaseFactory.databaseType = DBTYPE.SQL
+
 @app.route('/switch_db')
 def switch_db():
     if "use_mongo" in session:
+        DataBaseFactory.databaseType = DBTYPE.SQL
         session.pop('use_mongo',None)
     else:
         session['use_mongo'] = True
         connect_to_mongodb()
+        DataBaseFactory.databaseType = DBTYPE.MongoDB
     return redirect(url_for('home'));
 
 @app.route('/',methods=['GET', 'POST'])
@@ -115,29 +125,56 @@ def logout():
 def results_page():
     if request.method == 'POST':
         tblname = request.form['tablename']
-        qry = "select * from " + tblname +";"
-        res = return_query(qry)
+        res = DataBaseFactory.GetDataBaseObject().selectAllFromEntity(tblname)
+        pdb.set_trace()
         return render_template('results.html',res=res,name=tblname);
-        
+
+type1 = ""
+status =""
+demographic = ""
+
 @app.route('/chart',methods=['GET','POST'])
 def chart_page():
-    type1 = ""
+    global type1
+    global status
+    global demographic
+    use_old_values = False
+    dataList = None
     if request.method == 'POST':
-        status = request.form['cases']
+        pdb.set_trace()
+        fieldsToShow = ""
+        if "showFields" in request.form:
+            use_old_values = True
+            fieldsToShow = request.form['showFields']
+            dataList = DataBaseFactory.GetDataBaseObject().selectDataFromSummary(status,fieldsToShow)
+            pdb.set_trace()
+        if "idToUpdate" in request.form:
+            use_old_values = True
+            idtoupdate = request.form['idToUpdate']
+            attr = request.form['attrToUpdate']
+            newVal = request.form['newValue']
+            DataBaseFactory.GetDataBaseObject().updateEntity(idtoupdate,"",attr,newVal)
+            pdb.set_trace()
+        if not use_old_values:
+            status = request.form['cases']
         chart_data = {}
-        demographic = request.form['by']
-        statuses = mongo_con.cases.find({},{'status':1,'id':0}).distinct('status')
+        if not use_old_values:
+            demographic = request.form['by']
+        #statuses = mongo_con.cases.find({},{'status':1,'id':0}).distinct('status')
         demographics = []
-        type1 = request.form['type']
+        if not use_old_values:
+            type1 = request.form['type']
         if "age" in demographic:
             demographics = [10,20,30,40,50,60,70]
             for dem in demographics:
+                #DataBaseFactory.GetDataBaseObject().summarizeStatusFromDemographic(st)
                 total = mongo_con.cases.find({"$and":[{'status':status},{'patient_info.' + demographic:dem}]}).count()
                 chart_data[dem] = total
         else:
             demographics = mongo_con.cases.find({},{'patient_info.'+demographic:1,'id':0}).distinct('patient_info.' + demographic)
             for dem in demographics:
-                total = mongo_con.cases.find({"$and":[{'status':status},{'patient_info.' + demographic:dem}]}).count()
+                total = DataBaseFactory.GetDataBaseObject().summarizeStatusFromDemographic(status,demographic,dem)
+                print(total)
                 chart_data[dem] = total
-        return render_template('chart.html',dems=demographics,chart_data=chart_data,type1=type1)
+        return render_template('chart.html',dems=demographics,chart_data=chart_data,type1=type1,status=status,category=demographic,dataList=dataList)
     return render_template('chart.html',chart_data=None,type1=type1)
