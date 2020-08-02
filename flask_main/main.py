@@ -99,12 +99,13 @@ def switch_db():
         session['use_mongo'] = True
         connect_to_mongodb()
         DataBaseFactory.databaseType = DBTYPE.MongoDB
-    return redirect(url_for('home'));
+    return redirect(url_for('home'))
 
 @app.route('/',methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
         session['usr'] = request.form['usr']
+        session['role'] = DataBaseFactory.GetDataBaseObject().getRole(session['usr'])
     return render_template('home.html')
     
 @app.route('/login')
@@ -119,6 +120,7 @@ def test():
 @app.route('/logout')
 def logout():
     session.pop('usr',None)
+    session.pop('role',None)
     return redirect(url_for('home'))
 
 @app.route('/somewhere_else',methods=['POST'])
@@ -126,7 +128,6 @@ def results_page():
     if request.method == 'POST':
         tblname = request.form['tablename']
         res = DataBaseFactory.GetDataBaseObject().selectAllFromEntity(tblname)
-        pdb.set_trace()
         return render_template('results.html',res=res,name=tblname);
 
 type1 = ""
@@ -140,21 +141,19 @@ def chart_page():
     global demographic
     use_old_values = False
     dataList = None
+    successfulUpdate = None
     if request.method == 'POST':
-        pdb.set_trace()
         fieldsToShow = ""
         if "showFields" in request.form:
             use_old_values = True
             fieldsToShow = request.form['showFields']
             dataList = DataBaseFactory.GetDataBaseObject().selectDataFromSummary(status,fieldsToShow)
-            pdb.set_trace()
         if "idToUpdate" in request.form:
             use_old_values = True
             idtoupdate = request.form['idToUpdate']
             attr = request.form['attrToUpdate']
             newVal = request.form['newValue']
             DataBaseFactory.GetDataBaseObject().updateEntity(idtoupdate,"",attr,newVal)
-            pdb.set_trace()
         if not use_old_values:
             status = request.form['cases']
         chart_data = {}
@@ -176,5 +175,5 @@ def chart_page():
                 total = DataBaseFactory.GetDataBaseObject().summarizeStatusFromDemographic(status,demographic,dem)
                 print(total)
                 chart_data[dem] = total
-        return render_template('chart.html',dems=demographics,chart_data=chart_data,type1=type1,status=status,category=demographic,dataList=dataList)
+        return render_template('chart.html',dems=demographics,chart_data=chart_data,type1=type1,status=status,category=demographic,dataList=dataList,successfulUpdate=successfulUpdate)
     return render_template('chart.html',chart_data=None,type1=type1)

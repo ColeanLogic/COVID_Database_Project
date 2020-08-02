@@ -10,6 +10,12 @@ class DBTYPE(Enum):
     SQL = 1
     MongoDB = 2
 
+class ROLES():
+    media = "media"
+    government = "government"
+    doctor = "doctor"
+    hospital_admin = "hospital_admin"
+
 class DataBaseAbstraction(metaclass=abc.ABCMeta):
     conn = None
     @abc.abstractmethod
@@ -27,6 +33,10 @@ class DataBaseAbstraction(metaclass=abc.ABCMeta):
         
     @abc.abstractmethod
     def insertEntity(self, entity_name: str, data: []):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def getRole(self,username):
         raise NotImplementedError
         
     @abc.abstractmethod
@@ -67,9 +77,11 @@ class MongoDataBase(DataBaseAbstraction):
     def updateEntity(self, id, entity_name: str, attr, newVal):
         self.conn.cases.update({'_id':ObjectId(id.strip())},{"$set":{attr:newVal}})
 
+    def getRole(self, username):
+        return self.conn.login.find_one({'username':username})["role"]
 
-    def insertEntity(self, id, entity_name: str, data: []):
-        pass
+    def insertEntity(self, id, entity_name: str, fieldValues):
+        getattr(self.conn,entity_name).insert_one(fieldValues)
     
 class SQLDataBase(DataBaseAbstraction):
     def summarizeStatusFromDemographic(self, status, category, demographic):
@@ -93,8 +105,19 @@ class SQLDataBase(DataBaseAbstraction):
         csr.execute("UPDATE CASE_NO SET "+attr+"='"+newVal+"' WHERE '"+_id+"'=case_id;")
         self.conn.commit()
     
-    def insertEntity(self, entity_name: str, data: []):
-        pass
+    def insertEntity(self, entity_name: str, fieldValues):
+        csr = self.conn.cursor()
+        fieldsList = ""
+        valuesList = ""
+        for i in fieldValues.items():
+            fieldsList += i[0].strip() 
+            fieldsList +=","
+            valuesList += i[1].strip()
+            valuesList +=","
+        valuesList = "("+valuesList[:-1]+")"
+        fieldsList = "("+fieldsList[:-1]+")"
+        csr.execute("INSERT INTO " + entity_name + fieldsList + " VALUES " + valuesList + ";")
+        self.conn.commit()
 
     def selectDataFromSummary(self, status,fields):
         fields_str = ""
@@ -104,10 +127,13 @@ class SQLDataBase(DataBaseAbstraction):
             fields_str += ","
         fields_str = fields_str[:-1]
         csr = self.conn.cursor()
-        import pdb
-        pdb.set_trace()
         csr.execute("select " + fields_str + " from case_no join patient on case_no.patient_id=patient.patient_id where status='" + status.lower() + "'" + ";")
         return csr.fetchall()
+
+    def getRole(self, username):
+        csr = self.conn.cursor()
+        csr.execute("select role from login where username='"+ username +"';")
+        return csr.fetchall()[0]
     
     
 class DataBaseFactory():
@@ -126,7 +152,7 @@ class DataBaseFactory():
             
 #TODO:
 #mapping case_no to cases
-#county to county :)
+#county to county 
 #hospital to embedded cases.hospital
 #patient to embedded cases.patient_info
     

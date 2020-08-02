@@ -33,6 +33,7 @@
 <canvas id="myChart" width="400" height="400"></canvas>
 </div>
 {% if status %}
+{% if session['role'] == "hospital_admin" %}
 <div id="updateData">
 <button type="button" class="cont">Quick View</button>
 <form class="form1" action="chart" method="POST">
@@ -81,7 +82,7 @@
         </form>
         </div>
 
-
+{% endif %}
 {% endif %}
 
 </div>
