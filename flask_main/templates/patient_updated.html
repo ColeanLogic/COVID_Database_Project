@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Patient Record Updated: </h3>
+<!-- Display new record -->
+<ul>
+    {% for i in res %}
+    <li>
+        {% for j in i %}
+        {{ j }}
+        {% endfor %}
+    </li>
+    {% endfor %}
+</ul>
+<br>
+<a href="/patient_update"><h4>Update another patient record</h4></a>
+
+{% endblock %}

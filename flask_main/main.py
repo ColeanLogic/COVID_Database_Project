@@ -2,10 +2,12 @@ from flask import Flask, render_template, request, session, redirect, url_for
 import mysql.connector
 import pdb
 import os
-from forms import PatientFormCreate
+from forms import PatientForm, PatientLocateForm, PatientSearchForm, CaseForm, CaseLocateForm
+from database_class import Database
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, RadioField
 from wtforms.validators import DataRequired
+
 
 app = Flask(__name__)
 app.secret_key = b'helloworld'
@@ -14,6 +16,8 @@ host = '192.168.64.2'
 user = 'cassie'
 passwd = 'cassie'
 dbname= 'coviddb'
+
+db = Database(host, user, passwd, dbname)
 
 def connect_to_xampp(host,user,passwd,dbname):
     connection = None
@@ -104,34 +108,190 @@ def hooray():
     return render_template('hooray.html')
 
 # Patient Routes
+@app.route('/patient_create', methods=['GET', 'POST'])
+def patient_create():
+    global con
+    patient_form_create = PatientForm()
+    if patient_form_create.validate_on_submit():
+        form_data = patient_form_create.data 
+        qry = "INSERT INTO patient (patient_id, name, address_street, address_city, address_state, address_zip, county_id, phone, age, admitted, discharged, race, gender, health_info) VALUES ("       
+        numeric_data = ('patient_id', 'county_id', 'age')
+        for key, value in form_data.items():
+            if key != 'submit' and key != 'csrf_token':    
+                if value == None:
+                    if key == 'admitted' or key == 'discharged':
+                        qry = qry + f"NULL, "
+                    else:
+                        qry = qry + f"'NULL', "
+                else:
+                    if key in numeric_data:
+                        qry = qry + f"{value}, "
+                    else:
+                        qry = qry + f"'{value}', "
+            else:
+                continue
+        qry = qry[:-2]
+        qry = qry + ")"
+        csr = con.cursor()
+        csr.execute(qry)
+        return redirect(f'/patient_created/{patient_form_create.patient_id.data}.html')
+    return render_template('patient_create.html', template_form = patient_form_create)
+
 @app.route('/patient_created/<new_patient_id>', methods=['GET', 'POST'])
 def patient_created(new_patient_id):
     qry = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
     res = return_query(qry)
     return render_template('patient_created.html', res=res)
 
-@app.route('/patient_create', methods=['GET', 'POST'])
-def patient_create():
+@app.route('/patient_locate', methods=['GET', 'POST'])
+@app.route('/patient_locate/<status>', methods=['GET', 'POST'])
+def patient_locate(status=""):
     global con
-    patient_form_create = PatientFormCreate()
-    if patient_form_create.validate_on_submit():
-        new_patient_id = patient_form_create.patient_id.data
-        new_name = patient_form_create.name.data
-        new_address_street = patient_form_create.address_street.data
-        new_address_city = patient_form_create.address_city.data
-        new_address_state = patient_form_create.address_state.data
-        new_address_zip = patient_form_create.address_zip.data
-        new_county_id = patient_form_create.county_id.data
-        new_phone = patient_form_create.phone.data
-        new_age = patient_form_create.age.data
-        new_race = patient_form_create.race.data
-        new_gender = patient_form_create.gender.data
-        new_health_info = patient_form_create.health_info.data
-        new_admitted = patient_form_create.admitted.data
-        new_discharged = patient_form_create.discharged.data
-        qry = f'''INSERT INTO patient (patient_id, name, address_street, address_city, address_state, address_zip, county_id, phone, age, race, gender, health_info, admitted, discharged) VALUES ({new_patient_id},"{new_name}","{new_address_street}","{new_address_city}","{new_address_state}","{new_address_zip}","{new_county_id}","{new_phone}", "{new_age}","{new_race}","{new_gender}","{new_health_info}","{new_admitted}","{new_discharged}");'''
+    patient_locate_form = PatientLocateForm()
+    if patient_locate_form.validate_on_submit():
+        patient_id = patient_locate_form.patient_id.data
+        qry = f"SELECT * FROM patient WHERE patient_id = '{patient_id}'"
+        res = return_query(qry)
+        if (res):
+            patient_form_update = PatientForm()
+            patient_form_update.name.data = res[0][1]
+            patient_form_update.phone.data = res[0][2]
+            patient_form_update.admitted.data = res[0][3]
+            patient_form_update.discharged.data = res[0][4]
+            patient_form_update.county_id.data = res[0][5]
+            patient_form_update.health_info.data = res[0][6]
+            patient_form_update.age.data = res[0][7]
+            patient_form_update.race.data = res[0][8]
+            patient_form_update.gender.data = res[0][9]
+            patient_form_update.address_street.data = res[0][10]
+            patient_form_update.address_city.data = res[0][11]
+            patient_form_update.address_state.data = res[0][12]
+            patient_form_update.address_zip.data = res[0][13]
+            return render_template(f'/patient_update.html', res = res, template_form = patient_form_update)
+        else:
+            status='not_found'
+            return redirect(f'patient_locate/{status}')
+    return render_template('patient_locate.html', template_form = patient_locate_form, status = status)
+
+@app.route('/patient_update', methods=['GET', 'POST'])
+def patient_update():    
+    patient_form_update = PatientForm()
+    if patient_form_update.validate_on_submit():
+        form_data = patient_form_update.data
+        qry = "UPDATE patient SET "         
+        numeric_data = ('patient_id', 'county_id', 'age')
+        for key, value in form_data.items():
+            if key != 'submit' and key != 'csrf_token' and key != 'patient_id':    
+                if value == None:
+                    if key == 'admitted' or key == 'discharged':
+                        qry = qry + f"{key} = NULL, "
+                    else:
+                        qry = qry + f"{key} = 'NULL', "
+                else:
+                    if key in numeric_data:
+                        qry = qry + f"{key} = {value}, "
+                    else:
+                        qry = qry + f"{key} = '{value}', "
+            else:
+                continue
+        qry = qry[:-2]
+        qry = qry + f" WHERE patient_id = {form_data['patient_id']};"
         csr = con.cursor()
         csr.execute(qry)
-        return redirect(f'/patient_created/{new_patient_id}.html')
-    return render_template('patient_create.html', template_form=patient_form_create)
+        return redirect(f'/patient_updated/{patient_form_update.patient_id.data}.html')
+    return render_template('patient_update.html', template_form = patient_form_update)
 
+@app.route('/patient_updated/<new_patient_id>', methods=['GET', 'POST'])
+def patient_updated(new_patient_id):
+    qry = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
+    res = return_query(qry)
+    return render_template('patient_updated.html', res=res)
+
+@app.route('/patient_view', methods=['GET', 'POST'])
+def patient_view():
+    patient_form_view = PatientSearchForm()
+    if patient_form_view.validate_on_submit():
+        form_data = patient_form_view.data
+        if len(form_data) > 2:
+            qry = "SELECT * FROM patient WHERE "
+            numeric_data = ('patient_id', 'county_id', 'age')
+            for key, value in form_data.items():
+                if key != 'submit' and key != 'csrf_token':    
+                    if value :
+                        if key in numeric_data:
+                            qry = qry + f"{key} = {value} AND "
+                        else:
+                            qry = qry + f"{key} = '{value}' AND "
+                else:
+                    continue
+            qry = qry[:-4]
+            qry = qry + ";"
+            res = return_query(qry)
+            return render_template('/patient_view_results.html', res=res)     
+    return render_template('patient_view.html', template_form = patient_form_view)
+
+# Case routes
+@app.route('/case_create', methods=['GET', 'POST'])
+def case_create():
+    global db
+    case_form_create = CaseForm()
+    if case_form_create.validate_on_submit():
+        form_data = case_form_create.data 
+        qry = db.case_insert_sql(form_data)
+        db.insert(qry)
+        return redirect(f'/case_created/{case_form_create.case_id.data}')
+    return render_template('case_create.html', template_form = case_form_create)
+
+@app.route('/case_created/<new_case_id>', methods=['GET', 'POST'])
+def case_created(new_case_id):
+    global db
+    form_data = {'case_id': f'{new_case_id}'}
+    qry = db.case_select_sql(form_data)
+    res = return_query(qry)
+    return render_template('case_created.html', res=res)
+
+@app.route('/case_locate', methods=['GET', 'POST'])
+@app.route('/case_locate/<status>', methods=['GET', 'POST'])
+def case_locate(status = ""):
+    global db
+    case_locate_form = CaseLocateForm()
+    if case_locate_form.validate_on_submit():
+        case_id = case_locate_form.case_id.data
+        case_form_update = db.case_locate(case_id)
+        if not case_form_update:
+            status='not_found'
+            return redirect(f'case_locate/{status}')
+        else:
+            return render_template(f'/case_update.html', template_form = case_form_update)
+    return render_template('case_locate.html', template_form = case_locate_form)
+
+
+# @app.route('/patient_locate', methods=['GET', 'POST'])
+# @app.route('/patient_locate/<status>', methods=['GET', 'POST'])
+# def patient_locate(status=""):
+#     global con
+#     patient_locate_form = PatientLocateForm()
+#     if patient_locate_form.validate_on_submit():
+#         patient_id = patient_locate_form.patient_id.data
+#         qry = f"SELECT * FROM patient WHERE patient_id = '{patient_id}'"
+#         res = return_query(qry)
+#         if (res):
+#             patient_form_update = PatientForm()
+#             patient_form_update.name.data = res[0][1]
+#             patient_form_update.phone.data = res[0][2]
+#             patient_form_update.admitted.data = res[0][3]
+#             patient_form_update.discharged.data = res[0][4]
+#             patient_form_update.county_id.data = res[0][5]
+#             patient_form_update.health_info.data = res[0][6]
+#             patient_form_update.age.data = res[0][7]
+#             patient_form_update.race.data = res[0][8]
+#             patient_form_update.gender.data = res[0][9]
+#             patient_form_update.address_street.data = res[0][10]
+#             patient_form_update.address_city.data = res[0][11]
+#             patient_form_update.address_state.data = res[0][12]
+#             patient_form_update.address_zip.data = res[0][13]
+#             return render_template(f'/patient_update.html', res = res, template_form = patient_form_update)
+#         else:
+#             status='not_found'
+#             return redirect(f'patient_locate/{status}')
+#     return render_template('patient_locate.html', template_form = patient_locate_form, status = status)

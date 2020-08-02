@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Make Your Changes Below</h1>
+
+<form action='/case_update' method="POST">
+   
+    {{ template_form.hidden_tag() }}
+    <p>{{ template_form.case_id.label }}
+    {{ template_form.case_id() }}</p>
+    <p>{{ template_form.patient_id.label }}
+    {{ template_form.patient_id() }}</p>
+    <p>{{ template_form.county_id.label }}
+    {{ template_form.county_id() }}</p>
+    <p>{{ template_form.hospital_id.label }}
+    {{ template_form.hospital_id() }}</p>
+    <p>{{ template_form.status.label }}
+    {{ template_form.status() }}</p>
+    <p>{{ template_form.hospital_name.label }}
+    {{ template_form.hospital_name() }}</p>  
+
+    <p>{{ template_form.submit() }}</p>
+
+</form>
+
+{% endblock %}

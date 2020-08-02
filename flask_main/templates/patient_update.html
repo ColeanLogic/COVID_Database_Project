@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Make your changes below:</h1>
+
+<form action='/patient_update' method="POST">
+   {{ template_form.hidden_tag() }}
+   <p>{{ template_form.patient_id.label }}
+   {{ template_form.patient_id() }}</p>
+   <p>{{ template_form.name.label }}
+   {{ template_form.name() }}</p>
+   <p>{{ template_form.address_street.label }}
+   {{ template_form.address_street() }}</p>
+   <p>{{ template_form.address_city.label }}
+   {{ template_form.address_city() }}</p>
+   <p>{{ template_form.address_state.label }}
+   {{ template_form.address_state() }}</p>
+   <p>{{ template_form.address_zip.label }}
+   {{ template_form.address_zip() }}</p>  
+   <p>{{ template_form.county_id.label }}
+   {{ template_form.county_id() }}</p>   
+   <p>{{ template_form.phone.label }}
+   {{ template_form.phone() }}</p> 
+   <br>
+   <p>{{ template_form.age.label }}
+   {{ template_form.age() }}</p>
+   <p>{{ template_form.admitted.label }}
+   {{ template_form.admitted() }}</p>
+   <p>{{ template_form.discharged.label }}
+   {{ template_form.discharged() }}</p>
+   <br>
+   <table>
+      <tr><strong>Race* </strong></tr>
+      <tr>
+            {% for btn in template_form.race %}
+            <tr>
+               <td>{{ btn() }}</td>
+               <td>{{ btn.label }}</td>
+            </tr>
+            {% endfor %}
+      </tr>
+   </table>
+   <br>
+   <table>
+      <tr><strong>Gender* </strong></tr>
+      <tr>
+            {% for btn in template_form.gender %}
+            <tr>
+               <td>{{ btn() }}</td>
+               <td>{{ btn.label }}</td>
+            </tr>
+            {% endfor %}
+      </tr>
+   </table>
+   <br>
+   <table>
+      <tr><strong>Health Info </strong></tr>
+      <tr>
+            {% for btn in template_form.health_info %}
+            <tr>
+               <td>{{ btn() }}</td>
+               <td>{{ btn.label }}</td>
+            </tr>
+            {% endfor %}
+      </tr>
+   </table>
+   <br>
+   
+   <p>{{ template_form.submit() }}</p>
+</form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Please Enter Patient ID</h1>
+
+<form action='/patient_locate' method="POST">
+   {{ template_form.hidden_tag() }}
+   <p>{{ template_form.patient_id.label }}
+   {{ template_form.patient_id() }}</p>
+   <p>{{ template_form.submit() }}</p>
+</form>
+<br>
+{% if status == 'not_found' %}
+<h4><span class='text-danger'>Patient ID not found in database.</span></h4>
+{% endif %}
+
+{% endblock %}
