@@ -2,25 +2,46 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 from forms import PatientFormCreate, AddCountyData
 from datetime import datetime
 from database import Database
+from database_abstraction_classes import *
+import os
 
 # Database Configurations
 host = '192.168.64.2'
 mongo_host = '127.0.0.1'
 mongo_port = '20717'
-user = 'tom'
-passwd = 'tom'
-dbname = 'COVID_Database'
+user = 'root'
+passwd = ''
+dbname= 'COVID_Database'
+mongo_con = None
 
 db = Database(host, user, passwd, dbname)
 
+#here we have mongodb conn to covid_db and a sql conn to covid_db.
+DataBaseFactory.mongo_conn = mongo_con
+DataBaseFactory.sql_conn = con
+DataBaseFactory.databaseType = DBTYPE.SQL
+
 app = Flask(__name__)
 app.secret_key = b'helloworld'
+
+
+@app.route('/switch_db')
+def switch_db():
+    if "use_mongo" in session:
+        DataBaseFactory.databaseType = DBTYPE.SQL
+        session.pop('use_mongo',None)
+    else:
+        session['use_mongo'] = True
+        connect_to_mongodb()
+        DataBaseFactory.databaseType = DBTYPE.MongoDB
+    return redirect(url_for('home'))
 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
         session['usr'] = request.form['usr']
+        session['role'] = DataBaseFactory.GetDataBaseObject().getRole(session['usr'])
         flash('Logged in successfully!', 'success')
     return render_template('home.html')
 
@@ -63,28 +84,14 @@ def test():
     strbuilder = ""
     return render_template('test.html')
 
-
 @app.route('/somewhere_else', methods=['POST'])
 def results_page():
     if request.method == 'POST':
         tblname = request.form['tablename']
         sql = "SELECT * FROM " + tblname + ";"
-        res = db.query(sql)
+        # res = db.query(sql)
+        res = DataBaseFactory.GetDataBaseObject().selectAllFromEntity(tblname)
         return render_template('results.html', res=res, name=tblname)
-
-
-@app.route('/switch_db')
-def switch_db():
-    if "use_mongo" in session:
-        session.pop('use_mongo', None)
-    else:
-        session['use_mongo'] = True
-    return redirect(url_for('home'))
-
-
-@app.route('/hooray', methods=['GET', 'POST'])
-def hooray():
-    return render_template('hooray.html')
 
 # ---------------------------------------------------------
 # Patient Routes
@@ -229,3 +236,51 @@ def editCountyData(date, id):
         form.state.choices.append(state[0])
 
     return render_template('edit-county-data.html', form=form, date=date, id=id)
+
+type1 = ""
+status =""
+demographic = ""
+
+@app.route('/chart',methods=['GET','POST'])
+def chart_page():
+    global type1
+    global status
+    global demographic
+    use_old_values = False
+    dataList = None
+    successfulUpdate = None
+    if request.method == 'POST':
+        fieldsToShow = ""
+        if "showFields" in request.form:
+            use_old_values = True
+            fieldsToShow = request.form['showFields']
+            dataList = DataBaseFactory.GetDataBaseObject().selectDataFromSummary(status,fieldsToShow)
+        if "idToUpdate" in request.form:
+            use_old_values = True
+            idtoupdate = request.form['idToUpdate']
+            attr = request.form['attrToUpdate']
+            newVal = request.form['newValue']
+            DataBaseFactory.GetDataBaseObject().updateEntity(idtoupdate,"",attr,newVal)
+        if not use_old_values:
+            status = request.form['cases']
+        chart_data = {}
+        if not use_old_values:
+            demographic = request.form['by']
+        #statuses = mongo_con.cases.find({},{'status':1,'id':0}).distinct('status')
+        demographics = []
+        if not use_old_values:
+            type1 = request.form['type']
+        if "age" in demographic:
+            demographics = [10,20,30,40,50,60,70]
+            for dem in demographics:
+                #DataBaseFactory.GetDataBaseObject().summarizeStatusFromDemographic(st)
+                total = mongo_con.cases.find({"$and":[{'status':status},{'patient_info.' + demographic:dem}]}).count()
+                chart_data[dem] = total
+        else:
+            demographics = mongo_con.cases.find({},{'patient_info.'+demographic:1,'id':0}).distinct('patient_info.' + demographic)
+            for dem in demographics:
+                total = DataBaseFactory.GetDataBaseObject().summarizeStatusFromDemographic(status,demographic,dem)
+                print(total)
+                chart_data[dem] = total
+        return render_template('chart.html',dems=demographics,chart_data=chart_data,type1=type1,status=status,category=demographic,dataList=dataList,successfulUpdate=successfulUpdate)
+    return render_template('chart.html',chart_data=None,type1=type1)

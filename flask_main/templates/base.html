@@ -17,15 +17,14 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <style>
-    button {
-      position: relative;
-      top: 5px;
-      background-color: #FFFFFF;
-      border: 2px solid #6495ED;
-    }
-
-  </style>
+<style>
+button {
+	position: relative;
+	top: 2px;
+	background-color: #FFFFFF;
+	border: 2px solid #6495ED;
+}
+</style>
 </head>
 
 <body>
@@ -46,6 +45,9 @@
         <li class="nav-item active">
           <a class="nav-link" href="{{url_for('viewSchema')}}">View Schema<span class="sr-only"></span></a>
         </li>
+        
+        <!-- Chart -->
+        <li><a href="{{ url_for('chart_page') }}">Chart</a></li>
 
         <!-- Select All Rows-->
         <li class="nav-item active">
@@ -99,7 +101,15 @@
           </div>
         </li>
       </ul>
-      {% endif %}
+      
+      <!-- Change Database Btn! -->
+      <ul class="nav navbar-nav navbar-right">
+	    {% if session['use_mongo'] %}
+        <button onclick="window.location.href='switch_db'">Current Database: MongoDB<br/>Click to Switch!</button>
+	    {% else %}
+		<button onclick="window.location.href='switch_db'">Current Database: SQL<br/>Click to Switch!</button>
+	    {% endif %}
+    </ul>
   </nav>
 
   <!-- Flashed Messages -->
@@ -132,5 +142,4 @@
   {% block content %}
   {% endblock %}
 </body>
-
 </html>
