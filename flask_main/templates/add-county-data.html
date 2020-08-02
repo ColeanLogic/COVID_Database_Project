@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <form action="{{url_for('addCountyData')}}" method="POST">
+        <!-- Date -->
+        <div class="form-group">
+            {{ form.date.label(class="form-control-label") }}
+            {% if form.date.errors %}
+            {{ form.date(class="form-control is-invalid") }}
+            <div class="alert alert-danger">
+                {% for error in form.date.errors%}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.date(class="form-control") }}
+            {% endif %}
+        </div>
+        <!-- Counties -->
+        <div class="form-group">
+            {{ form.county.label(class="form-control-label") }}
+            {% if form.county.errors %}
+            {{ form.county(class="form-control is-invalid") }}
+            <div class="alert alert-danger">
+                {% for error in form.county.errors%}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.county(class="form-control") }}
+            {% endif %}
+        </div>
+        <!-- States -->
+        <div class="form-group">
+            {{ form.state.label(class="form-control-label") }}
+            {% if form.state.errors %}
+            {{ form.state(class="form-control is-invalid") }}
+            <div class="alert alert-danger">
+                {% for error in form.state.errors%}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.state(class="form-control") }}
+            {% endif %}
+        </div>
+        <!-- Cases -->
+        <div class="form-group">
+            {{ form.cases.label(class="form-control-label") }}
+            {% if form.cases.errors %}
+            {{ form.cases(class="form-control is-invalid") }}
+            <div class="alert alert-danger">
+                {% for error in form.cases.errors%}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.cases(class="form-control") }}
+            {% endif %}
+        </div>
+        <!-- Deaths -->
+        <div class="form-group">
+            {{ form.deaths.label(class="form-control-label") }}
+            {% if form.deaths.errors %}
+            {{ form.deaths(class="form-control is-invalid") }}
+            <div class="alert alert-danger">
+                {% for error in form.deaths.errors%}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.deaths(class="form-control") }}
+            {% endif %}
+        </div>
+        <!-- Submit Button -->
+        {{form.submit(class='btn btn-primary')}}
+    </form>
+</div>
+{% endblock %}

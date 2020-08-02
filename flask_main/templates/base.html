@@ -72,8 +72,8 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='county')}}">View Table</a>
-            <a class="dropdown-item disabled" href="#">Add New County</a>
-            <a class="dropdown-item disabled" href="#">Edit County</a>
+            <a class="dropdown-item" href="{{url_for('addCountyData')}}">Add County Data</a>
+            <a class="dropdown-item disabled" href="#">Edit County Data</a>
           </div>
         </li>
 
@@ -85,7 +85,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='hospital')}}">View Table</a>
-            <a class="dropdown-item disabled" href="#">Add New Hospital</a>
+            <a class="dropdown-item disabled" href="#">Add Hospital</a>
             <a class="dropdown-item disabled" href="#">Edit Hospital</a>
           </div>
         </li>
