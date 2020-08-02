@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 from forms import PatientFormCreate, AddCountyData
+from datetime import datetime
 from database import Database
 
 # Database Configurations
@@ -152,7 +153,7 @@ def addCountyData():
         form.state.choices.append(state[0])
 
     # if form is sent back (POST) to the server
-    if form.is_submitted():
+    if form.validate_on_submit():
         # capture data from form
         county_date = form.date.data
         county_name = form.county.data
@@ -163,11 +164,10 @@ def addCountyData():
         # capture county_id from table where county and state
         sql = f"SELECT DISTINCT county_id FROM county WHERE county_name = '{county_name}' and state_name = '{state_name}'"
         county_id = db.query(sql)[0][0]
-        print('id:', county_id)
 
         # insert data to county table
-        sql = f'''INSERT INTO county (county_date, county_name, state_name, county_id, cases, deaths) VALUES ('{county_date}', '{county_name}', '{state_name}', {county_id}, {cases}, {deaths})'''
-        print('Insert Statement:', sql)
+        sql = f'''INSERT INTO county (county_date, county_name, state_name, county_id, cases, deaths)
+                VALUES ('{county_date}', '{county_name}', '{state_name}', {county_id}, {cases}, {deaths})'''
         db.insert(sql)
 
         # redirect user to view county table
@@ -175,3 +175,57 @@ def addCountyData():
         return redirect(url_for('viewTable', table='county'))
 
     return render_template('add-county-data.html', form=form)
+
+
+@app.route('/edit-county-data/<date>/<id>', methods=['GET', 'POST'])
+def editCountyData(date, id):
+    # Initialize form from forms.py
+    form = AddCountyData()
+
+    # get values for this row from the database
+    sql = f'''SELECT * FROM county WHERE county_date = '{date}' and county_id = {id}'''
+    result = db.query(sql)[0]
+    date = result[0]
+    county = result[1]
+    state = result[2]
+    cases = result[4]
+    deaths = result[5]
+
+    # if form is sent back (POST) to the server
+    if form.is_submitted():
+        # capture data from form
+        new_county_date = datetime.strftime(form.date.data, '%Y-%m-%d')
+        new_county_name = form.county.data
+        new_state_name = form.state.data
+        new_cases = form.cases.data
+        new_deaths = form.deaths.data
+
+        # Update values in county table
+        sql = f'''UPDATE county SET county_date = '{new_county_date}', county_name = '{new_county_name}', state_name = '{new_state_name}', cases = {new_cases}, deaths = {new_deaths}
+                WHERE county_date = '{date}' and county_id = {id}'''
+        db.insert(sql)
+
+        # redirect user to view county table
+        flash('Updated Data Successfully', 'success')
+        return redirect(url_for('viewTable', table='county'))
+
+    # populate values to the form
+    form.date.data = datetime.strptime(date, '%Y-%m-%d')
+    form.county.choices.append(county)
+    form.state.choices.append(state)
+    form.cases.data = cases
+    form.deaths.data = deaths
+
+    # populate dropdown with distinct counties
+    sql = '''SELECT DISTINCT county_name FROM county'''
+    counties = db.query(sql)
+    for county in counties:
+        form.county.choices.append(county[0])
+
+    # populate dropdown with distinct states
+    sql = '''SELECT DISTINCT state_name FROM county'''
+    states = db.query(sql)
+    for state in states:
+        form.state.choices.append(state[0])
+
+    return render_template('edit-county-data.html', form=form, date=date, id=id)
