@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<p>Thank you for your interest in the COVID Database!</p>
+<p>Please enter a new username and password.</p>
+<form action="/register" method="POST">
+	<label for="usr">Username</label>
+    <input id="usr" name="usr">
+	<br>
+	<label for="pass">Password</label>
+    <input id="pass" name="pass" type="password">
+    <br>
+    <label for="role">User Role</label>
+	<select id="role" name="role">
+        <option value=""></option>
+        <option value="media">Associated Press</option>
+        <option value="doctor">Doctor</option>
+        <option value="government">Government Official</option>
+        <option value="hospital_admin">Hospital Administrator</option>
+        <option value="admin">System Admin</option>
+    </select>
+	<br>
+	<input type="submit" value="Submit">
+</form>
+{% endblock %}

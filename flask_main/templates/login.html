@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<p>Login or Register</p>
-<form action="/" method="POST">
+<p>Please enter your username and password.</p>
+<form action="/login" method="POST">
 	<label for="usr">Username</label>
-    <input id="tbname" name="usr">
+    <input id="usr" name="usr">
 	<br>
 	<label for="pass">Password</label>
-	<input id="tbname" name="pass" type="password">
+	<input id="pass" name="pass" type="password">
 	<br>
 	<input type="submit" value="Submit">
 </form>
