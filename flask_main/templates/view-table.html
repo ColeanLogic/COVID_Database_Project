@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <legend style="padding: 10px;">View Table: {{table}}</legend>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th></th>
+                            {% for attribute in header %}
+                            <th>{{attribute[0]}}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in body %}
+                        <tr>
+                            <!-- Edit Button-->
+                            {% if table == 'county' %}
+                            <td><a href="{{url_for('editCountyData', date=row[0], id=row[3])}}">Edit</a></td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
+
+                            {% for data in row %}
+                            <td>{{data}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

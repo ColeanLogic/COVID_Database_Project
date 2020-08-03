@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, RadioField, DecimalField
+from wtforms import StringField, SubmitField, TextAreaField, RadioField, DecimalField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Optional
 from wtforms.fields.html5 import DateField
 
 class PatientForm(FlaskForm):
+
     patient_id = StringField('Patient ID* ', validators=[DataRequired()])
     name = StringField('Patient Name* ', validators=[DataRequired()])
     address_street = StringField('Street Address ')
@@ -99,4 +100,14 @@ class CaseForm(FlaskForm):
 
 class CaseLocateForm(FlaskForm):
     case_id = DecimalField('Case ID ', places=0, validators=[DataRequired()])
+
+
+class AddCountyData(FlaskForm):
+    date = DateField('Date ', format='%Y-%m-%d',
+                     validators=[DataRequired()])
+    county = SelectField("County", validators=[
+        DataRequired()], choices=[])
+    state = SelectField("State", validators=[DataRequired()], choices=[])
+    cases = IntegerField("Cases", validators=[DataRequired()])
+    deaths = IntegerField("Deaths", validators=[DataRequired()])
     submit = SubmitField('Submit')

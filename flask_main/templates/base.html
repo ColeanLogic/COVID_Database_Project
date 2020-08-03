@@ -1,52 +1,150 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <title>COVID DATABASE</title>
+  <!-- Required meta tags -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap 4.5 (latest) CSS & JQuery -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <style>
+    button {
+      position: relative;
+      top: 2px;
+      background-color: #FFFFFF;
+      border: 2px solid #6495ED;
+    }
+
+  </style>
 </head>
+
 <body>
-  
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">COVID DATABASE</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">COVID Database</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        {% if not session['usr'] %}
+        <li class="nav-item active">
+          <a class="nav-link" href="{{url_for('login')}}">Login</a></li>
+        {% else %}
+        <!-- Schema -->
+        <li class="nav-item active">
+          <a class="nav-link" href="{{url_for('viewSchema')}}">View Schema<span class="sr-only"></span></a>
+        </li>
+
+        <!-- Chart -->
+        <li><a href="{{ url_for('chart_page') }}">Chart</a></li>
+
+        <!-- Select All Rows-->
+        <li class="nav-item active">
+          <a class="nav-link" href="{{url_for('test')}}">Select All Rows</a></li>
+
+        <!-- Patient Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Patient
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{url_for('viewTable', table='patient')}}">View Table</a>
+            <a class="dropdown-item" href="{{url_for('patient_create')}}">Add Patient</a>
+          </div>
+        </li>
+
+        <!-- County Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            County
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{url_for('viewTable', table='county')}}">View Table</a>
+            <a class="dropdown-item" href="{{url_for('addCountyData')}}">Add County Data</a>
+          </div>
+        </li>
+
+        <!-- Hospital Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Hospital
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{url_for('viewTable', table='hospital')}}">View Table</a>
+            <a class="dropdown-item disabled" href="#">Add Hospital</a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- User Dropdown -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false" style="color:black;"> Welcome, {{ session['usr'] }}!
+          </a>
+          <div class=" dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+            <a class="dropdown-item" href="{{ url_for('logout') }}">Sign out</a>
+          </div>
+        </li>
+      </ul>
+
+      {% endif %}
+
+      <!-- Change Database Btn! -->
+      <ul class="nav navbar-nav navbar-right">
+        {% if session['use_mongo'] %}
+        <button onclick="window.location.href='switch_db'">Current Database: MongoDB<br />Click to Switch!</button>
+        {% else %}
+        <button onclick="window.location.href='switch_db'">Current Database: SQL<br />Click to Switch!</button>
+        {% endif %}
+      </ul>
+  </nav>
+
+  <!-- Flashed Messages -->
+  <div class="container" id="content">
+    {% with messages= get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'message' %}
+    <div class="text-center alert alert-danger mt-3" id="flashed">
+      {{ message }}
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-	  {% if not session['usr'] %}
-      <li><a href="login">Login</a></li>
-	  {% else %}
-      <li><a href="test">Select All Rows</a></li>
-      <li>
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
-          Patient
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="patient_create">Create</a>
-          <a class="dropdown-item" href="patient_locate">Update</a>
-          <a class="dropdown-item" href="patient_view">View</a>
-        </div>
-      </li>
-      <li>
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">
-          Case
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="case_create">Create</a>
-          <a class="dropdown-item" href="case_locate">Update</a>
-          <a class="dropdown-item" href="case_view">View</a>
-        </div>
-      </li>
-      <li><a href="#">Other</a></li>
-	  {% endif %}
-    </ul>
+    {% else %}
+    <div class=" text-center alert alert-{{category}} mt-3" id="flashed">
+      {{ message }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <!-- End code for flashed messages -->
+    {% block container %}
+    {% endblock %}
   </div>
-</nav>
-{% block content %}
-{% endblock %}
+  <script>
+    // This clears all flashed messages after 3 seconds
+    $('#flashed').delay(3000).fadeOut('slow');
+  </script>
+  <!-- End Flashed Messages -->
+
+  {% block content %}
+  {% endblock %}
 </body>
-</html> 
+
+</html>
+>>>>>>> 911b522992644d4afb472252286afe2b94cac72b
