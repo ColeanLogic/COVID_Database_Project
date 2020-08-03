@@ -292,3 +292,51 @@ def chart_page():
                 chart_data[dem] = total
         return render_template('chart.html', dems=demographics, chart_data=chart_data, type1=type1, status=status, category=demographic, dataList=dataList, successfulUpdate=successfulUpdate)
     return render_template('chart.html', chart_data=None, type1=type1)
+
+
+# ---------------------------------------------------------
+# Hopital Table Routes (Add Hospital Data)
+# ---------------------------------------------------------
+
+
+# @app.route('/hospital)create', methods=['GET', 'POST'])
+# def addHospitalData():
+#     # Initialize form from forms.py
+#     form = AddCountyData()
+
+#     # populate dropdown with distinct counties
+#     sql = '''SELECT DISTINCT county_name FROM county'''
+#     counties = db.query(sql)
+#     for county in counties:
+#         form.county.choices.append(county[0])
+
+#     # populate dropdown with distinct states
+#     sql = '''SELECT DISTINCT state_name FROM county'''
+#     states = db.query(sql)
+#     for state in states:
+#         form.state.choices.append(state[0])
+
+#     # if form is sent back (POST) to the server
+#     if form.validate_on_submit():
+#         # capture data from form
+#         county_date = form.date.data
+#         county_name = form.county.data
+#         state_name = form.state.data
+#         cases = form.cases.data
+#         deaths = form.deaths.data
+
+#         # capture county_id from table where county and state
+#         sql = f"SELECT DISTINCT county_id FROM county WHERE county_name = '{county_name}' and state_name = '{state_name}'"
+#         county_id = db.query(sql)[0][0]
+
+#         # insert data to county table
+#         sql = f'''INSERT INTO county (county_date, county_name, state_name, county_id, cases, deaths)
+#                 VALUES ('{county_date}', '{county_name}', '{state_name}', {county_id}, {cases}, {deaths})'''
+#         db.insert(sql)
+
+#         # redirect user to view county table
+#         flash('Inserted Data Successfully', 'success')
+#         return redirect(url_for('viewTable', table='county'))
+
+#     return render_template('add-county-data.html', form=form)
+

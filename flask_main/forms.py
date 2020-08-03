@@ -52,3 +52,10 @@ class AddCountyData(FlaskForm):
     cases = IntegerField("Cases", validators=[DataRequired()])
     deaths = IntegerField("Deaths", validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class HospitalFormCreate(FlaskForm):
+    hospital_id = StringField('Hospital ID* ', validators=[DataRequired()])
+    name = StringField('Patient Name* ', validators=[DataRequired()])
+    county_id = StringField('County ID* ')
+    submit = SubmitField('Submit')
