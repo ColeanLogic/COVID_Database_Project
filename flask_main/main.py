@@ -302,19 +302,7 @@ def chart_page():
 @app.route('/hospital_create', methods=['GET', 'POST'])
 def addHospitalData():
     # Initialize form from forms.py
-    form = AddHospitalData()
-
-    # populate dropdown with distinct counties
-    sql = '''SELECT DISTINCT county_name FROM county'''
-    counties = db.query(sql)
-    for county in counties:
-        form.county.choices.append(county[0])
-
-    # populate dropdown with distinct states
-    sql = '''SELECT DISTINCT state_name FROM county'''
-    states = db.query(sql)
-    for state in states:
-        form.state.choices.append(state[0])
+    form = HospitalFormCreate()
 
     # if form is sent back (POST) to the server
     if form.validate_on_submit():
@@ -324,12 +312,11 @@ def addHospitalData():
         county_id = form.county_id.data
         
         # insert data to county table
-        sql = f'''INSERT INTO hospital (hospital_id, name, county_id) VALUES ("{new_hospital_id}","{new_name}","{new_county_id}");'''
+        sql = f'''INSERT INTO hospital (hospital_id, name, county_id) VALUES ("{hospital_id}","{name}","{county_id}");'''
         db.insert(sql)
 
         # redirect user to view county table
         flash('Hospital Data Successfully', 'success')
-        return redirect(url_for('viewTable', table='hospital'))
+        return redirect(url_for('addHospitalData', table='hospital'))
 
-    return render_template('add-county-data.html', form=form)
-
+    return render_template('hospital_create.html', form=form)

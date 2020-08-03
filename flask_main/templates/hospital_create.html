@@ -9,7 +9,7 @@
         <div class="form-group">
             {{ form.hospital_id.label(class="form-control-label") }}
             {% if form.hospital_id.errors %}
-            {{ form.county(class="form-control is-invalid") }}
+            {{ form.hospital_id(class="form-control is-invalid") }}
             <div class="alert alert-danger">
                 {% for error in form.hospital_id.errors%}
                 <span>{{ error }}</span>
@@ -47,5 +47,6 @@
             {{ form.county_id(class="form-control") }}
             {% endif %}
         </div>
+    </form>
 </div>
 {% endblock %}
