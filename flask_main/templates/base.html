@@ -24,7 +24,6 @@
       background-color: #FFFFFF;
       border: 2px solid #6495ED;
     }
-
   </style>
 </head>
 
@@ -48,11 +47,9 @@
         </li>
 
         <!-- Chart -->
-        <li><a href="{{ url_for('chart_page') }}">Chart</a></li>
-
-        <!-- Select All Rows-->
         <li class="nav-item active">
-          <a class="nav-link" href="{{url_for('test')}}">Select All Rows</a></li>
+          <a class="nav-link" href="{{url_for('chart_page')}}">Chart<span class="sr-only"></span></a>
+        </li>
 
         <!-- Patient Dropdown -->
         <li class="nav-item dropdown">
@@ -63,6 +60,8 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='patient')}}">View Table</a>
             <a class="dropdown-item" href="{{url_for('patient_create')}}">Add Patient</a>
+            <a class="dropdown-item" href="{{url_for('patient_locate')}}">Update Patient</a>
+            <a class="dropdown-item" href="{{url_for('patient_view')}}">Search</a>
           </div>
         </li>
 
@@ -89,7 +88,22 @@
             <a class="dropdown-item disabled" href="#">Add Hospital</a>
           </div>
         </li>
+      
+        <!-- Case Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Case
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{url_for('viewTable', table='case_no')}}">View Table</a>
+            <a class="dropdown-item" href="{{url_for('case_create')}}">Add Case</a>
+            <a class="dropdown-item" href="{{url_for('case_locate')}}">Update Case</a>
+          </div>
+        </li>
       </ul>
+
+      
 
       <!-- User Dropdown -->
       <ul class="navbar-nav ml-auto">
@@ -147,4 +161,4 @@
 </body>
 
 </html>
->>>>>>> 911b522992644d4afb472252286afe2b94cac72b
+

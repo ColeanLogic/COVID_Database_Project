@@ -1,71 +1,81 @@
 {% extends "base.html" %}
 {% block content %}
+<div class="container">
+   <legend style="padding: 5px;">Make Your Changes Below</legend>
 
-<h1>Make your changes below:</h1>
+   <form action='/patient_update' method="POST">
+      <!-- Hidden Field adds CSRF protection to form -->
+      {{ template_form.hidden_tag() }}
+      <!-- Form Fields -->
+      <div class="form-group">
+         <p>{{ template_form.patient_id.label(class="form-control-label") }}
+            {{ template_form.patient_id(class="form-control") }}</p>
+         <p>{{ template_form.name.label(class="form-control-label") }}
+         {{ template_form.name(class="form-control") }}</p>
+         <p>{{ template_form.address_street.label(class="form-control-label") }}
+         {{ template_form.address_street(class="form-control") }}</p>
+         <p>{{ template_form.address_city.label(class="form-control-label") }}
+         {{ template_form.address_city(class="form-control") }}</p>
+         <p>{{ template_form.address_state.label(class="form-control-label") }}
+         {{ template_form.address_state(class="form-control") }}</p>
+         <p>{{ template_form.address_zip.label(class="form-control-label") }}
+         {{ template_form.address_zip(class="form-control") }}</p>  
+         <p>{{ template_form.county_id.label(class="form-control-label") }}
+         {{ template_form.county_id(class="form-control") }}</p>   
+         <p>{{ template_form.phone.label(class="form-control-label") }}
+         {{ template_form.phone(class="form-control") }}</p> 
+         <br>
+      </div>
+      <div class="form-group">
+         <p>{{ template_form.age.label(class="form-control-label") }}
+         {{ template_form.age(class="form-control") }}</p>
+         <p>{{ template_form.admitted.label(class="form-control-label") }}
+         {{ template_form.admitted(class="form-control") }}</p>
+         <p>{{ template_form.discharged.label(class="form-control-label") }}
+         {{ template_form.discharged(class="form-control") }}</p>
+         <br>
+      </div>
+      <div class="form-group">
+         <table>
+            <tr><strong>Race* </strong></tr>
+            <tr>
+                  {% for btn in template_form.race %}
+                  <tr>
+                     <td>{{ btn() }}</td>
+                     <td>{{ btn.label }}</td>
+                  </tr>
+                  {% endfor %}
+            </tr>
+         </table>
+         <br>
+         <table>
+            <tr><strong>Gender* </strong></tr>
+            <tr>
+                  {% for btn in template_form.gender %}
+                  <tr>
+                     <td>{{ btn() }}</td>
+                     <td>{{ btn.label }}</td>
+                  </tr>
+                  {% endfor %}
+            </tr>
+         </table>
+         <br>
+         <table>
+            <tr><strong>Health Info </strong></tr>
+            <tr>
+                  {% for btn in template_form.health_info %}
+                  <tr>
+                     <td>{{ btn() }}</td>
+                     <td>{{ btn.label }}</td>
+                  </tr>
+                  {% endfor %}
+            </tr>
+         </table>
+         <br>
+         
+         <p>{{ template_form.submit() }}</p>
+      </div>
+   </form>
+</div>
 
-<form action='/patient_update' method="POST">
-   {{ template_form.hidden_tag() }}
-   <p>{{ template_form.patient_id.label }}
-   {{ template_form.patient_id() }}</p>
-   <p>{{ template_form.name.label }}
-   {{ template_form.name() }}</p>
-   <p>{{ template_form.address_street.label }}
-   {{ template_form.address_street() }}</p>
-   <p>{{ template_form.address_city.label }}
-   {{ template_form.address_city() }}</p>
-   <p>{{ template_form.address_state.label }}
-   {{ template_form.address_state() }}</p>
-   <p>{{ template_form.address_zip.label }}
-   {{ template_form.address_zip() }}</p>  
-   <p>{{ template_form.county_id.label }}
-   {{ template_form.county_id() }}</p>   
-   <p>{{ template_form.phone.label }}
-   {{ template_form.phone() }}</p> 
-   <br>
-   <p>{{ template_form.age.label }}
-   {{ template_form.age() }}</p>
-   <p>{{ template_form.admitted.label }}
-   {{ template_form.admitted() }}</p>
-   <p>{{ template_form.discharged.label }}
-   {{ template_form.discharged() }}</p>
-   <br>
-   <table>
-      <tr><strong>Race* </strong></tr>
-      <tr>
-            {% for btn in template_form.race %}
-            <tr>
-               <td>{{ btn() }}</td>
-               <td>{{ btn.label }}</td>
-            </tr>
-            {% endfor %}
-      </tr>
-   </table>
-   <br>
-   <table>
-      <tr><strong>Gender* </strong></tr>
-      <tr>
-            {% for btn in template_form.gender %}
-            <tr>
-               <td>{{ btn() }}</td>
-               <td>{{ btn.label }}</td>
-            </tr>
-            {% endfor %}
-      </tr>
-   </table>
-   <br>
-   <table>
-      <tr><strong>Health Info </strong></tr>
-      <tr>
-            {% for btn in template_form.health_info %}
-            <tr>
-               <td>{{ btn() }}</td>
-               <td>{{ btn.label }}</td>
-            </tr>
-            {% endfor %}
-      </tr>
-   </table>
-   <br>
-   
-   <p>{{ template_form.submit() }}</p>
-</form>
 {% endblock %}

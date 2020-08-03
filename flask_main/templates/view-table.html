@@ -23,6 +23,11 @@
                             {% else %}
                             <td></td>
                             {% endif %}
+                            {% if table == 'patient' %}
+                            <td><a href="{{url_for('editPatientData', id=row[0])}}">Edit</a></td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
 
                             {% for data in row %}
                             <td>{{data}}</td>

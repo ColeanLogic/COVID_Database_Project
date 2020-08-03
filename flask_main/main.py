@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from forms import PatientFormCreate, AddCountyData, PatientLocateForm, PatientSearchForm, CaseForm, CaseLocateForm
+from forms import AddCountyData, PatientLocateForm, PatientSearchForm, CaseForm, CaseLocateForm, PatientForm, PatientEditForm
 from datetime import datetime
 from database_class import Database
 from database_abstraction_classes import *
@@ -73,6 +73,26 @@ def viewTable(table):
 
     return render_template('view-table.html', header=header, body=body, table=table)
 
+####TODO
+
+@app.route('/view-table-filter/<table>/<qry>', methods=['GET'])
+def viewTableFilter(qry, table):
+    # Retrieve Table Body
+    body = db.query(qry)
+    
+    # Retrieve Table Header
+    sql = f'''SHOW COLUMNS FROM {table} '''
+    header = db.query(sql)
+
+    return render_template('view-table.html', header=header, body=body, table=table)
+
+
+
+
+#### TODO Delete this ####
+@app.route('/hooray', methods=['GET', 'POST'])
+def hooray():
+    return render_template('hooray.html')
 
 @app.route('/view-schema', methods=['GET'])
 def viewSchema():
@@ -104,46 +124,31 @@ def patient_create():
     patient_form_create = PatientForm()
     if patient_form_create.validate_on_submit():
         form_data = patient_form_create.data 
-        qry = "INSERT INTO patient (patient_id, name, address_street, address_city, address_state, address_zip, county_id, phone, age, admitted, discharged, race, gender, health_info) VALUES ("       
-        numeric_data = ('patient_id', 'county_id', 'age')
-        for key, value in form_data.items():
-            if key != 'submit' and key != 'csrf_token':    
-                if value == None:
-                    if key == 'admitted' or key == 'discharged':
-                        qry = qry + f"NULL, "
-                    else:
-                        qry = qry + f"'NULL', "
-                else:
-                    if key in numeric_data:
-                        qry = qry + f"{value}, "
-                    else:
-                        qry = qry + f"'{value}', "
-            else:
-                continue
-        qry = qry[:-2]
-        qry = qry + ")"
-        csr = con.cursor()
-        csr.execute(qry)
+        qry = db.patient_insert_sql(form_data)
+        db.insert(qry)
+        flash('New patient record created', 'success')
         return redirect(f'/patient_created/{patient_form_create.patient_id.data}.html')
     return render_template('patient_create.html', template_form = patient_form_create)
 
 @app.route('/patient_created/<new_patient_id>', methods=['GET', 'POST'])
 def patient_created(new_patient_id):
     sql = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
-    res = db.query(sql)
-    return render_template('patient_created.html', res=res)
+    table = 'patient'
+    # res = db.query(sql) 
+    # return render_template('patient_created.html', res=res)
+    return redirect(f'/view-table-filter/{table}/{sql}')
 
 @app.route('/patient_locate', methods=['GET', 'POST'])
 @app.route('/patient_locate/<status>', methods=['GET', 'POST'])
 def patient_locate(status=""):
-    global con
     patient_locate_form = PatientLocateForm()
     if patient_locate_form.validate_on_submit():
         patient_id = patient_locate_form.patient_id.data
         qry = f"SELECT * FROM patient WHERE patient_id = '{patient_id}'"
-        res = return_query(qry)
+        res = db.query(qry)
         if (res):
             patient_form_update = PatientForm()
+            patient_form_update.patient_id.data = res[0][0]
             patient_form_update.name.data = res[0][1]
             patient_form_update.phone.data = res[0][2]
             patient_form_update.admitted.data = res[0][3]
@@ -165,36 +170,65 @@ def patient_locate(status=""):
 
 @app.route('/patient_update', methods=['GET', 'POST'])
 def patient_update():    
+    # Initialize form from forms.py
     patient_form_update = PatientForm()
+
     if patient_form_update.validate_on_submit():
         form_data = patient_form_update.data
-        qry = "UPDATE patient SET "         
-        numeric_data = ('patient_id', 'county_id', 'age')
-        for key, value in form_data.items():
-            if key != 'submit' and key != 'csrf_token' and key != 'patient_id':    
-                if value == None:
-                    if key == 'admitted' or key == 'discharged':
-                        qry = qry + f"{key} = NULL, "
-                    else:
-                        qry = qry + f"{key} = 'NULL', "
-                else:
-                    if key in numeric_data:
-                        qry = qry + f"{key} = {value}, "
-                    else:
-                        qry = qry + f"{key} = '{value}', "
-            else:
-                continue
-        qry = qry[:-2]
-        qry = qry + f" WHERE patient_id = {form_data['patient_id']};"
-        csr = con.cursor()
-        csr.execute(qry)
+        qry = db.patient_update_sql(form_data)
+        db.insert(qry)
         return redirect(f'/patient_updated/{patient_form_update.patient_id.data}.html')
     return render_template('patient_update.html', template_form = patient_form_update)
+
+##### TODO - pre-populated form doesn't fill in radio button values ####
+
+@app.route('/edit-patient-data/<id>', methods=['GET', 'POST'])
+def editPatientData(id):
+    # Initialize form from forms.py
+    patient_form_update = PatientForm()
+
+    # get values for this row from the database
+    sql = f"SELECT * FROM patient WHERE patient_id = '{id}'"
+    res = db.query(sql)
+
+    # if form is sent back (POST) to the server
+    if patient_form_update.validate_on_submit():
+        # capture data from form
+        form_data = patient_form_update.data
+        # build SQL query in update table
+        qry = db.patient_update_sql(form_data)
+        # update table with new data
+        try:
+            db.insert(qry)
+        except:
+            flash('Not able to update patient record', 'warning')
+            return render_template(f'edit-patient-data.html', template_form = patient_form_update, id=id)
+        # redirect user to patient updated page
+        return redirect(f'/patient_updated/{patient_form_update.patient_id.data}.html')
+
+    # populate values to the form
+    patient_form_update.patient_id.data = res[0][0]
+    patient_form_update.name.data = res[0][1]
+    patient_form_update.phone.data = res[0][2]
+    patient_form_update.admitted.data = res[0][3]
+    patient_form_update.discharged.data = res[0][4]
+    patient_form_update.county_id.data = res[0][5]
+    patient_form_update.health_info.data = res[0][6]
+    patient_form_update.age.data = res[0][7]
+    patient_form_update.race.data = res[0][8]
+    patient_form_update.gender.data = res[0][9]
+    patient_form_update.address_street.data = res[0][10]
+    patient_form_update.address_city.data = res[0][11]
+    patient_form_update.address_state.data = res[0][12]
+    patient_form_update.address_zip.data = res[0][13]
+
+    return render_template('edit-patient-data.html', template_form=patient_form_update, id=id)
+
 
 @app.route('/patient_updated/<new_patient_id>', methods=['GET', 'POST'])
 def patient_updated(new_patient_id):
     qry = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
-    res = return_query(qry)
+    res = db.query(qry)
     return render_template('patient_updated.html', res=res)
 
 @app.route('/patient_view', methods=['GET', 'POST'])
@@ -203,24 +237,15 @@ def patient_view():
     if patient_form_view.validate_on_submit():
         form_data = patient_form_view.data
         if len(form_data) > 2:
-            qry = "SELECT * FROM patient WHERE "
-            numeric_data = ('patient_id', 'county_id', 'age')
-            for key, value in form_data.items():
-                if key != 'submit' and key != 'csrf_token':    
-                    if value :
-                        if key in numeric_data:
-                            qry = qry + f"{key} = {value} AND "
-                        else:
-                            qry = qry + f"{key} = '{value}' AND "
-                else:
-                    continue
-            qry = qry[:-4]
-            qry = qry + ";"
-            res = return_query(qry)
+            qry = db.patient_search_sql(form_data)
+            res = db.query(qry)
             return render_template('/patient_view_results.html', res=res)     
     return render_template('patient_view.html', template_form = patient_form_view)
 
-# Case routes
+# ---------------------------------------------------------
+# Case Routes
+# ---------------------------------------------------------
+
 @app.route('/case_create', methods=['GET', 'POST'])
 def case_create():
     global db
@@ -243,7 +268,6 @@ def case_created(new_case_id):
 @app.route('/case_locate', methods=['GET', 'POST'])
 @app.route('/case_locate/<status>', methods=['GET', 'POST'])
 def case_locate(status = ""):
-    global db
     case_locate_form = CaseLocateForm()
     if case_locate_form.validate_on_submit():
         case_id = case_locate_form.case_id.data
