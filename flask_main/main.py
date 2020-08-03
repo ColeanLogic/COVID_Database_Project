@@ -1,16 +1,16 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from forms import PatientFormCreate, AddCountyData
+from forms import PatientFormCreate, AddCountyData, HospitalFormCreate
 from datetime import datetime
 from database import Database
 from database_abstraction_classes import *
 import os
 
 # Database Configurations
-host = '192.168.64.2'
+host = 'localhost'
 mongo_host = '127.0.0.1'
 mongo_port = '20717'
-user = 'tom'
-passwd = 'tom'
+user = 'root'
+passwd = ''
 dbname = 'COVID_Database'
 mongo_con = None
 
@@ -292,3 +292,31 @@ def chart_page():
                 chart_data[dem] = total
         return render_template('chart.html', dems=demographics, chart_data=chart_data, type1=type1, status=status, category=demographic, dataList=dataList, successfulUpdate=successfulUpdate)
     return render_template('chart.html', chart_data=None, type1=type1)
+
+
+# ---------------------------------------------------------
+# Hopital Table Routes (Add Hospital Data)
+# ---------------------------------------------------------
+
+
+@app.route('/hospital_create', methods=['GET', 'POST'])
+def addHospitalData():
+    # Initialize form from forms.py
+    form = HospitalFormCreate()
+
+    # if form is sent back (POST) to the server
+    if form.validate_on_submit():
+        # capture data from form
+        hospital_id = form.hospital_id.data
+        name = form.name.data
+        county_id = form.county_id.data
+        
+        # insert data to county table
+        sql = f'''INSERT INTO hospital (hospital_id, name, county_id) VALUES ("{hospital_id}","{name}","{county_id}");'''
+        db.insert(sql)
+
+        # redirect user to view county table
+        flash('Hospital Data Successfully', 'success')
+        return redirect(url_for('addHospitalData', table='hospital'))
+
+    return render_template('hospital_create.html', form=form)
