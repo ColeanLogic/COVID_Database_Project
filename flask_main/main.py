@@ -3,10 +3,10 @@ import mysql.connector
 import pdb
 import os
 import sys
-# from forms import PatientFormCreate
-# from flask_wtf import FlaskForm
-# from wtforms import StringField, SubmitField, TextAreaField, RadioField
-# from wtforms.validators import DataRequired
+from forms import PatientFormCreate, HospitalFormCreate
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, TextAreaField, RadioField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__)
 app.secret_key = b'helloworld'
@@ -208,3 +208,17 @@ def patient_create():
         csr.execute(qry)
         return redirect(f'/patient_created/{new_patient_id}.html')
     return render_template('patient_create.html', template_form=patient_form_create)
+
+@app.route('/hospital_create', methods=['GET', 'POST'])
+def hospital_create():
+    global con
+    hospital_form_create = HospitalFormCreate()
+    if hospital_form_create.validate_on_submit():
+        new_hospital_id = hospital_form_create.hospital_id.data
+        new_name = hospital_form_create.name.data
+        new_county_id = hospital_form_create.county_id.data
+        qry = f'''INSERT INTO hospital (hospital_id, name, county_id) VALUES ("{new_hospital_id}","{new_name}","{new_county_id}");'''
+        csr = con.cursor()
+        csr.execute(qry)
+        return redirect(f'/hospital_created.html')
+    return render_template('hospital_create.html', template_form=hospital_form_create)
