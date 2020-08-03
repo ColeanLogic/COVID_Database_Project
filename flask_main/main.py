@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from forms import PatientFormCreate, AddCountyData
+from forms import PatientFormCreate, AddCountyData, HospitalFormCreate
 from datetime import datetime
 from database import Database
 from database_abstraction_classes import *
@@ -299,44 +299,37 @@ def chart_page():
 # ---------------------------------------------------------
 
 
-# @app.route('/hospital)create', methods=['GET', 'POST'])
-# def addHospitalData():
-#     # Initialize form from forms.py
-#     form = AddCountyData()
+@app.route('/hospital_create', methods=['GET', 'POST'])
+def addHospitalData():
+    # Initialize form from forms.py
+    form = AddHospitalData()
 
-#     # populate dropdown with distinct counties
-#     sql = '''SELECT DISTINCT county_name FROM county'''
-#     counties = db.query(sql)
-#     for county in counties:
-#         form.county.choices.append(county[0])
+    # populate dropdown with distinct counties
+    sql = '''SELECT DISTINCT county_name FROM county'''
+    counties = db.query(sql)
+    for county in counties:
+        form.county.choices.append(county[0])
 
-#     # populate dropdown with distinct states
-#     sql = '''SELECT DISTINCT state_name FROM county'''
-#     states = db.query(sql)
-#     for state in states:
-#         form.state.choices.append(state[0])
+    # populate dropdown with distinct states
+    sql = '''SELECT DISTINCT state_name FROM county'''
+    states = db.query(sql)
+    for state in states:
+        form.state.choices.append(state[0])
 
-#     # if form is sent back (POST) to the server
-#     if form.validate_on_submit():
-#         # capture data from form
-#         county_date = form.date.data
-#         county_name = form.county.data
-#         state_name = form.state.data
-#         cases = form.cases.data
-#         deaths = form.deaths.data
+    # if form is sent back (POST) to the server
+    if form.validate_on_submit():
+        # capture data from form
+        hospital_id = form.hospital_id.data
+        name = form.name.data
+        county_id = form.county_id.data
+        
+        # insert data to county table
+        sql = f'''INSERT INTO hospital (hospital_id, name, county_id) VALUES ("{new_hospital_id}","{new_name}","{new_county_id}");'''
+        db.insert(sql)
 
-#         # capture county_id from table where county and state
-#         sql = f"SELECT DISTINCT county_id FROM county WHERE county_name = '{county_name}' and state_name = '{state_name}'"
-#         county_id = db.query(sql)[0][0]
+        # redirect user to view county table
+        flash('Hospital Data Successfully', 'success')
+        return redirect(url_for('viewTable', table='hospital'))
 
-#         # insert data to county table
-#         sql = f'''INSERT INTO county (county_date, county_name, state_name, county_id, cases, deaths)
-#                 VALUES ('{county_date}', '{county_name}', '{state_name}', {county_id}, {cases}, {deaths})'''
-#         db.insert(sql)
-
-#         # redirect user to view county table
-#         flash('Inserted Data Successfully', 'success')
-#         return redirect(url_for('viewTable', table='county'))
-
-#     return render_template('add-county-data.html', form=form)
+    return render_template('add-county-data.html', form=form)
 

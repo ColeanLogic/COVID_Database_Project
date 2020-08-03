@@ -1,17 +1,51 @@
 {% extends "base.html" %}
 {% block content %}
-
-<h1>Create New Hospital Record</h1>
-
-<form action='/hospital_create' method="POST">
-   {{ template_form.hidden_tag() }}
-   <p>{{ template_form.hospital_id.label }}
-   {{ template_form.hospital_id() }}</p>
-   <p>{{ template_form.name.label }}
-   {{ template_form.name() }}</p>
-   <p>{{ template_form.county_id.label }}
-   {{ template_form.county_id() }}</p>
-   <br>
-   <p>{{ template_form.submit() }}</p>
-</form>
+<div class="container">
+    <legend style="padding: 5px;">Add Hospital Data</legend>
+    <form action="{{url_for('addHospitalData')}}" method="POST">
+        <!-- Hidden Field adds CSRF protection to form -->
+        {{ form.hidden_tag() }}
+        <!-- Hospital ID -->
+        <div class="form-group">
+            {{ form.hospital_id.label(class="form-control-label") }}
+            {% if form.hospital_id.errors %}
+            {{ form.county(class="form-control is-invalid") }}
+            <div class="alert alert-danger">
+                {% for error in form.hospital_id.errors%}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.hospital_id(class="form-control") }}
+            {% endif %}
+        </div>
+        <!-- Hospital Name -->
+        <div class="form-group">
+            {{ form.name.label(class="form-control-label") }}
+            {% if form.name.errors %}
+            {{ form.name(class="form-control is-invalid") }}
+            <div class="alert alert-danger">
+                {% for error in form.name.errors%}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.name(class="form-control") }}
+            {% endif %}
+        </div>
+        <!-- County ID -->
+        <div class="form-group">
+            {{ form.county_id.label(class="form-control-label") }}
+            {% if form.county_id.errors %}
+            {{ form.county_id(class="form-control is-invalid") }}
+            <div class="alert alert-danger">
+                {% for error in form.county_id.errors%}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.county_id(class="form-control") }}
+            {% endif %}
+        </div>
+</div>
 {% endblock %}
