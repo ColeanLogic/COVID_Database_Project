@@ -4,6 +4,7 @@ from datetime import datetime
 from database import Database
 from database_abstraction_classes import *
 import os
+import sys
 
 # Database Configurations
 host = 'localhost'
@@ -39,16 +40,27 @@ def switch_db():
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    if request.method == 'POST':
-        session['usr'] = request.form['usr']
-        session['role'] = DataBaseFactory.GetDataBaseObject().getRole(
-            session['usr'])
-        flash('Logged in successfully!', 'success')
     return render_template('home.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    
+    if request.method == "POST":
+        username = request.form ['usr']
+        password = request.form ['pass']
+        userRecord = DataBaseFactory.GetDataBaseObject().getUserRecords(username)
+
+        if len(userRecord) == 0:
+            flash('Invalid username!', 'warning')
+        elif userRecord[0][1] != password:
+            flash('Invalid password!', 'warning')
+        else:
+            session['usr'] = userRecord[0][0]
+            session['role'] = userRecord[0][2]
+            flash(f'''Logged in successfully! Your role is {session['role']}''', 'success')
+            return redirect(url_for('home'))
+    
     return render_template('login.html')
 
 
