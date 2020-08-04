@@ -74,11 +74,16 @@ def viewTable(table):
     return render_template('view-table.html', header=header, body=body, table=table)
 
 
-@app.route('/view-table-filter/<table>/<qry>', methods=['GET'])
-def viewTableFilter(qry, table):
+@app.route('/view-table-filter/<table>', methods=['GET'])
+def viewTableFilter(table):
     # Retrieve Table Body
-    body = db.query(qry)
-    
+    qry = session['qry']
+    try:
+        body = db.query(qry)
+        print(body)
+    except:
+        flash('No records found', 'danger')
+        return redirect(url_for('viewTable', table=table))
     # Retrieve Table Header
     sql = f'''SHOW COLUMNS FROM {table} '''
     header = db.query(sql)
@@ -112,11 +117,6 @@ def results_page():
 # ---------------------------------------------------------
 
 
-####TODO####
-# Doesn't fill in values for radio fields from the database, has something to do with capitalization
-# in the form template I think.
-
-
 @app.route('/patient_create', methods=['GET', 'POST'])
 def patient_create():
     patient_form_create = PatientForm()
@@ -138,9 +138,10 @@ def patient_created(new_patient_id):
 
 @app.route('/patient_updated/<new_patient_id>', methods=['GET', 'POST'])
 def patient_updated(new_patient_id):
-    sql = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
+    session['qry'] = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
     table = 'patient'
-    return redirect(f'/view-table-filter/{table}/{sql}')
+    flash('Patient record updated', 'success')
+    return redirect(f'/view-table-filter/{table}')
 
 
 @app.route('/edit-patient-data/<id>', methods=['GET', 'POST'])
@@ -194,18 +195,14 @@ def patient_view():
         if len(form_data) > 2:
             sql = db.patient_search_sql(form_data)
             table = 'patient'
-            return redirect(f'/view-table-filter/{table}/{sql}')     
+            session['qry'] = sql
+            return redirect(url_for('viewTableFilter', table=table))
     return render_template('patient_view.html', template_form = patient_form_view)
 
 
 # ---------------------------------------------------------
 # Case Routes
 # ---------------------------------------------------------
-
-
-####TODO####
-# Doesn't update values in the database when you use the edit buttons
-# also doesn't fill in radio field values, same as patient
 
 
 @app.route('/case_create', methods=['GET', 'POST'])
@@ -224,10 +221,10 @@ def case_create():
 def case_created(new_case_id):
     global db
     form_data = {'case_id': f'{new_case_id}'}
-    qry = db.case_select_sql(form_data)
+    session['qry'] = db.case_select_sql(form_data)
     table = 'case_no'
     flash('New Case Created', 'success')
-    return redirect(f'/view-table-filter/{table}/{qry}')
+    return redirect(f'/view-table-filter/{table}')
 
 
 @app.route('/edit-case-data/<id>', methods=['GET', 'POST'])
@@ -267,10 +264,10 @@ def editCaseData(id):
 
 @app.route('/case_updated/<new_case_id>', methods=['GET', 'POST'])
 def case_updated(new_case_id):
-    sql = f'''SELECT * FROM case_no WHERE case_id = "{new_case_id}"'''
+    session['qry'] = f'''SELECT * FROM case_no WHERE case_id = "{new_case_id}"'''
     table = 'case_no'
     flash('Case Record Updated', 'success')
-    return redirect(f'/view-table-filter/{table}/{sql}')
+    return redirect(f'/view-table-filter/{table}')
 
 
 @app.route('/case_view', methods=['GET', 'POST'])
@@ -279,9 +276,9 @@ def case_view():
     if case_form_view.validate_on_submit():
         form_data = case_form_view.data
         if len(form_data) > 2:
-            sql = db.case_search_sql(form_data)
+            session['qry'] = db.case_search_sql(form_data)
             table = 'case_no'
-            return redirect(f'/view-table-filter/{table}/{sql}')     
+            return redirect(f'/view-table-filter/{table}')     
     return render_template('case_view.html', template_form = case_form_view)
 
 

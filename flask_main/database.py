@@ -163,7 +163,7 @@ class Database():
         qry = "UPDATE case_no SET "         
         numeric_data = ('case_id', 'patient_id', 'county_id', 'hospital_id')
         for key, value in form_data.items():
-            if key != 'submit' and key != 'csrf_token' and key != 'case_id':    
+            if key != 'submit' and key != 'csrf_token':    
                 if value == None:
                     if key == 'admitted' or key == 'discharged':
                         qry = qry + f"{key} = NULL, "
@@ -177,7 +177,7 @@ class Database():
             else:
                 continue
         qry = qry[:-2]
-        qry = qry + f" WHERE case_id = {form_data['patient_id']};"
+        qry = qry + f" WHERE case_id = {form_data['case_id']};"
         return qry
     
 

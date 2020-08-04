@@ -131,7 +131,7 @@ class CaseForm(FlaskForm):
     county_id = DecimalField('County ID* ', places=0, validators=[DataRequired()])
     hospital_id = DecimalField('Hospital ID* ', places=0, validators=[DataRequired()])
     status = RadioField("Status ", choices=[
-        ("in hopsital","In Hopsital"),
+        ("in hospital ","In Hospital"),
         ("at home","At Home"),
         ("recovered","Recovered"),
         ("deceased","Deceased")], validators=[Optional()])
@@ -145,7 +145,7 @@ class CaseEditForm(FlaskForm):
     county_id = DecimalField('County ID* ', places=0, validators=[Optional()])
     hospital_id = DecimalField('Hospital ID* ', places=0, validators=[Optional()])
     status = RadioField("Status ", choices=[
-        ("in hopsital","In Hopsital"),
+        ("in hospital ","In Hospital"),
         ("at home","At Home"),
         ("recovered","Recovered"),
         ("deceased","Deceased")], validators=[Optional()])
