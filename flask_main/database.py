@@ -37,7 +37,7 @@ class Database():
         for i in path_table:
             county_path = os.path.join(os.getcwd(), '..', i[0]+'.csv')
             county_path = county_path.replace(r"/mnt/c", r"C:")
-            if(i[1] is not 'patient'):
+            if(i[1] != 'patient'):
                 load_data_query = "LOAD DATA INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' IGNORE 1 LINES;".format(
                     county_path, i[1])
             else:
