@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from forms import AddCountyData, PatientLocateForm, PatientSearchForm, patient_form_create, HospitalFormCreate, CaseForm, CaseLocateForm, PatientForm, PatientEditForm, CaseEditForm
+from forms import AddCountyData, PatientLocateForm, PatientSearchForm, HospitalFormCreate, CaseForm, CaseLocateForm, PatientForm, PatientEditForm, CaseEditForm, registrationForm
 from datetime import datetime
 from database import Database
 from database_abstraction_classes import *
@@ -33,7 +33,7 @@ def switch_db():
         session.pop('use_mongo', None)
     else:
         session['use_mongo'] = True
-        connect_to_mongodb()
+        db.connect_to_mongodb()
         DataBaseFactory.databaseType = DBTYPE.MongoDB
     return redirect(url_for('home'))
 
@@ -41,6 +41,24 @@ def switch_db():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     return render_template('home.html')
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = registrationForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        role = form.role.data
+        sql = f"INSERT INTO login VALUES ('{username}', '{password}', '{role}')"
+        db.insert(sql)
+        flash(f"Created user {username} successfully!")
+        session['usr'] = username
+        session['role'] = role
+        return redirect(url_for('home'))
+
+    return render_template('registration.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
