@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-   <legend style="padding: 5px;">Create New Case Record</legend>
+   <legend style="padding: 5px;">Make Your Changes Below</legend>
 
-   <form action='/case_create' method="POST">
+   <form action="{{url_for('editCaseData', id=id)}}" method="POST">
       <!-- Hidden Field adds CSRF protection to form -->
       {{ template_form.hidden_tag() }}
       <!-- Form Fields -->

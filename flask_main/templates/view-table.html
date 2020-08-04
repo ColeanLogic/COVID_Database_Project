@@ -9,6 +9,8 @@
                     <thead class="thead-light">
                         <tr>
                             <th></th>
+                            <th></th>
+                            <th></th>
                             {% for attribute in header %}
                             <th>{{attribute[0]}}</th>
                             {% endfor %}
@@ -28,7 +30,11 @@
                             {% else %}
                             <td></td>
                             {% endif %}
-
+                            {% if table == 'case_no' %}
+                            <td><a href="{{url_for('editCaseData', id=row[0])}}">Edit</a></td>
+                            {% else %}
+                            <td></td>
+                            {% endif %}
                             {% for data in row %}
                             <td>{{data}}</td>
                             {% endfor %}

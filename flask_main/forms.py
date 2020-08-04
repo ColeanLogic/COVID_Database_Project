@@ -3,8 +3,8 @@ from wtforms import StringField, SubmitField, TextAreaField, RadioField, Decimal
 from wtforms.validators import DataRequired, Optional
 from wtforms.fields.html5 import DateField
 
-class PatientForm(FlaskForm):
 
+class PatientForm(FlaskForm):
     patient_id = StringField('Patient ID* ', validators=[DataRequired()])
     name = StringField('Patient Name* ', validators=[DataRequired()])
     address_street = StringField('Street Address ')
@@ -41,6 +41,7 @@ class PatientForm(FlaskForm):
         ("Travel","Travel")        
         ], validators=[Optional()])
     submit = SubmitField('Submit')
+
 
 class PatientLocateForm(FlaskForm):
     patient_id = StringField('Patient ID* ', validators=[DataRequired()])
@@ -85,8 +86,8 @@ class PatientSearchForm(FlaskForm):
         ], validators=[Optional()])
     submit = SubmitField('Submit')
 
-class PatientEditForm(FlaskForm):
 
+class PatientEditForm(FlaskForm):
     name = StringField('Patient Name* ', validators=[DataRequired()])
     address_street = StringField('Street Address ')
     address_city = StringField('City ', validators=[Optional()])
@@ -123,6 +124,7 @@ class PatientEditForm(FlaskForm):
         ], validators=[Optional()])
     submit = SubmitField('Submit')
 
+
 class CaseForm(FlaskForm):
     case_id = DecimalField('Case ID* ', places=0, validators=[DataRequired()])
     patient_id = DecimalField('Patient ID* ', places=0, validators=[DataRequired()])
@@ -135,6 +137,21 @@ class CaseForm(FlaskForm):
         ("Deceased","Deceased")], validators=[Optional()])
     hospital_name = StringField('Hospital Name ', validators=[Optional()])
     submit = SubmitField('Submit')
+
+
+class CaseEditForm(FlaskForm):
+    case_id = DecimalField('Case ID* ', places=0, validators=[Optional()])
+    patient_id = DecimalField('Patient ID* ', places=0, validators=[Optional()])
+    county_id = DecimalField('County ID* ', places=0, validators=[Optional()])
+    hospital_id = DecimalField('Hospital ID* ', places=0, validators=[Optional()])
+    status = RadioField("Status ", choices=[
+        ("In Hopsital","In Hopsital"),
+        ("At Home","At Home"),
+        ("Recovered","Recovered"),
+        ("Deceased","Deceased")], validators=[Optional()])
+    hospital_name = StringField('Hospital Name ', validators=[Optional()])
+    submit = SubmitField('Submit')
+
 
 class CaseLocateForm(FlaskForm):
     case_id = DecimalField('Case ID ', places=0, validators=[DataRequired()])

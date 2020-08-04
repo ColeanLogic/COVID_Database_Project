@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 import mysql.connector
 import os
-
+from forms import CaseForm
 
 class Database():
     def __init__(self, host, user, passwd, dbname):
@@ -71,6 +71,155 @@ class Database():
         csr.execute(query)
         result = csr.fetchall()
         return result
+
+# ---------------------------------------------------------
+# Methods to build and return SQL queries
+# ---------------------------------------------------------
+
+    # Takes a dictionary of form data and returns an SQL insert statement for the patient table
+    def patient_insert_sql(self, form_data):
+        qry = "INSERT INTO patient (patient_id, name, address_street, address_city, address_state, address_zip, county_id, phone, age, admitted, discharged, race, gender, health_info) VALUES ("       
+        numeric_data = ('patient_id', 'county_id', 'age')
+        for key, value in form_data.items():
+            if key != 'submit' and key != 'csrf_token':    
+                if value == None:
+                    if key == 'admitted' or key == 'discharged':
+                        qry = qry + f"NULL, "
+                    else:
+                        qry = qry + f"'NULL', "
+                else:
+                    if key in numeric_data:
+                        qry = qry + f"{value}, "
+                    else:
+                        qry = qry + f"'{value}', "
+            else:
+                continue
+        qry = qry[:-2]
+        qry = qry + ")"
+        return qry
+    
+    # Takes a dictionary of form data and returns an SQL update statement for the patient table
+    def patient_update_sql(self, form_data):
+        qry = "UPDATE patient SET "         
+        numeric_data = ('patient_id', 'county_id', 'age')
+        for key, value in form_data.items():
+            if key != 'submit' and key != 'csrf_token' and key != 'patient_id':    
+                if value == None:
+                    if key == 'admitted' or key == 'discharged':
+                        qry = qry + f"{key} = NULL, "
+                    else:
+                        qry = qry + f"{key} = 'NULL', "
+                else:
+                    if key in numeric_data:
+                        qry = qry + f"{key} = {value}, "
+                    else:
+                        qry = qry + f"{key} = '{value}', "
+            else:
+                continue
+        qry = qry[:-2]
+        qry = qry + f" WHERE patient_id = {form_data['patient_id']};"
+        return qry
+    
+    # Takes a dictionary of form data and returns an SQL select statement to search the patient table
+    def patient_search_sql(self, form_data):           
+        qry = "SELECT * FROM patient WHERE "
+        numeric_data = ('patient_id', 'county_id', 'age')
+        for key, value in form_data.items():
+            if key != 'submit' and key != 'csrf_token':    
+                if value :
+                    if key in numeric_data:
+                        qry = qry + f"{key} = {value} AND "
+                    else:
+                        qry = qry + f"{key} = '{value}' AND "
+            else:
+                continue
+        qry = qry[:-4]
+        qry = qry + ";"
+        return qry
+
+    
+    # Takes a dictionary of form data and returns an SQL insert statement for the case_no table
+    def case_insert_sql(self, form_data):
+        qry = "INSERT INTO case_no (case_id, patient_id, county_id, hospital_id, status, hospital_name) VALUES ("       
+        numeric_data = ('case_id', 'patient_id', 'county_id', 'hospital_id')
+        for key, value in form_data.items():
+            if key != 'submit' and key != 'csrf_token':    
+                if value == None:
+                    qry = qry + "'NULL', "
+                else:
+                    if key in numeric_data:
+                        qry = qry + f"{value}, "
+                    else:
+                        qry = qry + f"'{value}', "
+            else:
+                continue
+        qry = qry[:-2]
+        qry = qry + ")"
+        return qry
+
+
+     # Takes a dictionary of form data and returns an SQL update statement for the case table
+    def case_update_sql(self, form_data):
+        qry = "UPDATE case_no SET "         
+        numeric_data = ('case_id', 'patient_id', 'county_id', 'hospital_id')
+        for key, value in form_data.items():
+            if key != 'submit' and key != 'csrf_token' and key != 'case_id':    
+                if value == None:
+                    if key == 'admitted' or key == 'discharged':
+                        qry = qry + f"{key} = NULL, "
+                    else:
+                        qry = qry + f"{key} = 'NULL', "
+                else:
+                    if key in numeric_data:
+                        qry = qry + f"{key} = {value}, "
+                    else:
+                        qry = qry + f"{key} = '{value}', "
+            else:
+                continue
+        qry = qry[:-2]
+        qry = qry + f" WHERE case_id = {form_data['patient_id']};"
+        return qry
+    
+
+    # Takes a dictionary of form data and returns an SQL select statement for the case_no table
+    def case_select_sql(self, form_data):
+        qry = "SELECT * FROM case_no WHERE "
+        numeric_data = ('case_id', 'patient_id', 'county_id', 'hospital_id')
+        for key, value in form_data.items():
+            if key != 'submit' and key != 'csrf_token':    
+                if value :
+                    if key in numeric_data:
+                        qry = qry + f"{key} = {value} AND "
+                    else:
+                        qry = qry + f"{key} = '{value}' AND "
+            else:
+                continue
+        qry = qry[:-4]
+        qry = qry + ";"
+        return qry
+
+
+# Takes a dictionary of form data and returns an SQL select statement to search the case table
+    def case_search_sql(self, form_data):           
+        qry = "SELECT * FROM case_no WHERE "
+        numeric_data = ('case_id', 'patient_id', 'county_id', 'hospital_id')
+        for key, value in form_data.items():
+            if key != 'submit' and key != 'csrf_token':    
+                if value :
+                    if key in numeric_data:
+                        qry = qry + f"{key} = {value} AND "
+                    else:
+                        qry = qry + f"{key} = '{value}' AND "
+            else:
+                continue
+        qry = qry[:-4]
+        qry = qry + ";"
+        return qry
+
+
+# ---------------------------------------------------------
+# MongoDB
+# ---------------------------------------------------------
 
     def connect_to_mongodb(self):
         # MongoClient("mongodb://" + mongo_host+':'+mongo_port)
