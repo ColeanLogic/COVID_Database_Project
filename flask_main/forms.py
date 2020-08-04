@@ -17,28 +17,28 @@ class PatientForm(FlaskForm):
     admitted = DateField('Date Admitted ', format='%Y-%m-%d', validators=[Optional()])
     discharged = DateField('Date Discharged ', format='%Y-%m-%d', validators=[Optional()])
     race = RadioField("Race/Ethnicity", choices=[
-        ("Caucasian", "Caucasian"), 
-        ("African American/Black","African American/Black"), 
-        ("Hispanic/Latinx","Hispanic/Latinx"),
-        ("Middle Eastern","Middle Eastern"),
-        ("American Indian/Alaskan","American Indian/Alaskan"),
-        ("Asian/Southeast Asian","Asian/Southeast Asian"),
-        ("Multiracial/Other","Multiracial/Other"),
-        ("No Answer","I prefer not to answer")
+        ("caucasian", "Caucasian"), 
+        ("african american/black","African American/Black"), 
+        ("hispanic/latinx","Hispanic/Latinx"),
+        ("middle eastern","Middle Eastern"),
+        ("american indian/alaskan","American Indian/Alaskan"),
+        ("asian/southeast asian","Asian/Southeast Asian"),
+        ("multiracial/other","Multiracial/Other"),
+        ("no answer","I prefer not to answer")
         ], validators=[DataRequired()])
     gender = RadioField("Gender", choices=[
-        ("Female", "Female"), 
-        ("Male","Male"), 
-        ("Other","Other")
+        ("female", "Female"), 
+        ("male","Male"), 
+        ("other","Other")
         ], validators=[DataRequired()])
     health_info = RadioField("Health Info", choices=[
-        ("Diabetes","Diabetes"),
-        ("Obesity","Obesity"),
-        ("Asthma","Asthma"),
-        ("Heart Disease","Heart Disease"),
-        ("Smoking","Smoking"),
-        ("Alcoholism","Alcoholism"),
-        ("Travel","Travel")        
+        ("diabetes","Diabetes"),
+        ("obesity","Obesity"),
+        ("asthma","Asthma"),
+        ("heart disease","Heart Disease"),
+        ("smoking","Smoking"),
+        ("alcoholism","Alcoholism"),
+        ("travel","Travel")        
         ], validators=[Optional()])
     submit = SubmitField('Submit')
 
@@ -61,28 +61,28 @@ class PatientSearchForm(FlaskForm):
     admitted = DateField('Date Admitted ', format='%Y-%m-%d', validators=[Optional()])
     discharged = DateField('Date Discharged ', format='%Y-%m-%d', validators=[Optional()])
     race = RadioField("Race/Ethnicity", choices=[
-        ("Caucasian", "Caucasian"), 
-        ("African American/Black","African American/Black"), 
-        ("Hispanic/Latinx","Hispanic/Latinx"),
-        ("Middle Eastern","Middle Eastern"),
-        ("American Indian/Alaskan","American Indian/Alaskan"),
-        ("Asian/Southeast Asian","Asian/Southeast Asian"),
-        ("Multiracial/Other","Multiracial/Other"),
-        ("No Answer","I prefer not to answer")
+        ("caucasian", "Caucasian"), 
+        ("african american/black","African American/Black"), 
+        ("hispanic/latinx","Hispanic/Latinx"),
+        ("middle eastern","Middle Eastern"),
+        ("american indian/alaskan","American Indian/Alaskan"),
+        ("asian/southeast asian","Asian/Southeast Asian"),
+        ("multiracial/other","Multiracial/Other"),
+        ("no answer","I prefer not to answer")
         ], validators=[Optional()])
     gender = RadioField("Gender", choices=[
-        ("Female", "Female"), 
-        ("Male","Male"), 
-        ("Other","Other")
+        ("female", "Female"), 
+        ("male","Male"), 
+        ("other","Other")
         ], validators=[Optional()])
     health_info = RadioField("Health Info", choices=[
-        ("Diabetes","Diabetes"),
-        ("Obesity","Obesity"),
-        ("Asthma","Asthma"),
-        ("Heart Disease","Heart Disease"),
-        ("Smoking","Smoking"),
-        ("Alcoholism","Alcoholism"),
-        ("Travel","Travel")        
+        ("diabetes","Diabetes"),
+        ("obesity","Obesity"),
+        ("asthma","Asthma"),
+        ("heart disease","Heart Disease"),
+        ("smoking","Smoking"),
+        ("alcoholism","Alcoholism"),
+        ("travel","Travel")        
         ], validators=[Optional()])
     submit = SubmitField('Submit')
 
@@ -99,28 +99,28 @@ class PatientEditForm(FlaskForm):
     admitted = DateField('Date Admitted ', format='%Y-%m-%d', validators=[Optional()])
     discharged = DateField('Date Discharged ', format='%Y-%m-%d', validators=[Optional()])
     race = RadioField("Race/Ethnicity", choices=[
-        ("Caucasian", "Caucasian"), 
-        ("African American/Black","African American/Black"), 
-        ("Hispanic/Latinx","Hispanic/Latinx"),
-        ("Middle Eastern","Middle Eastern"),
-        ("American Indian/Alaskan","American Indian/Alaskan"),
-        ("Asian/Southeast Asian","Asian/Southeast Asian"),
-        ("Multiracial/Other","Multiracial/Other"),
-        ("No Answer","I prefer not to answer")
+        ("caucasian", "Caucasian"), 
+        ("african american/black","African American/Black"), 
+        ("hispanic/latinx","Hispanic/Latinx"),
+        ("middle eastern","Middle Eastern"),
+        ("american indian/alaskan","American Indian/Alaskan"),
+        ("asian/southeast asian","Asian/Southeast Asian"),
+        ("multiracial/other","Multiracial/Other"),
+        ("no answer","I prefer not to answer")
         ], validators=[DataRequired()])
     gender = RadioField("Gender", choices=[
-        ("Female", "Female"), 
-        ("Male","Male"), 
-        ("Other","Other")
+        ("female", "female"), 
+        ("male","Male"), 
+        ("other","Other")
         ], validators=[DataRequired()])
     health_info = RadioField("Health Info", choices=[
-        ("Diabetes","Diabetes"),
-        ("Obesity","Obesity"),
-        ("Asthma","Asthma"),
-        ("Heart Disease","Heart Disease"),
-        ("Smoking","Smoking"),
-        ("Alcoholism","Alcoholism"),
-        ("Travel","Travel")        
+        ("diabetes","Diabetes"),
+        ("obesity","Obesity"),
+        ("asthma","Asthma"),
+        ("heart disease","Heart Disease"),
+        ("smoking","Smoking"),
+        ("alcoholism","Alcoholism"),
+        ("travel","Travel")        
         ], validators=[Optional()])
     submit = SubmitField('Submit')
 
@@ -131,10 +131,10 @@ class CaseForm(FlaskForm):
     county_id = DecimalField('County ID* ', places=0, validators=[DataRequired()])
     hospital_id = DecimalField('Hospital ID* ', places=0, validators=[DataRequired()])
     status = RadioField("Status ", choices=[
-        ("In Hopsital","In Hopsital"),
-        ("At Home","At Home"),
-        ("Recovered","Recovered"),
-        ("Deceased","Deceased")], validators=[Optional()])
+        ("in hopsital","In Hopsital"),
+        ("at home","At Home"),
+        ("recovered","Recovered"),
+        ("deceased","Deceased")], validators=[Optional()])
     hospital_name = StringField('Hospital Name ', validators=[Optional()])
     submit = SubmitField('Submit')
 
@@ -145,10 +145,10 @@ class CaseEditForm(FlaskForm):
     county_id = DecimalField('County ID* ', places=0, validators=[Optional()])
     hospital_id = DecimalField('Hospital ID* ', places=0, validators=[Optional()])
     status = RadioField("Status ", choices=[
-        ("In Hopsital","In Hopsital"),
-        ("At Home","At Home"),
-        ("Recovered","Recovered"),
-        ("Deceased","Deceased")], validators=[Optional()])
+        ("in hopsital","In Hopsital"),
+        ("at home","At Home"),
+        ("recovered","Recovered"),
+        ("deceased","Deceased")], validators=[Optional()])
     hospital_name = StringField('Hospital Name ', validators=[Optional()])
     submit = SubmitField('Submit')
 
