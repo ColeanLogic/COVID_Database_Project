@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from forms import AddCountyData, PatientLocateForm, PatientSearchForm, HospitalFormCreate, CaseForm, CaseLocateForm, PatientForm, PatientEditForm, CaseEditForm
+from forms import AddCountyData, PatientLocateForm, PatientSearchForm, patient_form_create, HospitalFormCreate, CaseForm, CaseLocateForm, PatientForm, PatientEditForm, CaseEditForm
 from datetime import datetime
 from database import Database
 from database_abstraction_classes import *
@@ -7,12 +7,11 @@ import os
 import sys
 
 # Database Configurations
-host = 'localhost'
+host = '192.168.64.2'
 mongo_host = '127.0.0.1'
 mongo_port = '20717'
-
-user = 'root'
-passwd = ''
+user = 'tom'
+passwd = 'tom'
 dbname = 'COVID_Database'
 mongo_con = None
 
@@ -25,6 +24,7 @@ DataBaseFactory.databaseType = DBTYPE.SQL
 
 app = Flask(__name__)
 app.secret_key = b'helloworld'
+
 
 @app.route('/switch_db')
 def switch_db():
@@ -45,10 +45,10 @@ def home():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    
+
     if request.method == "POST":
-        username = request.form ['usr']
-        password = request.form ['pass']
+        username = request.form['usr']
+        password = request.form['pass']
         userRecord = DataBaseFactory.GetDataBaseObject().getUserRecords(username)
 
         if len(userRecord) == 0:
@@ -58,9 +58,10 @@ def login():
         else:
             session['usr'] = userRecord[0][0]
             session['role'] = userRecord[0][2]
-            flash(f'''Logged in successfully! Your role is {session['role']}''', 'success')
+            flash(
+                f'''Logged in successfully! Your role is {session['role']}''', 'success')
             return redirect(url_for('home'))
-    
+
     return render_template('login.html')
 
 
@@ -134,12 +135,12 @@ def results_page():
 def patient_create():
     patient_form_create = PatientForm()
     if patient_form_create.validate_on_submit():
-        form_data = patient_form_create.data 
+        form_data = patient_form_create.data
         qry = db.patient_insert_sql(form_data)
         db.insert(qry)
         flash('New patient record created', 'success')
         return redirect(f'/patient_created/{patient_form_create.patient_id.data}.html')
-    return render_template('patient_create.html', template_form = patient_form_create)
+    return render_template('patient_create.html', template_form=patient_form_create)
 
 
 @app.route('/patient_created/<new_patient_id>', methods=['GET', 'POST'])
@@ -174,10 +175,10 @@ def editPatientData(id):
         qry = db.patient_update_sql(form_data)
         # update table with new data
         try:
-            db.insert(qry)    
+            db.insert(qry)
         except:
             flash('Not able to update patient record', 'warning')
-            return render_template(f'edit-patient-data.html', template_form = patient_form_update, id=id)
+            return render_template(f'edit-patient-data.html', template_form=patient_form_update, id=id)
         # redirect user to patient updated page
         return redirect(f'/patient_updated/{patient_form_update.patient_id.data}.html')
 
@@ -210,7 +211,7 @@ def patient_view():
             table = 'patient'
             session['qry'] = sql
             return redirect(url_for('viewTableFilter', table=table))
-    return render_template('patient_view.html', template_form = patient_form_view)
+    return render_template('patient_view.html', template_form=patient_form_view)
 
 
 # ---------------------------------------------------------
@@ -223,11 +224,11 @@ def case_create():
     global db
     case_form_create = CaseForm()
     if case_form_create.validate_on_submit():
-        form_data = case_form_create.data 
+        form_data = case_form_create.data
         qry = db.case_insert_sql(form_data)
         db.insert(qry)
         return redirect(f'/case_created/{case_form_create.case_id.data}')
-    return render_template('case_create.html', template_form = case_form_create)
+    return render_template('case_create.html', template_form=case_form_create)
 
 
 @app.route('/case_created/<new_case_id>', methods=['GET', 'POST'])
@@ -257,10 +258,10 @@ def editCaseData(id):
         qry = db.case_update_sql(form_data)
         # update table with new data
         try:
-            db.insert(qry)    
+            db.insert(qry)
         except:
             flash('Not able to update case record', 'warning')
-            return render_template(f'edit-case-data.html', template_form = case_form_update, id=id)
+            return render_template(f'edit-case-data.html', template_form=case_form_update, id=id)
         # redirect user to patient updated page
         return redirect(f'/case_updated/{case_form_update.case_id.data}')
 
@@ -271,7 +272,7 @@ def editCaseData(id):
     case_form_update.hospital_id.data = res[0][3]
     case_form_update.status.data = res[0][4]
     case_form_update.hospital_name.data = res[0][5]
-    
+
     return render_template('edit-case-data.html', template_form=case_form_update, id=id)
 
 
@@ -291,8 +292,8 @@ def case_view():
         if len(form_data) > 2:
             session['qry'] = db.case_search_sql(form_data)
             table = 'case_no'
-            return redirect(f'/view-table-filter/{table}')     
-    return render_template('case_view.html', template_form = case_form_view)
+            return redirect(f'/view-table-filter/{table}')
+    return render_template('case_view.html', template_form=case_form_view)
 
 
 # ---------------------------------------------------------
@@ -466,7 +467,7 @@ def addHospitalData():
         hospital_id = form.hospital_id.data
         name = form.name.data
         county_id = form.county_id.data
-        
+
         # insert data to county table
         sql = f'''INSERT INTO hospital (hospital_id, name, county_id) VALUES ("{hospital_id}","{name}","{county_id}");'''
         db.insert(sql)
@@ -476,4 +477,3 @@ def addHospitalData():
         return redirect(url_for('addHospitalData', table='hospital'))
 
     return render_template('hospital_create.html', form=form)
-
