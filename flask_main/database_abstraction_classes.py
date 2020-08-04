@@ -135,6 +135,11 @@ class SQLDataBase(DataBaseAbstraction):
         csr.execute("select role from login where username='"+ username +"';")
         return csr.fetchall()[0]
     
+    def getUserRecords(self, username):
+        csr = self.conn.cursor()
+        csr.execute("SELECT * FROM login WHERE username='" + username +"';")
+        return csr.fetchall()
+    
     
 class DataBaseFactory():
     databaseType = None
