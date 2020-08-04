@@ -97,11 +97,16 @@ def viewTable(table):
     sql = f'''SELECT * FROM {table}'''
     if table == 'county':
         sql = '''SELECT * FROM county ORDER BY county_date DESC LIMIT 1000'''
+    elif table == 'patient' and session['role'] not in ['doctor', 'hospital_admin']:
+        sql = sql.replace(
+            '*', 'patient_id, admitted, discharged, county_id, health_info, age, race, gender')
     body = db.query(sql)
 
     # Retrieve Table Header
-    sql = f'''SHOW COLUMNS FROM {table} '''
+    sql = f'''SHOW COLUMNS FROM {table}'''
     header = db.query(sql)
+    if table == 'patient' and session['role'] not in ['doctor', 'hospital_admin']:
+        del header[1:7]
 
     return render_template('view-table.html', header=header, body=body, table=table)
 
@@ -110,15 +115,17 @@ def viewTable(table):
 def viewTableFilter(table):
     # Retrieve Table Body
     qry = session['qry']
+
     try:
         body = db.query(qry)
-        print(body)
     except:
         flash('No records found', 'danger')
         return redirect(url_for('viewTable', table=table))
     # Retrieve Table Header
     sql = f'''SHOW COLUMNS FROM {table} '''
     header = db.query(sql)
+    if session['role'] not in ['doctor', 'hospital_admin']:
+        del header[1:7]
 
     return render_template('view-table.html', header=header, body=body, table=table)
 
@@ -225,7 +232,7 @@ def patient_view():
     if patient_form_view.validate_on_submit():
         form_data = patient_form_view.data
         if len(form_data) > 2:
-            sql = db.patient_search_sql(form_data)
+            sql = db.patient_search_sql(form_data, role=session['role'])
             table = 'patient'
             session['qry'] = sql
             return redirect(url_for('viewTableFilter', table=table))
@@ -463,7 +470,6 @@ def chart_page():
             for dem in demographics:
                 total = DataBaseFactory.GetDataBaseObject(
                 ).summarizeStatusFromDemographic(status, demographic, dem)
-                print(total)
                 chart_data[dem] = total
         return render_template('chart.html', dems=demographics, chart_data=chart_data, type1=type1, status=status, category=demographic, dataList=dataList, successfulUpdate=successfulUpdate)
     return render_template('chart.html', chart_data=None, type1=type1)
