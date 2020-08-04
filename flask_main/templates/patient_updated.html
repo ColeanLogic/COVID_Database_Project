@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3>New patient record created: </h3>
+<h3>Patient Record Updated: </h3>
 <!-- Display new record -->
 <ul>
     {% for i in res %}
@@ -13,6 +13,6 @@
     {% endfor %}
 </ul>
 <br>
-<a href="/patient_create"><h4>Create another patient record</h4></a>
+<a href="/patient_update"><h4>Update another patient record</h4></a>
 
 {% endblock %}

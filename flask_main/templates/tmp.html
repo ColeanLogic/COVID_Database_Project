@@ -1,0 +1,40 @@
+
+
+
+
+ 
+{% if res %}
+<h3>Congratulations, you created a new patient record.</h3>
+
+{% endif %}
+</form>
+
+
+new_name = patient_form_create.name.data
+        qry = qry + f"'{new_name}''"
+        new_address_street = patient_form_create.address_street.data
+        if new_address_street == None:
+            qry = qry + f"'NULL'"
+        else:
+            qry = qry + f"'{new_address_street}''"
+        new_address_city = patient_form_create.address_city.data
+        if new_address_street == None:
+            qry = qry + f"'NULL'"
+        else:
+            qry = qry + f"'{new_address_street}''"
+        
+        
+        new_address_state = patient_form_create.address_state.data
+        new_address_zip = patient_form_create.address_zip.data
+        new_county_id = patient_form_create.county_id.data
+        new_phone = patient_form_create.phone.data
+        new_age = patient_form_create.age.data
+        new_race = patient_form_create.race.data
+        new_gender = patient_form_create.gender.data
+        new_health_info = patient_form_create.health_info.data
+        new_admitted = patient_form_create.admitted.data
+        new_discharged = patient_form_create.discharged.data
+        qry = f'''INSERT INTO patient (patient_id, name, address_street, address_city, address_state, address_zip, county_id, phone, age, race, gender, health_info, admitted, discharged) VALUES ('''
+
+        new_patient_id = patient_form_create.patient_id.data
+        qry = qry + f"{new_patient_id}"

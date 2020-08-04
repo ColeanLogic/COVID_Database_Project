@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from forms import PatientFormCreate, AddCountyData, HospitalFormCreate
+from forms import AddCountyData, PatientLocateForm, PatientSearchForm, HospitalFormCreate, CaseForm, CaseLocateForm, PatientForm, PatientEditForm, CaseEditForm
 from datetime import datetime
 from database import Database
 from database_abstraction_classes import *
@@ -10,6 +10,7 @@ import sys
 host = 'localhost'
 mongo_host = '127.0.0.1'
 mongo_port = '20717'
+
 user = 'root'
 passwd = ''
 dbname = 'COVID_Database'
@@ -24,7 +25,6 @@ DataBaseFactory.databaseType = DBTYPE.SQL
 
 app = Flask(__name__)
 app.secret_key = b'helloworld'
-
 
 @app.route('/switch_db')
 def switch_db():
@@ -87,6 +87,23 @@ def viewTable(table):
     return render_template('view-table.html', header=header, body=body, table=table)
 
 
+@app.route('/view-table-filter/<table>', methods=['GET'])
+def viewTableFilter(table):
+    # Retrieve Table Body
+    qry = session['qry']
+    try:
+        body = db.query(qry)
+        print(body)
+    except:
+        flash('No records found', 'danger')
+        return redirect(url_for('viewTable', table=table))
+    # Retrieve Table Header
+    sql = f'''SHOW COLUMNS FROM {table} '''
+    header = db.query(sql)
+
+    return render_template('view-table.html', header=header, body=body, table=table)
+
+
 @app.route('/view-schema', methods=['GET'])
 def viewSchema():
     return render_template('view-schema.html')
@@ -107,49 +124,176 @@ def results_page():
         res = DataBaseFactory.GetDataBaseObject().selectAllFromEntity(tblname)
         return render_template('results.html', res=res, name=tblname)
 
+
 # ---------------------------------------------------------
 # Patient Routes
 # ---------------------------------------------------------
 
 
+@app.route('/patient_create', methods=['GET', 'POST'])
+def patient_create():
+    patient_form_create = PatientForm()
+    if patient_form_create.validate_on_submit():
+        form_data = patient_form_create.data 
+        qry = db.patient_insert_sql(form_data)
+        db.insert(qry)
+        flash('New patient record created', 'success')
+        return redirect(f'/patient_created/{patient_form_create.patient_id.data}.html')
+    return render_template('patient_create.html', template_form = patient_form_create)
+
+
 @app.route('/patient_created/<new_patient_id>', methods=['GET', 'POST'])
 def patient_created(new_patient_id):
     sql = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
+    table = 'patient'
+    return redirect(f'/view-table-filter/{table}/{sql}')
+
+
+@app.route('/patient_updated/<new_patient_id>', methods=['GET', 'POST'])
+def patient_updated(new_patient_id):
+    session['qry'] = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
+    table = 'patient'
+    flash('Patient record updated', 'success')
+    return redirect(f'/view-table-filter/{table}')
+
+
+@app.route('/edit-patient-data/<id>', methods=['GET', 'POST'])
+def editPatientData(id):
+    # Initialize form from forms.py
+    patient_form_update = PatientForm()
+
+    # get values for this row from the database
+    sql = f"SELECT * FROM patient WHERE patient_id = '{id}'"
     res = db.query(sql)
-    return render_template('patient_created.html', res=res)
+
+    # if form is sent back (POST) to the server
+    if patient_form_update.validate_on_submit():
+        # capture data from form
+        form_data = patient_form_update.data
+        # build SQL query in update table
+        qry = db.patient_update_sql(form_data)
+        # update table with new data
+        try:
+            db.insert(qry)    
+        except:
+            flash('Not able to update patient record', 'warning')
+            return render_template(f'edit-patient-data.html', template_form = patient_form_update, id=id)
+        # redirect user to patient updated page
+        return redirect(f'/patient_updated/{patient_form_update.patient_id.data}.html')
+
+    # populate values to the form
+    patient_form_update.patient_id.data = res[0][0]
+    patient_form_update.name.data = res[0][1]
+    patient_form_update.phone.data = res[0][2]
+    patient_form_update.admitted.data = res[0][3]
+    patient_form_update.discharged.data = res[0][4]
+    patient_form_update.county_id.data = res[0][5]
+    patient_form_update.health_info.data = res[0][6]
+    patient_form_update.age.data = res[0][7]
+    patient_form_update.race.data = res[0][8]
+    patient_form_update.gender.data = res[0][9]
+    patient_form_update.address_street.data = res[0][10]
+    patient_form_update.address_city.data = res[0][11]
+    patient_form_update.address_state.data = res[0][12]
+    patient_form_update.address_zip.data = res[0][13]
+
+    return render_template('edit-patient-data.html', template_form=patient_form_update, id=id)
 
 
-@app.route('/patient_create', methods=['GET', 'POST'])
-def patient_create():
-    patient_form_create = PatientFormCreate()
+@app.route('/patient_view', methods=['GET', 'POST'])
+def patient_view():
+    patient_form_view = PatientSearchForm()
+    if patient_form_view.validate_on_submit():
+        form_data = patient_form_view.data
+        if len(form_data) > 2:
+            sql = db.patient_search_sql(form_data)
+            table = 'patient'
+            session['qry'] = sql
+            return redirect(url_for('viewTableFilter', table=table))
+    return render_template('patient_view.html', template_form = patient_form_view)
 
-    if patient_form_create.validate_on_submit():
-        # get data from form
-        new_patient_id = patient_form_create.patient_id.data
-        new_name = patient_form_create.name.data
-        new_address_street = patient_form_create.address_street.data
-        new_address_city = patient_form_create.address_city.data
-        new_address_state = patient_form_create.address_state.data
-        new_address_zip = patient_form_create.address_zip.data
-        new_county_id = patient_form_create.county_id.data
-        new_phone = patient_form_create.phone.data
-        new_age = patient_form_create.age.data
-        new_race = patient_form_create.race.data
-        new_gender = patient_form_create.gender.data
-        new_health_info = patient_form_create.health_info.data
-        new_admitted = patient_form_create.admitted.data
-        new_discharged = patient_form_create.discharged.data
 
-        # built query and execute
-        sql = f'''INSERT INTO patient (patient_id, name, address_street, address_city,
-                address_state, address_zip, county_id, phone, age, race, gender, health_info, admitted, discharged)
-                VALUES ({new_patient_id},"{new_name}","{new_address_street}","{new_address_city}","{new_address_state}",
-                        "{new_address_zip}","{new_county_id}","{new_phone}", "{new_age}","{new_race}","{new_gender}",
-                        "{new_health_info}","{new_admitted}","{new_discharged}");'''
-        db.insert(sql)
+# ---------------------------------------------------------
+# Case Routes
+# ---------------------------------------------------------
 
-        return redirect(f'/patient_created/{new_patient_id}.html')
-    return render_template('patient_create.html', template_form=patient_form_create)
+
+@app.route('/case_create', methods=['GET', 'POST'])
+def case_create():
+    global db
+    case_form_create = CaseForm()
+    if case_form_create.validate_on_submit():
+        form_data = case_form_create.data 
+        qry = db.case_insert_sql(form_data)
+        db.insert(qry)
+        return redirect(f'/case_created/{case_form_create.case_id.data}')
+    return render_template('case_create.html', template_form = case_form_create)
+
+
+@app.route('/case_created/<new_case_id>', methods=['GET', 'POST'])
+def case_created(new_case_id):
+    global db
+    form_data = {'case_id': f'{new_case_id}'}
+    session['qry'] = db.case_select_sql(form_data)
+    table = 'case_no'
+    flash('New Case Created', 'success')
+    return redirect(f'/view-table-filter/{table}')
+
+
+@app.route('/edit-case-data/<id>', methods=['GET', 'POST'])
+def editCaseData(id):
+    # Initialize form from forms.py
+    case_form_update = CaseForm()
+
+    # get values for this row from the database
+    sql = f"SELECT * FROM case_no WHERE case_id = '{id}'"
+    res = db.query(sql)
+
+    # if form is sent back (POST) to the server
+    if case_form_update.validate_on_submit():
+        # capture data from form
+        form_data = case_form_update.data
+        # build SQL query in update table
+        qry = db.case_update_sql(form_data)
+        # update table with new data
+        try:
+            db.insert(qry)    
+        except:
+            flash('Not able to update case record', 'warning')
+            return render_template(f'edit-case-data.html', template_form = case_form_update, id=id)
+        # redirect user to patient updated page
+        return redirect(f'/case_updated/{case_form_update.case_id.data}')
+
+    # populate values to the form
+    case_form_update.case_id.data = res[0][0]
+    case_form_update.patient_id.data = res[0][1]
+    case_form_update.county_id.data = res[0][2]
+    case_form_update.hospital_id.data = res[0][3]
+    case_form_update.status.data = res[0][4]
+    case_form_update.hospital_name.data = res[0][5]
+    
+    return render_template('edit-case-data.html', template_form=case_form_update, id=id)
+
+
+@app.route('/case_updated/<new_case_id>', methods=['GET', 'POST'])
+def case_updated(new_case_id):
+    session['qry'] = f'''SELECT * FROM case_no WHERE case_id = "{new_case_id}"'''
+    table = 'case_no'
+    flash('Case Record Updated', 'success')
+    return redirect(f'/view-table-filter/{table}')
+
+
+@app.route('/case_view', methods=['GET', 'POST'])
+def case_view():
+    case_form_view = CaseEditForm()
+    if case_form_view.validate_on_submit():
+        form_data = case_form_view.data
+        if len(form_data) > 2:
+            session['qry'] = db.case_search_sql(form_data)
+            table = 'case_no'
+            return redirect(f'/view-table-filter/{table}')     
+    return render_template('case_view.html', template_form = case_form_view)
+
 
 # ---------------------------------------------------------
 # County Table Routes (Add County Data, Update County Data)
@@ -332,3 +476,4 @@ def addHospitalData():
         return redirect(url_for('addHospitalData', table='hospital'))
 
     return render_template('hospital_create.html', form=form)
+

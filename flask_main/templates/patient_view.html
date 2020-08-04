@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-   <legend style="padding: 5px;">Enter Patient Data</legend>
+   <legend style="padding: 5px;">Select Search Criteria</legend>
 
-   <form action='/patient_create' method="POST">
+   <form action='/patient_view' method="POST">
       <!-- Hidden Field adds CSRF protection to form -->
       {{ template_form.hidden_tag() }}
       <!-- Form Fields -->

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+   <legend style="padding: 5px;">Make Your Changes Below</legend>
+
+   <form action="{{url_for('editCaseData', id=id)}}" method="POST">
+      <!-- Hidden Field adds CSRF protection to form -->
+      {{ template_form.hidden_tag() }}
+      <!-- Form Fields -->
+      <div class="form-group">
+         <p>{{ template_form.case_id.label(class="form-control-label")}}
+         {{ template_form.case_id(class="form-control") }}</p>
+         <p>{{ template_form.patient_id.label(class="form-control-label") }}
+         {{ template_form.patient_id(class="form-control") }}</p>
+         <p>{{ template_form.county_id.label(class="form-control-label") }}
+         {{ template_form.county_id(class="form-control") }}</p>
+         <p>{{ template_form.hospital_id.label(class="form-control-label") }}
+         {{ template_form.hospital_id(class="form-control") }}</p>
+         <p>{{ template_form.hospital_name.label(class="form-control-label") }}
+        {{ template_form.hospital_name(class="form-control") }}</p>  
+        <br>
+         <table>
+            <tr><strong>Status </strong></tr>
+            <tr>
+                  {% for btn in template_form.status %}
+                  <tr>
+                     <td>{{ btn() }}</td>
+                     <td>{{ btn.label(class="form-control-label") }}</td>
+                  </tr>
+                  {% endfor %}
+            </tr>
+         </table>
+         <br>
+         <p>{{ template_form.submit() }}</p>
+      </div>
+   </form>
+</div>
+
+{% endblock %}
