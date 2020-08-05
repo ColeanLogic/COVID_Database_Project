@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container-fluid" style="width: 100%; max-width: 330px; padding: 15px;margin: auto;">
-	<legend style="padding: 5px;">Login</legend>
+	<legend style="text-align: center; padding: 5px;">Login</legend>
 	<form action="/login" method="POST">
 		<div class="form-group">
 			<label for="usr">Username</label>
@@ -13,6 +13,9 @@
 		</div>
 		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>
+	<div style="text-align: center; padding: 10px;">
+		<p>Don't have an account? <a href="{{url_for('register')}}">register</a> now!</p>
+	</div>
 </div>
 
 {% endblock %}

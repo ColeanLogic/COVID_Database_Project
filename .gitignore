@@ -1,2 +1,3 @@
 venv
 *.pyc
+flask_main/__pycache__/
