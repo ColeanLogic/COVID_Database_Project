@@ -53,7 +53,7 @@ def register():
         role = form.role.data
         sql = f"INSERT INTO login VALUES ('{username}', '{password}', '{role}')"
         db.insert(sql)
-        flash(f"Created user {username} successfully!")
+        flash(f"Created user {username} successfully!", 'success')
         session['usr'] = username
         session['role'] = role
         return redirect(url_for('home'))
