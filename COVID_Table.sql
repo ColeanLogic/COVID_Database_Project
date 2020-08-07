@@ -1,5 +1,5 @@
-CREATE schema COVID_Database7;
-USE COVID_Database7;
+CREATE schema COVID_Database;
+USE COVID_Database;
 
 CREATE TABLE login
 (
