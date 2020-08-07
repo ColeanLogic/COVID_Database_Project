@@ -56,7 +56,6 @@ CREATE TABLE case_no
     county_id NUMERIC(5,0) NOT NULL,
     hospital_id NUMERIC(6,0) NOT NULL,
     status VARCHAR(15),
-    name VARCHAR(100),
     PRIMARY KEY (case_id),
     foreign key (county_id) REFERENCES county(county_id),
     foreign key (patient_id) REFERENCES patient(patient_id),
@@ -84,6 +83,6 @@ AS
 CREATE VIEW comprehensive_summary
 AS
     SELECT name, status, county_name, state_name, cases, deaths
-    FROM case_no inner join hospital inner join county ON (case_no.hospital_id = hospital.hospital_id)
+    FROM case_no inner join hospital inner join county ON (case_no.hospital_id = hospital.hospital_id) 
     WHERE case_no.county_id = county.county_id
     GROUP BY case_id;
