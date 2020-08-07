@@ -12,7 +12,7 @@ mongo_host = '127.0.0.1'
 mongo_port = '20717'
 user = 'root'
 passwd = ''
-dbname = 'COVID_Database7'
+dbname = 'COVID_Database'
 mongo_con = None
 
 db = Database(host, user, passwd, dbname)
