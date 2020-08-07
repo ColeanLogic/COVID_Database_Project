@@ -18,7 +18,7 @@ class Database():
         connection = None
         try:
             connection = mysql.connector.connect(
-                host=self.host, user=self.user, passwd=self.passwd, autocommit=True)
+                host=self.host, user=self.user, passwd=self.passwd, autocommit=True, allow_local_infile=True)
         except mysql.connector.Error as E:
             print(E)
         return connection
@@ -33,16 +33,17 @@ class Database():
 
     def load_tables(self):
         self.use_db()
-        path_table = [('county_jul', 'county'), ('hospital', 'hospital'),
-                      ('login', 'login'), ('patients_july', 'patient'), ('case', 'case_no')]
+        path_table = [('county_jan_to_april','county'),('county_may','county'),('county_jun','county'),('county_jul','county'),
+            ('hospital','hospital'),('login','login'),('patients_april','patient'),('patients_may','patient'),('patients_june','patient'),
+            ('patients_july','patient'),('patients_march','patient'),('case','case_no')]
         for i in path_table:
             county_path = os.path.join(os.getcwd(), '..', i[0]+'.csv')
             county_path = county_path.replace(r"/mnt/c", r"C:")
             if(i[1] != 'patient'):
-                load_data_query = "LOAD DATA INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' IGNORE 1 LINES;".format(
+                load_data_query = "LOAD DATA LOCAL INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' IGNORE 1 LINES;".format(
                     county_path, i[1])
             else:
-                load_data_query = "LOAD DATA INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' IGNORE 1 LINES (patient_id, name, address_street, address_city, address_state, address_zip, phone, admitted, discharged, county_id, health_info, age,race,gender);".format(
+                load_data_query = "LOAD DATA LOCAL INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' IGNORE 1 LINES (patient_id, name, address_street, address_city, address_state, address_zip, phone, admitted, discharged, county_id, health_info, age,race,gender);".format(
                     county_path, i[1])
             csr = self.con.cursor()
             csr.execute(load_data_query)

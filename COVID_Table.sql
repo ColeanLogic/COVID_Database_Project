@@ -1,5 +1,5 @@
-CREATE schema COVID_Database;
-USE COVID_Database;
+CREATE schema COVID_Database7;
+USE COVID_Database7;
 
 CREATE TABLE login
 (
@@ -77,13 +77,13 @@ AS
 
 CREATE VIEW hospital_summary
 AS
-    SELECT name, status, COUNT(case_id)
+    SELECT case_no.name, status, COUNT(case_id)
     FROM case_no inner join hospital on (case_no.hospital_id = hospital.hospital_id)
-    GROUP BY name, status;
+    GROUP BY case_no.name, status;
 
 CREATE VIEW comprehensive_summary
 AS
-    SELECT name, status, county_name, state_name, cases, deaths
+    SELECT case_no.name, status, county_name, state_name, cases, deaths
     FROM case_no inner join hospital inner join county ON (case_no.hospital_id = hospital.hospital_id)
     WHERE case_no.county_id = county.county_id
     GROUP BY case_id;
