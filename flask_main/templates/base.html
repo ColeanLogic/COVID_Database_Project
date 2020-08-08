@@ -66,7 +66,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='patient')}}">View Table</a>
-            <a class="dropdown-item" href="{{url_for('patient_create')}}">Add Patient</a>
+            <a class="dropdown-item
+              {% if session['role'] not in ['doctor', 'hospital_admin'] %} disabled {% endif %}"
+              href="{{url_for('patient_create')}}">Add Patient</a>
             <a class="dropdown-item" href="{{url_for('patient_view')}}">Search</a>
           </div>
         </li>
@@ -79,7 +81,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='county')}}">View Table</a>
-            <a class="dropdown-item" href="{{url_for('addCountyData')}}">Add County Data</a>
+            <a class="dropdown-item
+              {% if session['role'] not in ['doctor', 'hospital_admin'] %} disabled {% endif %}"
+              href="{{url_for('addCountyData')}}">Add County Data</a>
           </div>
         </li>
 
@@ -91,7 +95,10 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='hospital')}}">View Table</a>
-            <a class="dropdown-item" href="{{url_for('addHospitalData')}}">Add Hospital</a>
+
+            <a class="dropdown-item
+              {% if session['role'] not in ['doctor', 'hospital_admin'] %} disabled {% endif %}"
+              href="{{url_for('addHospitalData')}}">Add Hospital</a>
           </div>
         </li>
 
@@ -103,7 +110,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='case_no')}}">View Table</a>
-            <a class="dropdown-item" href="{{url_for('case_create')}}">Add Case</a>
+            <a class="dropdown-item
+              {% if session['role'] not in ['doctor', 'hospital_admin'] %} disabled {% endif %}"
+              href="{{url_for('case_create')}}">Add Case</a>
             <a class="dropdown-item" href="{{url_for('case_view')}}">Search</a>
           </div>
         </li>
