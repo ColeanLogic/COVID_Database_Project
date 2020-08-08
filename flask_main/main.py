@@ -18,7 +18,8 @@ mongo_con = None
 db = Database(host, user, passwd, dbname)
 
 # here we have mongodb conn to covid_db and a sql conn to covid_db.
-DataBaseFactory.mongo_conn = mongo_con
+DataBaseFactory.mongo_conn = db.mongo_con
+mongo_con = db.mongo_con
 DataBaseFactory.sql_conn = db.con
 DataBaseFactory.databaseType = DBTYPE.SQL
 

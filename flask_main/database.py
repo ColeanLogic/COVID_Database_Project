@@ -11,7 +11,7 @@ class Database():
         self.passwd = passwd
         self.dbname = dbname
         self.con = self.connect_to_mysql()
-        self.mongo_con = self.connect_to_mongodb
+        self.mongo_con = self.connect_to_mongodb()
         self.use_db()
 
     def connect_to_mysql(self):
@@ -234,9 +234,6 @@ class Database():
     def connect_to_mongodb(self):
         # MongoClient("mongodb://" + mongo_host+':'+mongo_port)
         client = MongoClient('mongodb://127.0.0.1:27017')
-        if(self.mongo_con != None):
-            # already connected
-            return
         exists = False
         for db in client.list_databases():
             if db["name"] == "covid_db":
