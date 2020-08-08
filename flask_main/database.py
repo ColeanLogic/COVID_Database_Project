@@ -33,8 +33,10 @@ class Database():
 
     def load_tables(self):
         self.use_db()
-        path_table = [('county_jul', 'county'), ('hospital', 'hospital'),
-                      ('login', 'login'), ('patients_july', 'patient'), ('case', 'case_no')]
+        path_table = [('county_jan_to_april','county'),('county_may','county'),('county_jun','county'),('county_jul','county'),
+            ('hospital','hospital'),('login','login'),('patients_april','patient'),('patients_may','patient'),('patients_june','patient'),
+            ('patients_july','patient'),('patients_march','patient'),('case','case_no')]
+        print("Populating tables please wait...")
         for i in path_table:
             county_path = os.path.join(os.getcwd(), '..', i[0]+'.csv')
             county_path = county_path.replace(r"/mnt/c", r"C:")
@@ -45,8 +47,10 @@ class Database():
                 load_data_query = "LOAD DATA INFILE '{0}' IGNORE INTO TABLE {1} FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' IGNORE 1 LINES (patient_id, name, address_street, address_city, address_state, address_zip, phone, admitted, discharged, county_id, health_info, age,race,gender);".format(
                     county_path, i[1])
             csr = self.con.cursor()
+            print(f"Loading {i[0]}.csv into {i[1]} table")
             csr.execute(load_data_query)
             self.con.commit()
+        print("Complete!")
 
     def database_created(self):
         csr = self.con.cursor()
