@@ -4,7 +4,8 @@
     {% if session['usr'] %}
     <p style="padding: 5px;">Please select an option above to begin</p>
     {% else %}
-    <p style="padding: 5px;">Please <a href="{{url_for('login')}}">login</a> to continue</p>
+    <p style="padding: 5px;">Please <a href="{{url_for('login')}}">login</a> to continue. Don't have an account? <a
+            href="{{url_for('register')}}">register</a> now!</p>
     {% endif %}
     {% endblock %}
 </div>

@@ -24,6 +24,7 @@
       background-color: #FFFFFF;
       border: 2px solid #6495ED;
     }
+
   </style>
   <!--Chartist.js-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
@@ -40,11 +41,17 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      {% if not session['usr'] %}
       <ul class="navbar-nav mr-auto">
-        {% if not session['usr'] %}
         <li class="nav-item active">
-          <a class="nav-link" href="{{url_for('login')}}">Login</a></li>
-        {% else %}
+          <a class="nav-link" href="{{url_for('login')}}">Login</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="{{url_for('register')}}">Register</a>
+        </li>
+      </ul>
+      {% else %}
+      <ul class="navbar-nav mr-auto">
         <!-- Schema -->
         <li class="nav-item active">
           <a class="nav-link" href="{{url_for('viewSchema')}}">View Schema<span class="sr-only"></span></a>
@@ -63,7 +70,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='patient')}}">View Table</a>
-            <a class="dropdown-item" href="{{url_for('patient_create')}}">Add Patient</a>
+            <a class="dropdown-item
+              {% if session['role'] not in ['doctor', 'hospital_admin'] %} disabled {% endif %}"
+              href="{{url_for('patient_create')}}">Add Patient</a>
             <a class="dropdown-item" href="{{url_for('patient_view')}}">Search</a>
           </div>
         </li>
@@ -76,8 +85,10 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='county')}}">View Table</a>
-            <a class="dropdown-item" href="{{url_for('addCountyData')}}">Add County Data</a>
             <a class="dropdown-item" href="{{url_for('countyChart')}}">View Chart</a>
+            <a class="dropdown-item
+              {% if session['role'] not in ['doctor', 'hospital_admin'] %} disabled {% endif %}"
+              href="{{url_for('addCountyData')}}">Add County Data</a>
           </div>
         </li>
 
@@ -89,10 +100,13 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='hospital')}}">View Table</a>
-            <a class="dropdown-item" href="{{url_for('addHospitalData')}}">Add Hospital</a>
+
+            <a class="dropdown-item
+              {% if session['role'] not in ['doctor', 'hospital_admin'] %} disabled {% endif %}"
+              href="{{url_for('addHospitalData')}}">Add Hospital</a>
           </div>
         </li>
-      
+
         <!-- Case Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -101,36 +115,38 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='case_no')}}">View Table</a>
-            <a class="dropdown-item" href="{{url_for('case_create')}}">Add Case</a>
+            <a class="dropdown-item
+              {% if session['role'] not in ['doctor', 'hospital_admin'] %} disabled {% endif %}"
+              href="{{url_for('case_create')}}">Add Case</a>
             <a class="dropdown-item" href="{{url_for('case_view')}}">Search</a>
           </div>
         </li>
       </ul>
 
-      
+      <!-- Change Database Btn! -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          {% if session['use_mongo'] %}
+          <button onclick="window.location.href='switch_db'">Current Database: MongoDB<br />Click to Switch!</button>
+          {% else %}
+          <button onclick="window.location.href='switch_db'">Current Database: SQL<br />Click to Switch!</button>
+          {% endif %}
+        </li>
+      </ul>
 
       <!-- User Dropdown -->
       <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false" style="color:black;"> Welcome, {{ session['usr'] }}!
-          </a>
+            aria-expanded="false" style="color:black;"> Welcome, {{ session['usr'] }}! </a>
           <div class=" dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+            <a class="dropdown-item disabled" href="#">{{session['role']}}</a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ url_for('logout') }}">Sign out</a>
           </div>
         </li>
       </ul>
-
       {% endif %}
-
-      <!-- Change Database Btn! -->
-      <ul class="nav navbar-nav navbar-right">
-        {% if session['use_mongo'] %}
-        <button onclick="window.location.href='switch_db'">Current Database: MongoDB<br />Click to Switch!</button>
-        {% else %}
-        <button onclick="window.location.href='switch_db'">Current Database: SQL<br />Click to Switch!</button>
-        {% endif %}
-      </ul>
   </nav>
 
   <!-- Flashed Messages -->
@@ -165,4 +181,3 @@
 </body>
 
 </html>
-

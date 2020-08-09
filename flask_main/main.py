@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from forms import AddCountyData, PatientLocateForm, PatientSearchForm, HospitalFormCreate, CaseForm, CaseLocateForm, PatientForm, PatientEditForm, CaseEditForm, ChooseDates
+from forms import AddCountyData, PatientLocateForm, PatientSearchForm, HospitalFormCreate, CaseForm, CaseLocateForm, PatientForm, PatientEditForm, CaseEditForm, registrationForm, ChooseDates
 from datetime import datetime
 from database import Database
 from database_abstraction_classes import *
@@ -10,7 +10,6 @@ import sys
 host = 'localhost'
 mongo_host = '127.0.0.1'
 mongo_port = '20717'
-
 user = 'root'
 passwd = ''
 dbname = 'COVID_Database'
@@ -19,12 +18,14 @@ mongo_con = None
 db = Database(host, user, passwd, dbname)
 
 # here we have mongodb conn to covid_db and a sql conn to covid_db.
-DataBaseFactory.mongo_conn = mongo_con
+DataBaseFactory.mongo_conn = db.mongo_con
+mongo_con = db.mongo_con
 DataBaseFactory.sql_conn = db.con
 DataBaseFactory.databaseType = DBTYPE.SQL
 
 app = Flask(__name__)
 app.secret_key = b'helloworld'
+
 
 @app.route('/switch_db')
 def switch_db():
@@ -33,7 +34,7 @@ def switch_db():
         session.pop('use_mongo', None)
     else:
         session['use_mongo'] = True
-        connect_to_mongodb()
+        db.connect_to_mongodb()
         DataBaseFactory.databaseType = DBTYPE.MongoDB
     return redirect(url_for('home'))
 
@@ -43,12 +44,30 @@ def home():
     return render_template('home.html')
 
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = registrationForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+        role = form.role.data
+        sql = f"INSERT INTO login VALUES ('{username}', '{password}', '{role}')"
+        db.insert(sql)
+        flash(f"Created user {username} successfully!", 'success')
+        session['usr'] = username
+        session['role'] = role
+        return redirect(url_for('home'))
+
+    return render_template('registration.html', form=form)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    
+
     if request.method == "POST":
-        username = request.form ['usr']
-        password = request.form ['pass']
+        username = request.form['usr']
+        password = request.form['pass']
         userRecord = DataBaseFactory.GetDataBaseObject().getUserRecords(username)
 
         if len(userRecord) == 0:
@@ -58,9 +77,10 @@ def login():
         else:
             session['usr'] = userRecord[0][0]
             session['role'] = userRecord[0][2]
-            flash(f'''Logged in successfully! Your role is {session['role']}''', 'success')
+            flash(
+                f'''Logged in successfully! Your role is {session['role']}''', 'success')
             return redirect(url_for('home'))
-    
+
     return render_template('login.html')
 
 
@@ -78,11 +98,16 @@ def viewTable(table):
     sql = f'''SELECT * FROM {table}'''
     if table == 'county':
         sql = '''SELECT * FROM county ORDER BY county_date DESC LIMIT 1000'''
+    elif table == 'patient' and session['role'] not in ['doctor', 'hospital_admin']:
+        sql = sql.replace(
+            '*', 'patient_id, admitted, discharged, county_id, health_info, age, race, gender')
     body = db.query(sql)
 
     # Retrieve Table Header
-    sql = f'''SHOW COLUMNS FROM {table} '''
+    sql = f'''SHOW COLUMNS FROM {table}'''
     header = db.query(sql)
+    if table == 'patient' and session['role'] not in ['doctor', 'hospital_admin']:
+        del header[1:7]
 
     return render_template('view-table.html', header=header, body=body, table=table)
 
@@ -91,15 +116,17 @@ def viewTable(table):
 def viewTableFilter(table):
     # Retrieve Table Body
     qry = session['qry']
+
     try:
         body = db.query(qry)
-        print(body)
     except:
         flash('No records found', 'danger')
         return redirect(url_for('viewTable', table=table))
     # Retrieve Table Header
     sql = f'''SHOW COLUMNS FROM {table} '''
     header = db.query(sql)
+    if session['role'] not in ['doctor', 'hospital_admin']:
+        del header[1:7]
 
     return render_template('view-table.html', header=header, body=body, table=table)
 
@@ -134,12 +161,12 @@ def results_page():
 def patient_create():
     patient_form_create = PatientForm()
     if patient_form_create.validate_on_submit():
-        form_data = patient_form_create.data 
+        form_data = patient_form_create.data
         qry = db.patient_insert_sql(form_data)
         db.insert(qry)
         flash('New patient record created', 'success')
         return redirect(f'/patient_created/{patient_form_create.patient_id.data}.html')
-    return render_template('patient_create.html', template_form = patient_form_create)
+    return render_template('patient_create.html', template_form=patient_form_create)
 
 
 @app.route('/patient_created/<new_patient_id>', methods=['GET', 'POST'])
@@ -174,10 +201,10 @@ def editPatientData(id):
         qry = db.patient_update_sql(form_data)
         # update table with new data
         try:
-            db.insert(qry)    
+            db.insert(qry)
         except:
             flash('Not able to update patient record', 'warning')
-            return render_template(f'edit-patient-data.html', template_form = patient_form_update, id=id)
+            return render_template(f'edit-patient-data.html', template_form=patient_form_update, id=id)
         # redirect user to patient updated page
         return redirect(f'/patient_updated/{patient_form_update.patient_id.data}.html')
 
@@ -206,11 +233,11 @@ def patient_view():
     if patient_form_view.validate_on_submit():
         form_data = patient_form_view.data
         if len(form_data) > 2:
-            sql = db.patient_search_sql(form_data)
+            sql = db.patient_search_sql(form_data, role=session['role'])
             table = 'patient'
             session['qry'] = sql
             return redirect(url_for('viewTableFilter', table=table))
-    return render_template('patient_view.html', template_form = patient_form_view)
+    return render_template('patient_view.html', template_form=patient_form_view)
 
 
 # ---------------------------------------------------------
@@ -223,11 +250,11 @@ def case_create():
     global db
     case_form_create = CaseForm()
     if case_form_create.validate_on_submit():
-        form_data = case_form_create.data 
+        form_data = case_form_create.data
         qry = db.case_insert_sql(form_data)
         db.insert(qry)
         return redirect(f'/case_created/{case_form_create.case_id.data}')
-    return render_template('case_create.html', template_form = case_form_create)
+    return render_template('case_create.html', template_form=case_form_create)
 
 
 @app.route('/case_created/<new_case_id>', methods=['GET', 'POST'])
@@ -257,7 +284,7 @@ def editCaseData(id):
         qry = db.case_update_sql(form_data)
         # update table with new data
         try:
-            db.insert(qry)    
+            db.insert(qry)
         except:
             flash('Not able to update case record', 'warning')
             return render_template(f'edit-case-data.html', template_form = case_form_update, id=id)
@@ -271,7 +298,7 @@ def editCaseData(id):
     case_form_update.hospital_id.data = res[0][3]
     case_form_update.status.data = res[0][4]
     case_form_update.hospital_name.data = res[0][5]
-    
+
     return render_template('edit-case-data.html', template_form=case_form_update, id=id)
 
 
@@ -291,8 +318,8 @@ def case_view():
         if len(form_data) > 2:
             session['qry'] = db.case_search_sql(form_data)
             table = 'case_no'
-            return redirect(f'/view-table-filter/{table}')     
-    return render_template('case_view.html', template_form = case_form_view)
+            return redirect(f'/view-table-filter/{table}')
+    return render_template('case_view.html', template_form=case_form_view)
 
 
 # ---------------------------------------------------------
@@ -475,7 +502,6 @@ def chart_page():
             for dem in demographics:
                 total = DataBaseFactory.GetDataBaseObject(
                 ).summarizeStatusFromDemographic(status, demographic, dem)
-                print(total)
                 chart_data[dem] = total
         return render_template('chart.html', dems=demographics, chart_data=chart_data, type1=type1, status=status, category=demographic, dataList=dataList, successfulUpdate=successfulUpdate)
     return render_template('chart.html', chart_data=None, type1=type1)
@@ -497,7 +523,7 @@ def addHospitalData():
         hospital_id = form.hospital_id.data
         name = form.name.data
         county_id = form.county_id.data
-        
+
         # insert data to county table
         sql = f'''INSERT INTO hospital (hospital_id, name, county_id) VALUES ("{hospital_id}","{name}","{county_id}");'''
         db.insert(sql)
@@ -507,4 +533,3 @@ def addHospitalData():
         return redirect(url_for('addHospitalData', table='hospital'))
 
     return render_template('hospital_create.html', form=form)
-
