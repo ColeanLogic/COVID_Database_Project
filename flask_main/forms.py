@@ -168,6 +168,7 @@ class AddCountyData(FlaskForm):
     submit = SubmitField('Submit')
 
 
+
 class ChooseDates(FlaskForm):
     start_date = DateField('Start Date ', format='%Y-%m-%d',
                      validators=[DataRequired()])
@@ -179,4 +180,10 @@ class ChooseDates(FlaskForm):
         ("cases","Total Cases"),
         ("deaths","Total Deaths")
         ], validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class HospitalFormCreate(FlaskForm):
+    hospital_id = StringField('Hospital ID* ', validators=[DataRequired()])
+    name = StringField('Hospital Name* ', validators=[DataRequired()])
+    county_id = StringField('County ID* ', validators=[DataRequired()])
     submit = SubmitField('Submit')
