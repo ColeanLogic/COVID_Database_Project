@@ -3,9 +3,13 @@ Photo by <a href="https://unsplash.com/@taiscaptures?utm_source=unsplash&utm_med
 
 # COVID-Database
 
-> Final Project Repository. CSC 545: Advanced Database Systems. Southern Connecticut State University. Summer 2020. Presented by Tom Birmingham, Jack Bonadies, David Boyer, David Coelho and Sara Cole.
+> The purpose of the Covid Virus Public Health database system is to maintain an up-to-date database to assist
+government agencies, the general public, and health specialists in making appropriate decisions and guidance,
+and to empower users with the ability to analyze and draw conclusions with the data.
 
+[![Application](http://g.recordit.co/weDg8VESBZ.gif)]()
 
+This repo holds the final works of five students of the CSC 545: Advanced Database Systems graduate class at Southern Connecticut State University, Summer 2020. Presented by Tom Birmingham, Jack Bonadies, David Boyer, David Coelho and Sara Cole.
 
 ---
 
@@ -13,18 +17,16 @@ Photo by <a href="https://unsplash.com/@taiscaptures?utm_source=unsplash&utm_med
 
 > Our `README` has a lot of info, so we thought a table of contents might be nice.
 
-- [Objective] (#objective)
-- [Significance] (#significance)
-- [Mission] (#mission)
+- [Objectives](#objective-and-motivation)
+- [Significance and Application](#significance-and-application)
 - [Installation](#installation)
 - [Features](#features)
 - [Team](#team)
 
-
 ---
 
 
-## Objective
+## Objective and Motivation
 
 The objective of this project is to design both a relational database and a non-relational database to store
 public health data relating to COVID 19, which may include the number of active infections, the location of
@@ -36,7 +38,7 @@ design, implementation, and testing phases of the two different types of databas
 project is to improve our understanding of database design and user interface design, and to better understand
 the advantages and drawbacks of relational and non-relational databases.
 
-## Significance
+## Significance and Application
 
 A public health database that includes up-to-date information from all over the country is useful to a wide array
 of individuals and agencies in government, healthcare, media, and more. Government agencies, mayors,
@@ -46,16 +48,6 @@ next outbreak might occur, need easy access to the most current data. Our user i
 views for hospital personnel and for government officials and agencies at the city, state, and federal level.
 Users will be able to access the information they need without compromising the privacy of individual medical
 records.
-
-
----
-
-
-## Mission
-
-The purpose of the Covid Virus Public Health database system is to maintain an up-to-date database to assist
-government agencies, the general public, and health specialists in making appropriate decisions and guidance,
-and to empower users with the ability to analyze and draw conclusions with the data.
 
 
 ---
