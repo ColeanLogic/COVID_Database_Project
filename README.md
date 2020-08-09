@@ -5,24 +5,35 @@ Photo by <a href="https://unsplash.com/@taiscaptures?utm_source=unsplash&utm_med
 
 The purpose of the Covid Virus Public Health database system is to maintain an up-to-date database to assist government agencies, the general public, and health specialists in making appropriate decisions and guidance, and to empower users with the ability to analyze and draw conclusions with the data.
 
-> This repository holds the final works of five students of Southern Connecticut State University's CSC 545 Advanced Database Systems class, Summer 2020, Presented by: Tom Birmingham, Jack Bonadies, David Boyer, David Coelho and Sara Cole.
+> This repository holds the final works of five students of Southern Connecticut State University's CSC 545 Advanced Database Systems class, Summer 2020. Presented by: Tom Birmingham, Jack Bonadies, David Boyer, David Coelho and Sara Cole
 
-## Application Demo
-
-[![](http://g.recordit.co/weDg8VESBZ.gif)]()
-
-
----
 
 ## Table of Contents
 
 > Our `README` has a lot of info, so we thought a table of contents might be nice.
 
-- [Objectives](#objective-and-motivation)
-- [Significance and Application](#significance-and-application)
-- [Installation](#installation)
+- [Demo](#application-demo)
 - [Features](#features)
+- [Objective, Motivation and Significance](#objective-and-motivation)
+- [Installation](#installation)
 - [Team](#team)
+
+---
+
+## Application Demo
+
+[![](http://g.recordit.co/weDg8VESBZ.gif)]()
+
+## Features
+
+- Maintain individual patient data and demographics
+- Maintain the number of confirmed cases of COVID-19 by date for the US, state, and each county.
+- Report on number of new cases by date
+- Report on number of resolved cases by date
+- Allow for data science and understanding of demographics of different regions
+- Report on why some regions have more cases and are unable to “flatten the curve”
+- Report on factors (health, cultural, etc.) which cause the virus to spread more than others
+
 
 ---
 
@@ -30,7 +41,7 @@ The purpose of the Covid Virus Public Health database system is to maintain an u
 ## Objective and Motivation
 
 The objective of this project is to design both a relational database and a non-relational database to store
-public health data relating to COVID 19, which may include the number of active infections, the location of
+public health data relating to COVID-19, which may include the number of active infections, the location of
 those cases, and the status and demographics of patients. This data should be accessible to viewers at the
 hospital, city, county, state, and federal level, but should restrict access to private medical information.
 Implementation of the databases will include a website that allows the appropriate users to create new
@@ -109,21 +120,6 @@ powershell.exe ../populateMongoDB.ps1
 - Data is populated from the included CSV's
 
 ---
-
-
-## Features
-
-- Maintain individual patient data and demographics
-- Maintain the number of confirmed cases of COVID-19 by date for the US, state, and each county.
-- Report on number of new cases by date
-- Report on number of resolved cases by date
-- Allow for data science and understanding of demographics of different regions
-- Report on why some regions have more cases and are unable to “flatten the curve”
-- Report on factors (health, cultural, etc.) which cause the virus to spread more than others
-
-
----
-
 
 ## Team
 
