@@ -1,15 +1,16 @@
-<img src="https://i.ibb.co/1KhNkY4/tai-s-captures-Lhb-zw-Q-QGI-unsplash-1.jpg" width="500px">
+<img src="https://i.ibb.co/1KhNkY4/tai-s-captures-Lhb-zw-Q-QGI-unsplash-1.jpg">
 Photo by <a href="https://unsplash.com/@taiscaptures?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Tai's Captures</a> on <a href="https://unsplash.com/s/photos/virus?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 
 # COVID-Database
 
-> The purpose of the Covid Virus Public Health database system is to maintain an up-to-date database to assist
-government agencies, the general public, and health specialists in making appropriate decisions and guidance,
-and to empower users with the ability to analyze and draw conclusions with the data.
+The purpose of the Covid Virus Public Health database system is to maintain an up-to-date database to assist government agencies, the general public, and health specialists in making appropriate decisions and guidance, and to empower users with the ability to analyze and draw conclusions with the data.
 
-[![Application](http://g.recordit.co/weDg8VESBZ.gif)]()
+> This repository holds the final works of five students of Southern Connecticut State University's CSC 545 Advanced Database Systems class, Summer 2020, Presented by: Tom Birmingham, Jack Bonadies, David Boyer, David Coelho and Sara Cole.
 
-This repo holds the final works of five students of the CSC 545: Advanced Database Systems graduate class at Southern Connecticut State University, Summer 2020. Presented by Tom Birmingham, Jack Bonadies, David Boyer, David Coelho and Sara Cole.
+## Application Demo
+
+[![](http://g.recordit.co/weDg8VESBZ.gif)]()
+
 
 ---
 
@@ -128,5 +129,5 @@ powershell.exe ../populateMongoDB.ps1
 
 | <a href="https://github.com/tbirms" target="_blank">**Tom Birmingham**</a> | <a href="https://github.com/ColeanLogic" target="_blank">**ColeanLogic**</a> | <a href="https://github.com/jackBonadies" target="_blank">**jackBonadies**</a> | <a href="https://github.com/bigcoffeemug" target="_blank">**David D Boyer**</a> | <a href="https://github.com/dcoelho7" target="_blank">**dclelho7**</a> |
 | :---: |:---:| :---:|:---:|:---:|
-| [![Tom Birmingham](https://avatars1.githubusercontent.com/u/31289104?s=460&u=c59c1b012275b375ebdce3f6733e63e0e08e81b5&v=4&s=200)](https://github.com/tbirms)    | [![ColeanLogic](https://avatars1.githubusercontent.com/u/47699463?s=460&u=1bd7d7110528166abf1d40f9e1811a67d75bfe36&v=4&s=200)](https://github.com/ColeanLogic) | [![jackBonadies](https://avatars1.githubusercontent.com/u/13188205?s=460&u=27ffc4f07ceaac5101453bbf4e804d298bb61ed1&v=4&s=200)](https://github.com/jackBonadies)  | [![David D Boyer](https://avatars1.githubusercontent.com/u/13188205?s=460&u=27ffc4f07ceaac5101453bbf4e804d298bb61ed1&v=4&s=200)](https://github.com/bigcoffeemug)  | [![dclelho7](https://avatars1.githubusercontent.com/u/32175581?s=460&v=4&s=200)](https://github.com/dcoelho7)  |
+| [![Tom Birmingham](https://avatars1.githubusercontent.com/u/31289104?s=460&u=c59c1b012275b375ebdce3f6733e63e0e08e81b5&v=4&s=200)](https://github.com/tbirms)    | [![ColeanLogic](https://avatars1.githubusercontent.com/u/47699463?s=460&u=1bd7d7110528166abf1d40f9e1811a67d75bfe36&v=4&s=200)](https://github.com/ColeanLogic) | [![jackBonadies](https://avatars1.githubusercontent.com/u/13188205?s=460&u=27ffc4f07ceaac5101453bbf4e804d298bb61ed1&v=4&s=200)](https://github.com/jackBonadies)  | [![David D Boyer](https://avatars3.githubusercontent.com/u/51653526?s=460&u=25dcce3dd27cd67365c266b9a2e2b3203e5bcd5c&v=4&s=200)](https://github.com/bigcoffeemug)  | [![dclelho7](https://avatars1.githubusercontent.com/u/32175581?s=460&v=4&s=200)](https://github.com/dcoelho7)  |
 | <a href="https://github.com/tbirms" target="_blank">`github.com/tbirms`</a> | <a href="http://github.com/ColeanLogic" target="_blank">`github.com/ColeanLogic`</a> | <a href="http://github.com/jackBonadies" target="_blank">`github.com/jackBonadies`</a> | <a href="http://github.com/bigcoffeemug" target="_blank">`github.com/bigcoffeemug`</a> | <a href="http://github.com/dcoelho7" target="_blank">`github.com/dcoelho7`</a> |
