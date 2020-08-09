@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-from forms import AddCountyData, PatientLocateForm, PatientSearchForm, HospitalFormCreate, CaseForm, CaseLocateForm, PatientForm, PatientEditForm, CaseEditForm, registrationForm
+from forms import AddCountyData, PatientLocateForm, PatientSearchForm, HospitalFormCreate, CaseForm, CaseLocateForm, PatientForm, PatientEditForm, CaseEditForm, registrationForm, ChooseDates
 from datetime import datetime
 from database import Database
 from database_abstraction_classes import *
@@ -280,15 +280,15 @@ def editCaseData(id):
     if case_form_update.validate_on_submit():
         # capture data from form
         form_data = case_form_update.data
-        # build SQL query in update table
+        # build SQL query to update case table
         qry = db.case_update_sql(form_data)
         # update table with new data
         try:
             db.insert(qry)
         except:
             flash('Not able to update case record', 'warning')
-            return render_template(f'edit-case-data.html', template_form=case_form_update, id=id)
-        # redirect user to patient updated page
+            return render_template(f'edit-case-data.html', template_form = case_form_update, id=id)
+        # redirect user to case updated page
         return redirect(f'/case_updated/{case_form_update.case_id.data}')
 
     # populate values to the form
@@ -422,6 +422,37 @@ def editCountyData(date, id):
 
     return render_template('edit-county-data.html', form=form, date=date, id=id)
 
+
+@app.route('/county-chart', methods=['GET', 'POST'])
+def countyChart(res = None):
+    # instantiate form
+    form = ChooseDates()
+    
+    # if form is sent back (POST) to the server
+    if form.validate_on_submit():
+        # capture data from form
+        form_data = {}
+        form_data["start_date"] = datetime.strftime(form.start_date.data, '%Y-%m-%d')
+        form_data["end_date"] = datetime.strftime(form.end_date.data, '%Y-%m-%d')
+        form_data["county_id"] = form.county_id.data
+        form_data["state_name"] = form.state.data
+        form_data["request_type"] = form.request_type.data
+        sql = db.countyChartSql(form_data)
+        res = db.query(sql)
+        labels = []
+        series = []
+        for row in res:
+            date_time = datetime.strptime(row[0], '%Y-%m-%d')
+            date_str = date_time.strftime("%b %d")
+            labels.append(date_str)
+        for row in res:
+            if form_data["request_type"] == "cases":
+                series.append(int(row[1]))
+            else:
+                series.append(int(row[2]))
+        return render_template('county-chart.html', form=form, res=res, labels=labels, series=series)
+    
+    return render_template('county-chart.html', form=form, res=res)
 
 type1 = ""
 status = ""

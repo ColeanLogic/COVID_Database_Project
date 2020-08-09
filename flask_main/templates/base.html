@@ -26,6 +26,10 @@
     }
 
   </style>
+  <!--Chartist.js-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+  <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
 </head>
 
 <body>
@@ -81,6 +85,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{url_for('viewTable', table='county')}}">View Table</a>
+            <a class="dropdown-item" href="{{url_for('countyChart')}}">View Chart</a>
             <a class="dropdown-item
               {% if session['role'] not in ['doctor', 'hospital_admin'] %} disabled {% endif %}"
               href="{{url_for('addCountyData')}}">Add County Data</a>
