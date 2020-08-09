@@ -1,12 +1,11 @@
-<a href="https://github.com/bigcoffeemug/COVID-Database"><img src="https://images.unsplash.com/photo-1584744982493-704a9eea4322?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" title="COVID-Database" alt="Mask"></a>
+<img src="https://i.ibb.co/1KhNkY4/tai-s-captures-Lhb-zw-Q-QGI-unsplash-1.jpg" width="500px">
+Photo by <a href="https://unsplash.com/@taiscaptures?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Tai's Captures</a> on <a href="https://unsplash.com/s/photos/virus?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 
 # COVID-Database
 
-> Final Project Repository. CSC 545: Advanced Database Systems. Southern Connecticut State University. Summer 2020.
+> Final Project Repository. CSC 545: Advanced Database Systems. Southern Connecticut State University. Summer 2020. Presented by Tom Birmingham, Jack Bonadies, David Boyer, David Coelho and Sara Cole.
 
-> Presented by: Tom Birmingham, Jack Bonadies, David Boyer, David Coelho and Sara Cole
 
-[![Application](http://g.recordit.co/weDg8VESBZ.gif)]()
 
 ---
 
@@ -19,17 +18,13 @@
 - [Mission] (#mission)
 - [Installation](#installation)
 - [Features](#features)
-- [Contributing](#contributing)
 - [Team](#team)
-- [FAQ](#faq)
-- [Support](#support)
-- [License](#license)
 
 
 ---
 
 
-## Objective and Motivation
+## Objective
 
 The objective of this project is to design both a relational database and a non-relational database to store
 public health data relating to COVID 19, which may include the number of active infections, the location of
@@ -41,7 +36,7 @@ design, implementation, and testing phases of the two different types of databas
 project is to improve our understanding of database design and user interface design, and to better understand
 the advantages and drawbacks of relational and non-relational databases.
 
-## Significance and Application
+## Significance
 
 A public health database that includes up-to-date information from all over the country is useful to a wide array
 of individuals and agencies in government, healthcare, media, and more. Government agencies, mayors,
@@ -56,7 +51,7 @@ records.
 ---
 
 
-## Mission Statement
+## Mission
 
 The purpose of the Covid Virus Public Health database system is to maintain an up-to-date database to assist
 government agencies, the general public, and health specialists in making appropriate decisions and guidance,
