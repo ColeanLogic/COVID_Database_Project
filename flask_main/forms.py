@@ -166,3 +166,17 @@ class AddCountyData(FlaskForm):
     cases = IntegerField("Cases", validators=[DataRequired()])
     deaths = IntegerField("Deaths", validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class ChooseDates(FlaskForm):
+    start_date = DateField('Start Date ', format='%Y-%m-%d',
+                     validators=[DataRequired()])
+    end_date = DateField('End Date ', format='%Y-%m-%d',
+                     validators=[DataRequired()])
+    county_id = StringField('County ID ', validators=[Optional()])
+    state = StringField('State ', validators=[Optional()])
+    request_type = RadioField("Data to Display", choices=[
+        ("cases","Total Cases"),
+        ("deaths","Total Deaths")
+        ], validators=[DataRequired()])
+    submit = SubmitField('Submit')

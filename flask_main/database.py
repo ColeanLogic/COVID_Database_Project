@@ -158,7 +158,7 @@ class Database():
         return qry
 
 
-     # Takes a dictionary of form data and returns an SQL update statement for the case table
+     # Takes a dictionary of form data and returns an SQL update statement for the case_no table
     def case_update_sql(self, form_data):
         qry = "UPDATE case_no SET "         
         numeric_data = ('case_id', 'patient_id', 'county_id', 'hospital_id')
@@ -214,6 +214,18 @@ class Database():
                 continue
         qry = qry[:-4]
         qry = qry + ";"
+        return qry
+    
+    # Takes a dictionary of form data and returns an SQL select statement to search the county table
+    def countyChartSql(self, form_data):
+        start_date = form_data["start_date"]
+        end_date = form_data["end_date"]
+        qry = f"SELECT county_date, SUM(cases), SUM(deaths) FROM county WHERE county_date BETWEEN '{start_date}' AND '{end_date}'"
+        for key, value in form_data.items():
+            if key != "start_date" and key != "end_date" and key!= "request_type":
+                if value:
+                    qry = qry + f" AND {key} = '{value}'"
+        qry = qry + " GROUP BY county_date;"
         return qry
 
 
