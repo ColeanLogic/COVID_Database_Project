@@ -7,11 +7,11 @@ import os
 import sys
 
 # Database Configurations
-host = '192.168.64.2'
+host = 'localhost'
 mongo_host = '127.0.0.1'
 mongo_port = '20717'
-user = 'tom'
-passwd = 'tom'
+user = 'root'
+passwd = ''
 dbname = 'COVID_Database'
 mongo_con = None
 
