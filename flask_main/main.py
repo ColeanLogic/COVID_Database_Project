@@ -162,18 +162,18 @@ def patient_create():
     patient_form_create = PatientForm()
     if patient_form_create.validate_on_submit():
         form_data = patient_form_create.data
+        id = patient_form_create.patient_id.data
         qry = db.patient_insert_sql(form_data)
         db.insert(qry)
         flash('New patient record created', 'success')
-        return redirect(f'/patient_created/{patient_form_create.patient_id.data}.html')
+        return redirect(f'/patient_created/{id}.html')
     return render_template('patient_create.html', template_form=patient_form_create)
 
 
 @app.route('/patient_created/<new_patient_id>', methods=['GET', 'POST'])
 def patient_created(new_patient_id):
-    sql = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
-    table = 'patient'
-    return redirect(f'/view-table-filter/{table}/{sql}')
+    session['qry'] = f'''SELECT * FROM patient WHERE patient_id = "{new_patient_id}"'''
+    return redirect(f'/view-table-filter/patient')
 
 
 @app.route('/patient_updated/<new_patient_id>', methods=['GET', 'POST'])
