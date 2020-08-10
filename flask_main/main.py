@@ -209,14 +209,13 @@ def editPatientData(id):
     res = db.query(sql)
 
     # populate values to the form
-    print("res:", res)
     form.patient_id.data = res[0][0]
     form.name.data = res[0][1]
-    form.phone.data = res[0][2]
-    form.address_street.data = res[0][3]
-    form.address_city.data = res[0][4]
-    form.address_state.data = res[0][5]
-    form.address_zip.data = res[0][6]
+    form.address_street.data = res[0][2]
+    form.address_city.data = res[0][3]
+    form.address_state.data = res[0][4]
+    form.address_zip.data = res[0][5]
+    form.phone.data = res[0][6]
     form.admitted.data = res[0][7]
     form.discharged.data = res[0][8]
     form.county_id.data = res[0][9]
@@ -271,16 +270,16 @@ def case_created(new_case_id):
 @app.route('/edit-case-data/<id>', methods=['GET', 'POST'])
 def editCaseData(id):
     # Initialize form from forms.py
-    case_form_update = CaseForm()
+    form = CaseForm()
 
     # get values for this row from the database
     sql = f"SELECT * FROM case_no WHERE case_id = '{id}'"
     res = db.query(sql)
 
     # if form is sent back (POST) to the server
-    if case_form_update.validate_on_submit():
+    if form.validate_on_submit():
         # capture data from form
-        form_data = case_form_update.data
+        form_data = form.data
         # build SQL query to update case table
         qry = db.case_update_sql(form_data)
         # update table with new data
@@ -288,19 +287,19 @@ def editCaseData(id):
             db.insert(qry)
         except:
             flash('Not able to update case record', 'warning')
-            return render_template(f'edit-case-data.html', template_form=case_form_update, id=id)
+            return render_template(f'edit-case-data.html', template_form=form, id=id)
         # redirect user to case updated page
-        return redirect(f'/case_updated/{case_form_update.case_id.data}')
+        return redirect(f'/case_updated/{form.case_id.data}')
 
     # populate values to the form
-    case_form_update.case_id.data = res[0][0]
-    case_form_update.patient_id.data = res[0][1]
-    case_form_update.county_id.data = res[0][2]
-    case_form_update.hospital_id.data = res[0][3]
-    case_form_update.status.data = res[0][4]
-    case_form_update.hospital_name.data = res[0][5]
+    form.case_id.data = res[0][0]
+    form.patient_id.data = res[0][1]
+    form.county_id.data = res[0][2]
+    form.hospital_id.data = res[0][3]
+    form.status.data = res[0][4]
+    form.hospital_name.data = res[0][5]
 
-    return render_template('edit-case-data.html', template_form=case_form_update, id=id)
+    return render_template('edit-case-data.html', template_form=form, id=id)
 
 
 @app.route('/case_updated/<new_case_id>', methods=['GET', 'POST'])
